@@ -11,37 +11,30 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
-        :root {
-            --accent: #3b82f6;
-            --bg-dark: #020617;
-        }
-
+        :root { --accent: #3b82f6; --bg-dark: #020617; }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 50% -20%, #1e293b, var(--bg-dark)),
-                radial-gradient(circle at 0% 100%, #0f172a, transparent);
+            background-image: radial-gradient(circle at 50% -20%, #1e293b, var(--bg-dark));
             color: #f8fafc;
-            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
-
         .mono { font-family: 'JetBrains Mono', monospace; }
-
         .glass-card { 
             background: rgba(15, 23, 42, 0.7); 
             backdrop-filter: blur(24px); 
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
-
         .status-btn { 
             border: 1px solid rgba(255,255,255,0.05); 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
         }
-
         .btn-working.active { background: #10b981; border-color: #10b981; color: white; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
         .btn-bug.active { background: #ef4444; border-color: #ef4444; color: white; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); }
         .btn-skip.active { background: #64748b; border-color: #64748b; color: white; }
@@ -49,75 +42,54 @@
         input, select, textarea {
             background: rgba(0, 0, 0, 0.3) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            transition: all 0.3s ease;
             color: white !important;
+            transition: all 0.3s ease;
         }
-        
         input:focus, select:focus, textarea:focus {
             border-color: var(--accent) !important;
-            background: rgba(0, 0, 0, 0.5) !important;
-            outline: none;
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            outline: none;
         }
-
-        .guide-box { 
-            background: linear-gradient(to right, rgba(59, 130, 246, 0.08), transparent); 
-            border-left: 4px solid var(--accent);
-            border-radius: 0 1rem 1rem 0;
-        }
-
+        .guide-box { border-left: 4px solid var(--accent); background: linear-gradient(to right, rgba(59, 130, 246, 0.08), transparent); }
         .step-animate { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen p-4 flex flex-col items-center justify-center">
-
-    <div class="fixed top-8 w-full max-w-xl px-4 flex justify-end z-50">
-        <button onclick="toggleLang()" class="glass-card px-5 py-2.5 rounded-2xl text-[10px] font-bold border border-white/10 hover:border-blue-500/50 transition-all uppercase tracking-[0.15em] flex items-center gap-2">
-            <i class="fa-solid fa-globe text-blue-400"></i> <span id="langBtn">EN | Indonesia</span>
-        </button>
-    </div>
+<body>
 
     <div class="max-w-xl w-full glass-card rounded-[3rem] overflow-hidden border-white/10">
-        <div class="h-2 bg-white/5 w-full relative">
+        <div class="h-2 bg-white/5 w-full">
             <div id="progressBar" class="h-full bg-blue-500 transition-all duration-700 shadow-[0_0_15px_rgba(59,130,246,0.6)]" style="width: 0%"></div>
         </div>
 
         <div class="p-10 pb-4 text-center">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full mb-4">
-                <div class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
                 <span class="text-[10px] font-black tracking-[0.25em] text-blue-400 uppercase">Android Testing Hub</span>
             </div>
             <h1 class="text-4xl font-extrabold tracking-tighter text-white">V1.0 <span class="font-thin text-slate-500 italic">Core</span></h1>
         </div>
 
-        <div id="step-setup" class="p-10 pt-4 space-y-8 step-animate">
-            <div class="grid gap-6">
-                <div class="relative">
+        <div id="step-setup" class="p-10 pt-4 space-y-6 step-animate">
+            <div class="grid gap-5">
+                <div>
                     <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1 mb-2 block" id="lbl-tester">Tester Identity</label>
                     <input type="text" id="tgUser" placeholder="@username" class="w-full p-4 rounded-2xl text-sm font-medium">
                 </div>
-                <div class="relative">
+                <div>
                     <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1 mb-2 block" id="lbl-project">Project Name</label>
-                    <input type="text" id="romName" placeholder="e.g. EvolutionX v8.0" class="w-full p-4 rounded-2xl text-sm font-medium">
+                    <input type="text" id="romName" placeholder="e.g. PixelOS v4.0" class="w-full p-4 rounded-2xl text-sm font-medium">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1 mb-2 block" id="lbl-device">Device</label>
-                        <select id="deviceSelect" class="w-full p-4 rounded-2xl text-sm font-medium appearance-none cursor-pointer">
-                            <option value="Generic">Generic Device</option>
+                        <select id="deviceSelect" class="w-full p-4 rounded-2xl text-sm font-medium appearance-none">
+                            <option value="Generic" id="opt-generic">Generic Device</option>
                             <option value="Redmi Note 12 Pro 4G">Redmi Note 12 Pro 4G</option>
                         </select>
                     </div>
                     <div>
                         <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1 mb-2 block" id="lbl-cat">Category</label>
-                        <select id="testType" class="w-full p-4 rounded-2xl text-sm font-medium appearance-none cursor-pointer">
+                        <select id="testType" class="w-full p-4 rounded-2xl text-sm font-medium appearance-none">
                             <option value="ROM">ROM</option>
                             <option value="Kernel">Kernel</option>
                             <option value="Recovery">Recovery</option>
@@ -125,113 +97,135 @@
                     </div>
                 </div>
             </div>
-            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-bold text-sm transition-all shadow-xl shadow-blue-900/40 uppercase tracking-[0.2em]" id="btn-begin">Begin Session</button>
+            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-bold text-sm transition-all shadow-xl uppercase tracking-[0.2em]" id="btn-begin">Begin Session</button>
+            
+            <div class="pt-4 border-t border-white/5 flex justify-center">
+                <button onclick="toggleLang()" class="flex items-center gap-2 text-[10px] font-bold text-slate-500 hover:text-blue-400 transition-colors uppercase tracking-widest">
+                    <i class="fa-solid fa-globe"></i> <span id="langBtnText">Switch to Indonesia</span>
+                </button>
+            </div>
         </div>
 
         <div id="step-testing" class="hidden p-10 pt-2 step-animate">
-            <div class="flex justify-between items-center mb-8">
+            <div class="flex justify-between items-center mb-6">
                 <div class="px-4 py-1.5 bg-white/5 rounded-xl border border-white/10">
                     <span id="pageIndicator" class="mono text-[11px] font-bold text-blue-400">TASK 01/18</span>
                 </div>
-                <button onclick="toggleLogModal()" class="text-[10px] font-black text-amber-500 hover:text-amber-400 transition-all uppercase tracking-widest border-b border-amber-500/30">
-                    Log Help
-                </button>
+                <button onclick="toggleLogModal()" class="text-[10px] font-black text-amber-500 uppercase tracking-widest border-b border-amber-500/30" id="btn-log-help">Log Help</button>
             </div>
 
-            <div class="mb-8">
-                <h2 id="currentQuestion" class="text-3xl font-extrabold text-white leading-tight mb-4 tracking-tight">Feature</h2>
-                <div class="guide-box p-5 space-y-4">
-                    <p id="guideDesc" class="text-xs text-slate-400 leading-relaxed font-medium italic"></p>
+            <div class="mb-6">
+                <h2 id="currentQuestion" class="text-2xl font-extrabold text-white mb-4 tracking-tight">Feature</h2>
+                <div class="guide-box p-5 space-y-3">
+                    <p id="guideDesc" class="text-xs text-slate-400 leading-relaxed italic font-medium"></p>
                     <div class="pt-3 border-t border-white/5">
-                        <span class="text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] block mb-2" id="lbl-howcheck">Verification Guide:</span>
-                        <p id="guideStep" class="text-xs text-white font-semibold leading-relaxed"></p>
+                        <span class="text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] block mb-1" id="lbl-howcheck">Check Guide:</span>
+                        <p id="guideStep" class="text-xs text-white font-semibold"></p>
                     </div>
                 </div>
             </div>
             
-            <div class="space-y-6">
+            <div class="space-y-4">
                 <div class="grid grid-cols-3 gap-3">
-                    <button onclick="setStatus('Working')" id="btn-Working" class="status-btn btn-working p-5 rounded-2xl text-[10px] font-black uppercase tracking-widest">Working</button>
-                    <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-5 rounded-2xl text-[10px] font-black uppercase tracking-widest">Bug</button>
-                    <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-5 rounded-2xl text-[10px] font-black uppercase tracking-widest">Skip</button>
+                    <button onclick="setStatus('Working')" id="btn-Working" class="status-btn btn-working p-4 rounded-2xl text-[10px] font-black uppercase tracking-widest">Working</button>
+                    <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-4 rounded-2xl text-[10px] font-black uppercase tracking-widest">Bug</button>
+                    <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-4 rounded-2xl text-[10px] font-black uppercase tracking-widest">Skip</button>
                 </div>
-                
-                <textarea id="currentComment" oninput="saveCurrentData()" placeholder="Add technical notes or bug details..." class="w-full p-5 rounded-[2rem] h-28 outline-none text-sm resize-none custom-scrollbar"></textarea>
-                
+                <textarea id="currentComment" oninput="saveCurrentData()" class="w-full p-5 rounded-[2rem] h-24 outline-none text-sm resize-none" placeholder="Notes..."></textarea>
                 <div class="flex items-center gap-4">
                     <input type="file" id="currentPhoto" accept="image/*" onchange="handlePhotoUpload(this)" class="hidden">
-                    <label for="currentPhoto" class="cursor-pointer flex-1 flex items-center justify-center p-5 rounded-2xl border-2 border-dashed border-slate-800 hover:border-blue-500 hover:bg-blue-500/5 transition-all group">
-                        <span id="photoLabel" class="text-[10px] font-bold uppercase text-slate-500 group-hover:text-blue-400 transition-colors">Attach Screenshot</span>
+                    <label for="currentPhoto" class="cursor-pointer flex-1 flex items-center justify-center p-4 rounded-2xl border-2 border-dashed border-slate-800 hover:border-blue-500 hover:bg-blue-500/5 transition-all">
+                        <span id="photoLabel" class="text-[10px] font-bold uppercase text-slate-500">Attach Screenshot</span>
                     </label>
-                    <div id="photoPreviewContainer" class="hidden relative group">
-                        <img id="imagePreview" src="#" class="w-16 h-16 object-cover rounded-2xl border-2 border-white/10 shadow-xl">
-                        <button onclick="clearPhoto()" class="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full text-[10px] shadow-lg flex items-center justify-center hover:scale-110 transition-transform"><i class="fa-solid fa-xmark"></i></button>
+                    <div id="photoPreviewContainer" class="hidden relative">
+                        <img id="imagePreview" src="#" class="w-14 h-14 object-cover rounded-xl border border-white/10">
+                        <button onclick="clearPhoto()" class="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 rounded-full text-[8px] flex items-center justify-center"><i class="fa-solid fa-x"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="flex gap-4 mt-12">
-                <button onclick="prevQuestion()" class="px-8 py-5 rounded-2xl font-bold text-xs text-slate-500 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest" id="btn-back">Back</button>
-                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black hover:bg-blue-50 p-5 rounded-2xl font-black text-xs transition-all uppercase tracking-[0.2em] shadow-lg">Next Task</button>
+            <div class="flex gap-4 mt-8">
+                <button onclick="prevQuestion()" class="px-6 py-4 rounded-2xl font-bold text-[10px] text-slate-500 hover:text-white transition uppercase tracking-widest" id="btn-back">Back</button>
+                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-4 rounded-2xl font-black text-[10px] transition-all uppercase tracking-[0.2em]">Next Task</button>
             </div>
         </div>
 
         <div id="step-finish" class="hidden p-10 step-animate">
-            <div class="text-center mb-10">
-                <div class="w-24 h-24 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-blue-500/20 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
-                    <i class="fa-solid fa-cloud-arrow-down text-3xl text-blue-400"></i>
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/20 shadow-lg shadow-blue-500/10">
+                    <i class="fa-solid fa-cloud-arrow-down text-2xl text-blue-400"></i>
                 </div>
-                <h2 class="text-3xl font-extrabold uppercase tracking-tighter text-white" id="lbl-export">Export Package</h2>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em] mt-2">Ready for Distribution</p>
+                <h2 class="text-2xl font-extrabold uppercase tracking-tighter" id="lbl-export">Export Package</h2>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1">Ready for submission</p>
             </div>
 
-            <div class="bg-black/30 rounded-[2.5rem] p-8 border border-white/10 space-y-5 mb-8">
-                <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Project Name</span>
-                    <span id="sumROM" class="text-sm font-bold text-blue-400"></span>
+            <div class="bg-black/30 rounded-[2rem] p-6 border border-white/5 space-y-4 mb-6">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest" id="lbl-sum-proj">Project</span>
+                    <span id="sumROM" class="font-bold text-blue-400 text-right"></span>
                 </div>
-                <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Test Category</span>
-                    <span id="sumType" class="text-sm font-bold text-amber-400"></span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Tester Name</span>
-                    <span id="sumTester" class="text-sm font-bold text-white"></span>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest" id="lbl-sum-test">Tester</span>
+                    <span id="sumTester" class="font-bold text-white text-right"></span>
                 </div>
             </div>
 
-            <div class="p-8 bg-blue-500/5 rounded-[2rem] border border-blue-500/10 mb-8 text-center group transition-all hover:bg-blue-500/10">
-                <label class="text-[11px] font-black text-blue-400 uppercase block mb-4 tracking-[0.2em]" id="lbl-attach">Attach System Log (Optional)</label>
-                <input type="file" id="mainLog" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-6 file:rounded-full file:border-0 file:bg-slate-800 file:text-blue-400 file:font-bold hover:file:bg-slate-700 cursor-pointer">
+            <div class="p-6 bg-blue-500/5 rounded-[2rem] border border-blue-500/10 mb-8">
+                <label class="text-[10px] font-black text-blue-400 uppercase block mb-4 text-center tracking-widest italic" id="lbl-attach">Attach System Log (Optional)</label>
+                <div class="relative group">
+                    <input type="file" id="mainLog" onchange="updateFileName(this)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                    <div class="flex items-center justify-between p-4 bg-slate-900/80 rounded-xl border border-white/10 group-hover:border-blue-500 transition-all">
+                        <span id="fileNameDisplay" class="text-[10px] text-slate-500 truncate mr-2 font-medium" id="lbl-no-file">No file chosen...</span>
+                        <div class="bg-blue-600 px-4 py-2 rounded-lg text-[9px] font-black uppercase text-white shadow-lg shadow-blue-900/20" id="lbl-browse">Browse</div>
+                    </div>
+                </div>
             </div>
 
-            <button onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-6 rounded-2xl font-black text-xs tracking-[0.3em] transition-all uppercase shadow-2xl shadow-blue-900/40" id="btn-download">Download ZIP Package</button>
-            <button onclick="location.reload()" class="w-full mt-6 text-slate-600 hover:text-red-400 text-[11px] font-bold uppercase tracking-widest transition" id="btn-reset">New Session</button>
+            <button onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs tracking-[0.2em] transition-all uppercase shadow-xl" id="btn-download">Download ZIP Package</button>
+            <button onclick="location.reload()" class="w-full mt-4 text-slate-600 hover:text-red-400 text-[10px] font-bold uppercase tracking-widest transition" id="btn-reset">New Session</button>
         </div>
     </div>
 
     <div id="logModal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-50 flex items-center justify-center p-6 hidden">
-        <div class="bg-slate-900 max-w-sm w-full rounded-[2.5rem] border border-white/10 p-10 step-animate">
-            <h3 class="text-2xl font-extrabold text-amber-500 uppercase tracking-tight mb-6" id="lbl-logguide">Guide</h3>
-            <div class="space-y-6">
-                <div class="p-5 bg-black/50 rounded-2xl border border-white/5">
-                    <p class="text-blue-400 text-[10px] font-black uppercase tracking-widest mb-3"># Get Logcat</p>
-                    <code class="text-xs text-slate-300 block bg-black p-3 rounded-lg overflow-x-auto mono">adb logcat -d > log.txt</code>
+        <div class="bg-slate-900 max-w-sm w-full rounded-[2.5rem] border border-white/10 p-10">
+            <h3 class="text-xl font-extrabold text-amber-500 uppercase tracking-tight mb-6" id="lbl-modal-title">Log Guide</h3>
+            <div class="space-y-4">
+                <div class="p-4 bg-black/50 rounded-xl border border-white/5">
+                    <p class="text-blue-400 text-[9px] font-black uppercase tracking-widest mb-2"># System Log</p>
+                    <code class="text-[10px] text-slate-300 block mono">adb logcat -d > log.txt</code>
                 </div>
-                <div class="p-5 bg-black/50 rounded-2xl border border-white/5">
-                    <p class="text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-3"># Get Dmesg</p>
-                    <code class="text-xs text-slate-300 block bg-black p-3 rounded-lg overflow-x-auto mono">adb shell dmesg > dmesg.txt</code>
+                <div class="p-4 bg-black/50 rounded-xl border border-white/5">
+                    <p class="text-emerald-400 text-[9px] font-black uppercase tracking-widest mb-2"># Kernel Log</p>
+                    <code class="text-[10px] text-slate-300 block mono">adb shell dmesg > dmesg.txt</code>
                 </div>
             </div>
-            <button onclick="toggleLogModal()" class="w-full mt-10 bg-slate-800 p-5 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-slate-700 transition-colors">Close Guide</button>
+            <button onclick="toggleLogModal()" class="w-full mt-8 bg-slate-800 p-4 rounded-xl font-bold uppercase text-[10px] tracking-widest" id="btn-close">Close</button>
         </div>
     </div>
 
     <script>
         let currentLang = 'en';
         const i18n = {
-            en: { btn: "Switch to Indonesia", tester: "Tester Identity", project: "Project Name", device: "Device", cat: "Category", begin: "Begin Session", how: "Verification Guide:", back: "Back", next: "Next Task", finish: "Export Package", export: "Export Package", attach: "Attach System Log (Optional)", download: "Download ZIP Package", reset: "New Session", logg: "Guide", photo: "Attach Screenshot" },
-            id: { btn: "Ganti ke Bahasa Inggris", tester: "Identitas Tester", project: "Nama Proyek", device: "Perangkat", cat: "Kategori", begin: "Mulai Sesi", how: "Panduan Verifikasi:", back: "Kembali", next: "Tugas Selanjutnya", finish: "Ekspor Paket", export: "Ekspor Paket", attach: "Lampirkan Log Sistem (Opsional)", download: "Unduh Paket ZIP", reset: "Sesi Baru", logg: "Panduan", photo: "Lampirkan Screenshot" }
+            en: {
+                langBtn: "Switch to Indonesia",
+                tester: "Tester Identity", project: "Project Name", device: "Device", cat: "Category", 
+                begin: "Begin Session", how: "Check Guide:", back: "Back", next: "Next Task", 
+                finish: "Export", export: "Export Package", attach: "Attach System Log (Optional)", 
+                download: "Download ZIP Package", reset: "New Session", logg: "Log Guide", 
+                photo: "Attach Screenshot", generic: "Generic Device", placeholder: "Notes...",
+                sumProj: "Project", sumTest: "Tester", noFile: "No file chosen...", browse: "Browse",
+                modalTitle: "Log Guide", close: "Close", error: "Please fill in all required fields!"
+            },
+            id: {
+                langBtn: "Ganti ke Bahasa Inggris",
+                tester: "Identitas Tester", project: "Nama Proyek", device: "Perangkat", cat: "Kategori", 
+                begin: "Mulai Sesi", how: "Panduan Cek:", back: "Kembali", next: "Tugas Lanjut", 
+                finish: "Ekspor", export: "Ekspor Paket", attach: "Lampirkan Log Sistem (Opsional)", 
+                download: "Unduh Paket ZIP", reset: "Sesi Baru", logg: "Panduan Log", 
+                photo: "Lampirkan Screenshot", generic: "Perangkat Umum", placeholder: "Catatan temuan...",
+                sumProj: "Proyek", sumTest: "Tester", noFile: "Belum ada file...", browse: "Pilih File",
+                modalTitle: "Panduan Log", close: "Tutup", error: "Harap isi semua kolom wajib!"
+            }
         };
 
         const testSets = {
@@ -256,38 +250,11 @@
                 { q: "Internal Storage", en_d: "Files can be moved and deleted.", id_d: "File bisa dipindah dan dihapus.", en_s: "Working: Writable. Check: Create a folder in File Manager and delete it.", id_s: "Working: Bisa ditulis. Cara Cek: Buat folder di File Manager lalu hapus." }
             ],
             "Kernel": [
-                { q: "Deep Sleep", en_d: "CPU sleeps to save power.", id_d: "CPU tidur untuk hemat daya.", en_s: "Working: Active. Check: Use 'CPU-Z' to see clock frequencies.", id_s: "Working: Aktif. Cara Cek: Gunakan 'CPU-Z' untuk lihat frekuensi CPU." },
-                { q: "Charging mA", en_d: "Stable current during charging.", id_d: "Arus stabil saat mengecas.", en_s: "Working: >2000mA. Check: Use 'Ampere' app while charging.", id_s: "Working: >2000mA. Cara Cek: Gunakan aplikasi 'Ampere' saat cas." },
-                { q: "Thermal Throttling", en_d: "Phone doesn't overheat instantly.", id_d: "HP tidak langsung panas berlebih.", en_s: "Working: Stable. Check: Run 'CPU Throttling Test' for 5 mins.", id_s: "Working: Stabil. Cara Cek: Jalankan 'CPU Throttling Test' selama 5 menit." },
-                { q: "Multi-Touch", en_d: "Detects all fingers correctly.", id_d: "Deteksi semua jari dengan benar.", en_s: "Working: 10 fingers. Check: Use 'MultiTouch Tester' app.", id_s: "Working: 10 jari. Cara Cek: Gunakan aplikasi 'MultiTouch Tester'." },
-                { q: "WireGuard Support", en_d: "VPN protocol side kernel.", id_d: "Protokol VPN sisi kernel.", en_s: "Working: Yes. Check: Open WireGuard app and try connecting.", id_s: "Working: Ya. Cara Cek: Buka aplikasi WireGuard dan coba konek." },
-                { q: "ZRAM Status", en_d: "Virtual RAM working properly.", id_d: "RAM Virtual jalan dengan benar.", en_s: "Working: Active. Check: Check 'Memory' in Dev Options.", id_s: "Working: Aktif. Cara Cek: Cek 'Memory' di Opsi Developer." },
-                { q: "CPU Governors", en_d: "Clock speed changes with load.", id_d: "Clock speed berubah sesuai beban.", en_s: "Working: Scaling. Check: See CPU-Z frequencies while opening apps.", id_s: "Working: Scaling. Cara Cek: Lihat frekuensi CPU-Z saat buka aplikasi." },
-                { q: "Display Calibration", en_d: "Natural colors, no tint.", id_d: "Warna natural, tidak menguning.", en_s: "Working: Clean. Check: View a white image at max brightness.", id_s: "Working: Bersih. Cara Cek: Lihat gambar putih di kecerahan penuh." },
-                { q: "Audio Gain", en_d: "Balanced volume output.", id_d: "Output volume seimbang.", en_s: "Working: Normal. Check: Play music at max volume, listen for distortion.", id_s: "Working: Normal. Cara Cek: Putar musik volume pol, dengar distorsi." },
-                { q: "Input Latency", en_d: "Low delay when tapping.", id_d: "Delay rendah saat menyentuh.", en_s: "Working: Snappy. Check: Type fast and see if letters follow.", id_s: "Working: Cepat. Cara Cek: Ketik cepat dan lihat apakah huruf mengikuti." },
-                { q: "USB OTG", en_d: "Flash drive detection.", id_d: "Deteksi flashdisk.", en_s: "Working: Mounted. Check: Plug flashdrive via OTG adapter.", id_s: "Working: Muncul. Cara Cek: Colok flashdisk lewat kabel OTG." },
-                { q: "Wi-Fi 5GHz", en_d: "High speed network support.", id_d: "Dukungan jaringan speed tinggi.", en_s: "Working: Connected. Check: Connect to 5GHz Wi-Fi router.", id_s: "Working: Konek. Cara Cek: Hubungkan ke Wi-Fi 5GHz." },
-                { q: "Underclock/Overclock", en_d: "Stability at custom clocks.", id_d: "Stabilitas di clock kustom.", en_s: "Working: No reboot. Check: Apply custom freq in Kernel app.", id_s: "Working: Tidak reboot. Cara Cek: Terapkan freq kustom di app Kernel." },
-                { q: "Double Tap to Wake", en_d: "Screen turns on by tapping twice.", id_d: "Layar nyala dengan ketuk 2x.", en_s: "Working: Responsive. Check: Enable in Settings and test on lockscreen.", id_s: "Working: Responsif. Cara Cek: Aktifkan di Setelan dan tes." },
-                { q: "Core Online Status", en_d: "All CPU cores working.", id_d: "Semua core CPU jalan.", en_s: "Working: 8 Cores. Check: Check CPU-Z 'Device' tab.", id_s: "Working: 8 Core. Cara Cek: Lihat tab 'Device' di CPU-Z." }
+                { q: "Deep Sleep", en_d: "CPU sleeps to save power.", id_d: "CPU tidur untuk hemat daya.", en_s: "Working: Active. Check: See clock in CPU-Z or Franco Kernel Manager.", id_s: "Working: Aktif. Cara Cek: Lihat clock di CPU-Z saat layar mati sebentar." },
+                { q: "Charging mA", en_d: "Stable current during charging.", id_d: "Arus stabil saat mengecas.", en_s: "Working: >2000mA. Check: Use 'Ampere' app while charging.", id_s: "Working: >2000mA. Cara Cek: Gunakan aplikasi 'Ampere' saat cas." }
             ],
             "Recovery": [
-                { q: "Data Decryption", en_d: "Can see folders in /sdcard.", id_d: "Bisa lihat folder di /sdcard.", en_s: "Working: Names ok. Check: Open 'Install' menu, see file names.", id_s: "Working: Nama ok. Cara Cek: Buka menu 'Install', lihat nama file." },
-                { q: "ADB Sideload", en_d: "PC detects phone in sideload.", id_d: "PC deteksi HP di sideload.", en_s: "Working: Ready. Check: Enter Sideload mode and type 'adb devices'.", id_s: "Working: Siap. Cara Cek: Masuk mode Sideload dan ketik 'adb devices'." },
-                { q: "MTP Support", en_d: "Transfer files from PC.", id_d: "Transfer file dari PC.", en_s: "Working: Visible. Check: Plug USB to PC, check Internal Storage.", id_s: "Working: Terlihat. Cara Cek: Colok USB ke PC, cek Internal Storage." },
-                { q: "Touch Sensitivity", en_d: "Touch works in all areas.", id_d: "Sentuhan jalan di semua sisi.", en_s: "Working: Fluid. Check: Swipe up/down and click menus.", id_s: "Working: Lancar. Cara Cek: Swipe atas/bawah dan klik menu." },
-                { q: "MicroSD/OTG Mount", en_d: "Read external media.", id_d: "Baca media eksternal.", en_s: "Working: Mounted. Check: Change storage to SDCard/OTG.", id_s: "Working: Terbaca. Cara Cek: Ganti storage ke SDCard/OTG." },
-                { q: "Backup/Restore", en_d: "Save system image.", id_d: "Simpan image sistem.", en_s: "Working: Success. Check: Backup Boot partition to internal.", id_s: "Working: Berhasil. Cara Cek: Backup partisi Boot ke internal." },
-                { q: "Format Data", en_d: "Wiping data partitions.", id_d: "Menghapus partisi data.", en_s: "Working: Done. Check: Try 'Format Data (Yes)'.", id_s: "Working: Selesai. Cara Cek: Coba 'Format Data (Yes)'." },
-                { q: "FastbootD", en_d: "Enter sub-fastboot mode.", id_d: "Masuk mode sub-fastboot.", en_s: "Working: Purple UI. Check: Reboot to Fastboot from menu.", id_s: "Working: UI Ungu. Cara Cek: Reboot ke Fastboot dari menu." },
-                { q: "Flash Zip", en_d: "Install zip packages.", id_d: "Instal paket zip.", en_s: "Working: No error. Check: Try flashing a small Magisk or font zip.", id_s: "Working: Tidak error. Cara Cek: Coba flash zip Magisk atau font." },
-                { q: "Partition Mount", en_d: "Mounting System/Vendor.", id_d: "Mount System/Vendor.", en_s: "Working: Checked. Check: Go to Mount menu and tick System.", id_s: "Working: Tercentang. Cara Cek: Buka menu Mount dan centang System." },
-                { q: "Brightness Control", en_d: "Adjust screen light.", id_d: "Atur cahaya layar.", en_s: "Working: Changes. Check: Adjust slider in Settings menu.", id_s: "Working: Berubah. Cara Cek: Atur slider di menu Settings." },
-                { q: "Language Settings", en_d: "Switch UI language.", id_d: "Ganti bahasa UI.", en_s: "Working: Applied. Check: Change to Chinese/English.", id_s: "Working: Terganti. Cara Cek: Ganti ke Chinese/English." },
-                { q: "Hardware Keys", en_d: "Vol/Power buttons work.", id_d: "Tombol Vol/Power jalan.", en_s: "Working: Normal. Check: Use buttons to navigate or select.", id_s: "Working: Normal. Cara Cek: Pakai tombol untuk navigasi." },
-                { q: "Reboot Logic", en_d: "Restart to System/Recovery.", id_d: "Restart ke System/Recovery.", en_s: "Working: Boots. Check: Tap Reboot > System.", id_s: "Working: Booting. Cara Cek: Tekan Reboot > System." },
-                { q: "Log Export", en_d: "Copy logs to SDcard.", id_d: "Copy log ke SDcard.", en_s: "Working: Copied. Check: Use 'Advanced > Copy Log'.", id_s: "Working: Tersalin. Cara Cek: Pakai menu 'Advanced > Copy Log'." }
+                { q: "Data Decryption", en_d: "Can see folders in /sdcard.", id_d: "Bisa lihat folder di /sdcard.", en_s: "Working: Names ok. Check: Open 'Install' menu, see file names.", id_s: "Working: Nama ok. Cara Cek: Buka menu 'Install', lihat nama file." }
             ]
         };
 
@@ -297,28 +264,51 @@
 
         function toggleLang() {
             currentLang = (currentLang === 'en') ? 'id' : 'en';
-            const lang = i18n[currentLang];
-            document.getElementById('langBtn').innerText = lang.btn;
-            document.getElementById('lbl-tester').innerText = lang.tester;
-            document.getElementById('lbl-project').innerText = lang.project;
-            document.getElementById('lbl-device').innerText = lang.device;
-            document.getElementById('lbl-cat').innerText = lang.cat;
-            document.getElementById('btn-begin').innerText = lang.begin;
-            document.getElementById('lbl-howcheck').innerText = lang.how;
-            document.getElementById('btn-back').innerText = lang.back;
-            document.getElementById('lbl-export').innerText = lang.export;
-            document.getElementById('lbl-attach').innerText = lang.attach;
-            document.getElementById('btn-download').innerText = lang.download;
-            document.getElementById('btn-reset').innerText = lang.reset;
-            document.getElementById('lbl-logguide').innerText = lang.logg;
-            document.getElementById('photoLabel').innerText = lang.photo;
+            const dict = i18n[currentLang];
+            
+            // Navbar & Setup
+            document.getElementById('langBtnText').innerText = dict.langBtn;
+            document.getElementById('lbl-tester').innerText = dict.tester;
+            document.getElementById('lbl-project').innerText = dict.project;
+            document.getElementById('lbl-device').innerText = dict.device;
+            document.getElementById('lbl-cat').innerText = dict.cat;
+            document.getElementById('opt-generic').innerText = dict.generic;
+            document.getElementById('btn-begin').innerText = dict.begin;
+            
+            // Testing Interface
+            document.getElementById('lbl-howcheck').innerText = dict.how;
+            document.getElementById('btn-back').innerText = dict.back;
+            document.getElementById('btn-log-help').innerText = dict.logg;
+            document.getElementById('photoLabel').innerText = dict.photo;
+            document.getElementById('currentComment').placeholder = dict.placeholder;
+            
+            // Finish Interface
+            document.getElementById('lbl-export').innerText = dict.export;
+            document.getElementById('lbl-sum-proj').innerText = dict.sumProj;
+            document.getElementById('lbl-sum-test').innerText = dict.sumTest;
+            document.getElementById('lbl-attach').innerText = dict.attach;
+            document.getElementById('lbl-browse').innerText = dict.browse;
+            document.getElementById('btn-download').innerText = dict.download;
+            document.getElementById('btn-reset').innerText = dict.reset;
+
+            // Modal
+            document.getElementById('lbl-modal-title').innerText = dict.modalTitle;
+            document.getElementById('btn-close').innerText = dict.close;
+
             if(questions.length > 0) updatePage();
+        }
+
+        function updateFileName(input) {
+            const display = document.getElementById('fileNameDisplay');
+            display.innerText = input.files[0] ? input.files[0].name : (i18n[currentLang].noFile);
+            display.classList.remove('text-slate-500');
+            display.classList.add('text-blue-400');
         }
 
         function startTesting() {
             const rom = document.getElementById('romName').value;
             const tg = document.getElementById('tgUser').value;
-            if(!rom || !tg) return alert("Please fill in the project and tester name.");
+            if(!rom || !tg) return alert(i18n[currentLang].error);
             const type = document.getElementById('testType').value;
             questions = [...testSets[type]];
             questions.forEach(q => { if(!testData[q.q]) testData[q.q] = { status: "Not Tested", comment: "", photo: null }; });
@@ -349,21 +339,13 @@
                 if(btn.id === `btn-${status.replace(/\s+/g, '-')}`) btn.classList.add('active');
             });
         }
-
-        function handlePhotoUpload(input) {
-            if (input.files && input.files[0]) {
-                testData[questions[currentIndex].q].photo = input.files[0];
-                updatePage();
-            }
-        }
-
+        function handlePhotoUpload(input) { if (input.files && input.files[0]) { testData[questions[currentIndex].q].photo = input.files[0]; updatePage(); } }
         function clearPhoto() { testData[questions[currentIndex].q].photo = null; updatePage(); }
         function toggleLogModal() { document.getElementById('logModal').classList.toggle('hidden'); }
         function prevQuestion() {
             if(currentIndex > 0) { currentIndex--; updatePage(); } 
             else { document.getElementById('step-testing').classList.add('hidden'); document.getElementById('step-setup').classList.remove('hidden'); }
         }
-
         function nextQuestion() {
             saveCurrentData();
             if(currentIndex < questions.length - 1) { currentIndex++; updatePage(); } 
@@ -371,16 +353,13 @@
                 document.getElementById('step-testing').classList.add('hidden'); 
                 document.getElementById('step-finish').classList.remove('hidden');
                 document.getElementById('sumTester').innerText = document.getElementById('tgUser').value;
-                document.getElementById('sumType').innerText = document.getElementById('testType').value;
                 document.getElementById('sumROM').innerText = document.getElementById('romName').value;
             }
         }
-
         async function generateZip() {
             const zip = new JSZip();
-            const now = new Date();
             const rom = document.getElementById('romName').value.replace(/\s+/g, '_');
-            let report = `=== ANDROID TESTING HUB V1.0 REPORT ===\nPROJECT: ${rom}\nTESTER: ${document.getElementById('tgUser').value}\nDATE: ${now.toLocaleString()}\n\n`;
+            let report = `=== ATH V1.0 REPORT ===\nPROJECT: ${rom}\nTESTER: ${document.getElementById('tgUser').value}\n\n`;
             const imgFolder = zip.folder("evidence");
             for (const qObj of questions) {
                 const item = testData[qObj.q];
@@ -401,7 +380,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = `${rom}-Report.zip`;
             link.click();
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
         }
     </script>
 </body>
