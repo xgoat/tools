@@ -45,9 +45,9 @@
 </head>
 <body class="min-h-screen p-4 flex flex-col items-center justify-center">
 
-    <div class="fixed top-4 right-4 z-50">
+    <div class="mb-4">
         <button onclick="toggleLang()" class="glass-card px-4 py-2 rounded-full text-[10px] font-bold border border-white/10 hover:bg-white/5 transition uppercase tracking-widest">
-            <i class="fa-solid fa-language mr-2 text-blue-400"></i> <span id="langBtn">Language: EN</span>
+            <i class="fa-solid fa-language mr-2 text-blue-400"></i> <span id="langBtn">Switch to Indonesia</span>
         </button>
     </div>
 
@@ -76,14 +76,14 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block" id="lbl-device">Device</label>
-                        <select id="deviceSelect" class="w-full p-4 rounded-2xl outline-none text-sm">
+                        <select id="deviceSelect" class="w-full p-4 rounded-2xl outline-none text-sm appearance-none">
                             <option value="Generic">Generic Device</option>
                             <option value="Redmi Note 12 Pro 4G">Redmi Note 12 Pro 4G</option>
                         </select>
                     </div>
                     <div>
                         <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block" id="lbl-cat">Category</label>
-                        <select id="testType" class="w-full p-4 rounded-2xl outline-none text-sm">
+                        <select id="testType" class="w-full p-4 rounded-2xl outline-none text-sm appearance-none">
                             <option value="ROM">ROM</option>
                             <option value="Kernel">Kernel</option>
                             <option value="Recovery">Recovery</option>
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-bold text-sm transition-all shadow-xl uppercase tracking-widest" id="btn-begin">Begin Session</button>
+            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-bold text-sm transition-all shadow-xl shadow-blue-900/20 uppercase tracking-widest" id="btn-begin">Begin Session</button>
         </div>
 
         <div id="step-testing" class="hidden p-8 pt-2 step-animate">
@@ -99,17 +99,17 @@
                 <div class="px-3 py-1 bg-white/5 rounded-lg border border-white/10">
                     <span id="pageIndicator" class="mono text-[10px] text-slate-400">TASK 01/20</span>
                 </div>
-                <button onclick="toggleLogModal()" class="text-[10px] font-bold text-amber-500 uppercase tracking-tighter">
+                <button onclick="toggleLogModal()" class="text-[10px] font-bold text-amber-500 hover:text-amber-400 transition uppercase tracking-tighter">
                     <i class="fa-solid fa-circle-question mr-1"></i> Log Help
                 </button>
             </div>
 
             <div class="mb-4">
-                <h2 id="currentQuestion" class="text-2xl font-bold text-white leading-tight mb-3">Feature</h2>
+                <h2 id="currentQuestion" class="text-2xl font-bold text-white leading-tight mb-2">Feature</h2>
                 <div class="guide-box p-4 rounded-xl space-y-2 mb-4">
                     <p id="guideDesc" class="text-[11px] text-slate-300 leading-relaxed italic"></p>
                     <div class="pt-2 border-t border-blue-500/10">
-                        <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest block mb-1" id="lbl-guide-title">How to check / Take Log:</span>
+                        <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest block mb-1" id="lbl-howcheck">Normal Condition vs How to Check:</span>
                         <p id="guideStep" class="text-[11px] text-blue-100/80 font-medium"></p>
                     </div>
                 </div>
@@ -121,48 +121,65 @@
                     <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-4 rounded-2xl text-[10px] font-black uppercase">Bug</button>
                     <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-4 rounded-2xl text-[10px] font-black uppercase">Skip</button>
                 </div>
-                <textarea id="currentComment" oninput="saveCurrentData()" placeholder="Notes..." class="w-full p-5 rounded-3xl h-24 outline-none text-sm resize-none"></textarea>
+                <textarea id="currentComment" oninput="saveCurrentData()" placeholder="Describe findings..." class="w-full p-5 rounded-3xl h-24 outline-none text-sm resize-none"></textarea>
                 <div class="flex items-center gap-4">
                     <input type="file" id="currentPhoto" accept="image/*" onchange="handlePhotoUpload(this)" class="hidden">
-                    <label for="currentPhoto" class="cursor-pointer flex-1 flex items-center justify-center p-4 rounded-2xl border border-dashed border-slate-700 hover:border-blue-500 bg-white/5">
+                    <label for="currentPhoto" class="cursor-pointer flex-1 flex items-center justify-center p-4 rounded-2xl border border-dashed border-slate-700 hover:border-blue-500 bg-white/5 transition-all">
                         <span id="photoLabel" class="text-[10px] font-bold uppercase text-slate-500">Attach Screenshot</span>
                     </label>
                     <div id="photoPreviewContainer" class="hidden relative">
-                        <img id="imagePreview" src="#" class="w-14 h-14 object-cover rounded-xl border border-white/20">
+                        <img id="imagePreview" src="#" class="w-14 h-14 object-cover rounded-xl">
+                        <button onclick="clearPhoto()" class="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 rounded-full text-[8px]"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
             </div>
 
             <div class="flex gap-4 mt-10">
                 <button onclick="prevQuestion()" class="p-5 rounded-2xl font-bold text-xs text-slate-500 hover:text-white transition uppercase" id="btn-back">BACK</button>
-                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-5 rounded-2xl font-bold text-xs transition-all uppercase tracking-widest shadow-lg shadow-white/5">Next Task</button>
+                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-5 rounded-2xl font-bold text-xs transition-all uppercase tracking-widest">Next Task</button>
             </div>
         </div>
 
         <div id="step-finish" class="hidden p-8 step-animate">
             <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold uppercase tracking-tighter" id="lbl-export-title">Export</h2>
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Validation Complete</p>
+                <div class="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
+                    <i class="fa-solid fa-cloud-arrow-down text-2xl text-blue-400"></i>
+                </div>
+                <h2 class="text-2xl font-bold uppercase tracking-tighter" id="lbl-export">Export</h2>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Validation V1.0 Complete</p>
             </div>
-            <div class="bg-black/40 rounded-3xl p-6 border border-white/5 space-y-4 mb-6" id="summaryBox">
-                <div class="flex justify-between"><span class="text-[10px] font-bold text-slate-500 uppercase">Project</span><span id="sumROM" class="text-xs font-bold text-blue-400"></span></div>
-                <div class="flex justify-between"><span class="text-[10px] font-bold text-slate-500 uppercase">Tester</span><span id="sumTester" class="text-xs font-bold text-white"></span></div>
+
+            <div class="bg-black/40 rounded-3xl p-6 border border-white/5 space-y-4 mb-6">
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">Project</span>
+                    <span id="sumROM" class="text-xs font-bold text-blue-400"></span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">Category</span>
+                    <span id="sumType" class="text-xs font-bold text-amber-400"></span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase">Tester</span>
+                    <span id="sumTester" class="text-xs font-bold text-white"></span>
+                </div>
             </div>
+
             <div class="p-6 bg-blue-500/5 rounded-3xl border border-blue-500/10 mb-8">
-                <label class="text-[10px] font-black text-blue-400 uppercase block mb-3 text-center" id="lbl-attach">Attach System Log</label>
-                <input type="file" id="mainLog" class="block w-full text-xs text-slate-500">
+                <label class="text-[10px] font-black text-blue-400 uppercase block mb-3 text-center tracking-widest italic" id="lbl-attach-log">Attach System Log (Logcat/Dmesg)</label>
+                <input type="file" id="mainLog" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
             </div>
-            <button id="downloadBtn" onclick="generateZip()" class="w-full bg-blue-600 p-5 rounded-2xl font-black text-xs tracking-widest shadow-xl uppercase" id="btn-zip">Download ZIP Package</button>
+
+            <button onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs tracking-[0.2em] transition-all uppercase shadow-xl shadow-blue-900/40" id="btn-download">Download ZIP Package</button>
+            <button onclick="resetData()" class="w-full mt-4 text-slate-600 hover:text-red-400 text-[10px] font-bold uppercase transition" id="btn-reset">Reset Session</button>
         </div>
     </div>
 
     <div id="logModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 flex items-center justify-center p-6 hidden">
         <div class="bg-slate-900 max-w-sm w-full rounded-[2rem] border border-white/10 p-8">
-            <h3 class="text-xl font-bold text-amber-500 uppercase mb-4" id="lbl-log-title">Log Instructions</h3>
+            <h3 class="text-xl font-bold text-amber-500 uppercase mb-4" id="lbl-logguide">Log Instructions</h3>
             <div class="space-y-4 font-mono text-[10px] text-slate-400">
-                <div class="p-4 bg-black rounded-2xl"><code>adb logcat -d > logcat.txt</code></div>
-                <div class="p-4 bg-black rounded-2xl"><code>adb shell dmesg > dmesg.txt</code></div>
-                <div class="p-4 bg-black rounded-2xl"><code>adb pull /tmp/recovery.log</code></div>
+                <div class="p-4 bg-black rounded-2xl border border-white/5"><p class="text-blue-400 mb-2"># System</p><code>adb logcat -d > logcat.txt</code></div>
+                <div class="p-4 bg-black rounded-2xl border border-white/5"><p class="text-emerald-400 mb-2"># Kernel</p><code>adb shell dmesg > dmesg.txt</code></div>
             </div>
             <button onclick="toggleLogModal()" class="w-full mt-6 bg-slate-800 p-4 rounded-xl font-bold uppercase text-[10px]">Close</button>
         </div>
@@ -170,65 +187,66 @@
 
     <script>
         let currentLang = 'en';
+
         const i18n = {
-            en: { lang: "Language: EN", tester: "Tester Identity", project: "Project Name", device: "Device", cat: "Category", begin: "Begin Session", guide: "How to check / Take Log:", back: "BACK", next: "Next Task", finish: "Export Data", export: "Export", attach: "Attach System Log", download: "Download ZIP Package", logTitle: "Log Instructions", photo: "Attach Screenshot" },
-            id: { lang: "Bahasa: ID", tester: "Identitas Tester", project: "Nama Proyek", device: "Perangkat", cat: "Kategori", begin: "Mulai Sesi", guide: "Cara cek / Ambil Log:", back: "KEMBALI", next: "Tugas Selanjutnya", finish: "Ekspor Data", export: "Ekspor", attach: "Lampirkan Log Sistem", download: "Unduh Paket ZIP", logTitle: "Instruksi Log", photo: "Lampirkan Screenshot" }
+            en: { btn: "Switch to Indonesia", tester: "Tester Identity", project: "Project Name", device: "Device", cat: "Category", begin: "Begin Session", how: "Normal Condition vs How to Check:", back: "BACK", next: "Next Task", finish: "Export", export: "Export", attach: "Attach System Log", download: "Download ZIP Package", reset: "Reset Session", guide: "Log Instructions", photo: "Attach Screenshot" },
+            id: { btn: "Ganti ke Bahasa Inggris", tester: "Identitas Tester", project: "Nama Proyek", device: "Perangkat", cat: "Kategori", begin: "Mulai Sesi", how: "Kondisi Normal vs Cara Cek:", back: "KEMBALI", next: "Tugas Selanjutnya", finish: "Ekspor", export: "Ekspor", attach: "Lampirkan Log Sistem", download: "Unduh Paket ZIP", reset: "Reset Sesi", guide: "Instruksi Log", photo: "Lampirkan Screenshot" }
         };
 
         const testSets = {
-            "ROM_Generic": [
-                { q: "System UI Stability", en_d: "Checks for crashes in notifications and launcher.", id_d: "Cek crash pada notifikasi dan launcher.", en_s: "Check 'logcat | grep -E \"AndroidRuntime|system_server\"'.", id_s: "Cek 'logcat | grep -E \"AndroidRuntime|system_server\"'." },
-                { q: "App Opening Speed", en_d: "Test app launch fluidity.", id_d: "Uji kelancaran buka aplikasi.", en_s: "Check logcat 'ActivityTaskManager' for launch times.", id_s: "Cek logcat 'ActivityTaskManager' untuk waktu buka." },
-                { q: "RIL: Signal & Data", en_d: "SIM detection and internet stability.", id_d: "Deteksi SIM dan stabilitas internet.", en_s: "Take logcat with '-b radio' buffer.", id_s: "Ambil logcat dengan buffer '-b radio'." },
-                { q: "RIL: VoLTE / VoNR", en_d: "High-def calls over LTE/5G.", id_d: "Panggilan suara HD via LTE/5G.", en_s: "Check IMS status in Phone Info (*#*#4636#*#*).", id_s: "Cek status IMS di Informasi Telepon (*#*#4636#*#*)." },
-                { q: "Wi-Fi & Hotspot", en_d: "Testing 2.4/5GHz and sharing data.", id_d: "Uji 2.4/5GHz dan berbagi data.", en_s: "Check dmesg for 'wlan' errors.", id_s: "Cek dmesg untuk error 'wlan'." },
-                { q: "Bluetooth Audio", en_d: "Latency and high-res codec check.", id_d: "Cek latensi dan codec resolusi tinggi.", en_s: "Check logcat 'bt_stack' for codec info.", id_s: "Cek logcat 'bt_stack' untuk info codec." },
-                { q: "GPS Accuracy", en_d: "Lock speed and position precision.", id_d: "Kecepatan lock dan presisi posisi.", en_s: "Check logcat 'GnssLocationProvider'.", id_s: "Cek logcat 'GnssLocationProvider'." },
-                { q: "Camera Stability", en_d: "Shutter speed and focus accuracy.", id_d: "Kecepatan rana dan akurasi fokus.", en_s: "Check dmesg for 'camera' or 'sensor' errors.", id_s: "Cek dmesg untuk error 'camera' atau 'sensor'." },
-                { q: "Audio & Speaker", en_d: "Distortion and earpiece clarity.", id_d: "Distorsi dan kejernihan earpiece.", en_s: "Check logcat 'AudioFlinger'.", id_s: "Cek logcat 'AudioFlinger'." },
-                { q: "Biometrics", en_d: "FP and Face Unlock security.", id_d: "Keamanan FP dan Face Unlock.", en_s: "Check logcat 'fingerprintd'.", id_s: "Cek logcat 'fingerprintd'." },
-                { q: "Display & Brightness", en_d: "Auto-brightness and color profiles.", id_d: "Auto-brightness dan profil warna.", en_s: "Check logcat 'DisplayPowerController'.", id_s: "Cek logcat 'DisplayPowerController'." },
-                { q: "Charging Protocol", en_d: "PD/QC speed and temperature.", id_d: "Kecepatan PD/QC dan suhu.", en_s: "Check 'adb shell dumpsys battery'.", id_s: "Cek 'adb shell dumpsys battery'." },
-                { q: "USB/OTG Transfer", en_d: "MTP and external storage speed.", id_d: "Kecepatan MTP dan storage eksternal.", en_s: "Check dmesg for USB enumeration.", id_s: "Cek dmesg untuk enumerasi USB." },
-                { q: "DRM Widevine L1", en_d: "HD streaming support check.", id_d: "Cek dukungan streaming HD.", en_s: "Use 'DRM Info' app. Check logcat for 'mediadrm'.", id_s: "Gunakan 'DRM Info'. Cek logcat untuk 'mediadrm'." },
-                { q: "Play Integrity", en_d: "Google security certification.", id_d: "Sertifikasi keamanan Google.", en_s: "Use 'YASNAC' app. Check attestation logs.", id_s: "Gunakan 'YASNAC'. Cek log atestasi." },
-                { q: "Memory Management", en_d: "RAM usage and app killing.", id_d: "Penggunaan RAM dan penutupan aplikasi.", en_s: "Check 'adb shell dumpsys meminfo'.", id_s: "Cek 'adb shell dumpsys meminfo'." },
-                { q: "Dark Mode/Monet", en_d: "Theming engine stability.", id_d: "Stabilitas mesin tema.", en_s: "Check logcat 'OverlayManager'.", id_s: "Cek logcat 'OverlayManager'." },
-                { q: "Mic Clarity", en_d: "Recording and call quality.", id_d: "Kualitas rekaman dan telepon.", en_s: "Check logcat 'audio_hw_primary'.", id_s: "Cek logcat 'audio_hw_primary'." }
+            "ROM": [
+                { q: "System UI Stability", en_d: "The interface should not lag or restart when swiping status bar.", id_d: "Antarmuka tidak boleh lag atau restart saat swipe status bar.", en_s: "Working: Smooth swipe. Check: Open many apps and pull down notification bar repeatedly.", id_s: "Working: Swipe lancar. Cara Cek: Buka banyak aplikasi dan tarik bar notifikasi berulang kali." },
+                { q: "RIL: Signal & Data", en_d: "Mobile data must be stable with 4G/5G icon visible.", id_d: "Data seluler harus stabil dengan ikon 4G/5G muncul.", en_s: "Working: Internet works. Check: Disable Wi-Fi, open YouTube, and browse for 1 minute.", id_s: "Working: Internet jalan. Cara Cek: Matikan Wi-Fi, buka YouTube, dan browsing selama 1 menit." },
+                { q: "Google Play Integrity", en_d: "Device should pass security checks for banking apps.", id_d: "Perangkat harus lolos cek keamanan untuk aplikasi bank.", en_s: "Working: 'MEETS_DEVICE_INTEGRITY'. Check: Download 'YASNAC' app from Play Store and Run.", id_s: "Working: Lolos Integrity. Cara Cek: Download aplikasi 'YASNAC' di Play Store dan Run." },
+                { q: "Biometrics (FP/Face)", en_d: "Fast and accurate unlocking without failed attempts.", id_d: "Buka kunci cepat dan akurat tanpa sering gagal.", en_s: "Working: Unlocks in <1s. Check: Register fingers/face and try unlocking 5 times in a row.", id_s: "Working: Buka <1 detik. Cara Cek: Daftarkan jari/wajah dan coba buka 5 kali berturut-turut." },
+                { q: "Widevine Level", en_d: "Determines if you can watch Netflix in Full HD.", id_d: "Menentukan apakah bisa nonton Netflix Full HD.", en_s: "Working: L1. Check: Open 'DRM Info' app and check 'Security Level'.", id_s: "Working: L1. Cara Cek: Buka aplikasi 'DRM Info' dan cek bagian 'Security Level'." },
+                { q: "Bluetooth Audio", en_d: "Clean sound without stuttering on TWS/Speakers.", id_d: "Suara jernih tanpa putus-putus di TWS/Speaker.", en_s: "Working: No delay. Check: Connect Bluetooth headphones and play music for 30 seconds.", id_s: "Working: Tidak delay. Cara Cek: Hubungkan headphone Bluetooth dan putar musik 30 detik." },
+                { q: "Wi-Fi & Hotspot", en_d: "Able to connect to Wi-Fi and share internet.", id_d: "Bisa konek ke Wi-Fi dan berbagi internet.", en_s: "Working: Hotspot active. Check: Turn on Hotspot and connect another device to it.", id_s: "Working: Hotspot aktif. Cara Cek: Hidupkan Hotspot dan hubungkan perangkat lain." },
+                { q: "GPS Accuracy", en_d: "Precise location tracking for Maps.", id_d: "Pelacakan lokasi yang presisi untuk Maps.", en_s: "Working: Accurate location. Check: Open Google Maps and tap 'My Location' icon.", id_s: "Working: Lokasi akurat. Cara Cek: Buka Google Maps dan tekan ikon 'Lokasi Saya'." },
+                { q: "Battery Idle Drain", en_d: "Battery should not drop much when screen is off.", id_d: "Baterai tidak boleh turun banyak saat layar mati.", en_s: "Working: <2% per hour. Check: Check battery percentage, leave for 30 mins, check again.", id_s: "Working: <2% per jam. Cara Cek: Catat baterai, diamkan 30 menit, cek lagi." },
+                { q: "Camera App", en_d: "Taking photos and videos should be smooth.", id_d: "Ambil foto dan video harus lancar.", en_s: "Working: No crash. Check: Open camera, take 3 photos, and record a 10s video.", id_s: "Working: Tidak crash. Cara Cek: Buka kamera, ambil 3 foto, dan rekam video 10 detik." },
+                { q: "Flashlight", en_d: "LED light should turn on from Quick Settings.", id_d: "Lampu LED harus menyala dari Pengaturan Cepat.", en_s: "Working: Bright LED. Check: Toggle flashlight icon in status bar.", id_s: "Working: LED terang. Cara Cek: Tekan ikon senter di bar status." },
+                { q: "Audio Jack / USB-C", en_d: "Music through wired headphones.", id_d: "Musik melalui kabel headphone.", en_s: "Working: Sound out. Check: Plug in earphones and listen for any noise.", id_s: "Working: Suara keluar. Cara Cek: Colok earphone dan dengarkan jika ada noise." },
+                { q: "Display Brightness", en_d: "Smooth transition from dark to bright.", id_d: "Transisi lancar dari gelap ke terang.", en_s: "Working: Auto works. Check: Move slider and test auto-brightness under a light.", id_s: "Working: Auto jalan. Cara Cek: Geser slider dan tes auto-bright di bawah lampu." },
+                { q: "Dark Mode", en_d: "System apps should change colors correctly.", id_d: "Aplikasi sistem harus ganti warna dengan benar.", en_s: "Working: All black. Check: Enable Dark Mode and open Settings/Phone apps.", id_s: "Working: Hitam semua. Cara Cek: Aktifkan Dark Mode dan buka menu Setelan." },
+                { q: "Charging Speed", en_d: "Detects 'Fast Charging' or 'Turbo' animation.", id_d: "Mendeteksi animasi 'Fast Charging' atau 'Turbo'.", en_s: "Working: Fast. Check: Connect original charger and see lockscreen text.", id_s: "Working: Cepat. Cara Cek: Colok charger ori dan lihat teks di lockscreen." },
+                { q: "Microphone", en_d: "Clear voice recording without static.", id_d: "Rekaman suara jernih tanpa statik.", en_s: "Working: Clear. Check: Open 'Recorder' app and say 'Testing 1 2 3'.", id_s: "Working: Jernih. Cara Cek: Buka aplikasi 'Perekam' dan bicara 'Tes 1 2 3'." },
+                { q: "Vibration/Haptics", en_d: "Haptics feel tight, not buzzy.", id_d: "Getaran terasa padat, tidak berisik.", en_s: "Working: Tactile. Check: Type on keyboard and feel the vibration.", id_s: "Working: Taktil. Cara Cek: Ketik di keyboard dan rasakan getarannya." },
+                { q: "Internal Storage", en_d: "Files can be moved and deleted.", id_d: "File bisa dipindah dan dihapus.", en_s: "Working: Writable. Check: Create a folder in File Manager and delete it.", id_s: "Working: Bisa ditulis. Cara Cek: Buat folder di File Manager lalu hapus." }
             ],
             "Kernel": [
-                { q: "Deep Sleep State", en_d: "Idle battery conservation.", id_d: "Penghematan baterai saat idle.", en_s: "Check 'adb shell cat /sys/kernel/debug/wakeup_sources'.", id_s: "Cek 'adb shell cat /sys/kernel/debug/wakeup_sources'." },
-                { q: "CPU Frequency", en_d: "Scaling and governor check.", id_d: "Cek scaling dan governor.", en_s: "Check 'adb shell cat /proc/cpuinfo'.", id_s: "Cek 'adb shell cat /proc/cpuinfo'." },
-                { q: "GPU Performance", en_d: "Rendering smoothness.", id_d: "Kelancaran render GPU.", en_s: "Check dmesg for 'kgsl' or 'mali' errors.", id_s: "Cek dmesg untuk error 'kgsl' atau 'mali'." },
-                { q: "Thermal Control", en_d: "Throttling under load.", id_d: "Throttling saat beban berat.", en_s: "Check dmesg | grep 'thermal'.", id_s: "Cek dmesg | grep 'thermal'." },
-                { q: "I/O Scheduler", en_d: "Read/Write efficiency.", id_d: "Efisiensi baca/tulis.", en_s: "Check 'cat /sys/block/mmcblk0/queue/scheduler'.", id_s: "Cek 'cat /sys/block/mmcblk0/queue/scheduler'." },
-                { q: "WireGuard Support", en_d: "Kernel-side VPN speed.", id_d: "Kecepatan VPN sisi kernel.", en_s: "Check 'lsmod | grep wireguard'.", id_s: "Cek 'lsmod | grep wireguard'." },
-                { q: "Charging Current", en_d: "mA stability during charge.", id_d: "Stabilitas mA saat cas.", en_s: "Check 'adb shell dumpsys battery'.", id_s: "Cek 'adb shell dumpsys battery'." },
-                { q: "KSM Efficiency", en_d: "Memory merging performance.", id_d: "Performa penggabungan memori.", en_s: "Check '/sys/kernel/mm/ksm/pages_shared'.", id_s: "Cek '/sys/kernel/mm/ksm/pages_shared'." },
-                { q: "Touch Latency", en_d: "Input responsiveness.", id_d: "Responsivitas input.", en_s: "Check dmesg for touch driver logs.", id_s: "Cek dmesg untuk log driver sentuh." },
-                { q: "Haptic Feedback", en_d: "Vibrator motor control.", id_d: "Kontrol motor getar.", en_s: "Check dmesg | grep 'vibrator'.", id_s: "Cek dmesg | grep 'vibrator'." },
-                { q: "F2FS Performance", en_d: "Filesystem R/W speed.", id_d: "Kecepatan R/W sistem file.", en_s: "Check 'mount | grep f2fs'.", id_s: "Cek 'mount | grep f2fs'." },
-                { q: "ZRAM Compression", en_d: "Efficiency of virtual RAM.", id_d: "Efisiensi RAM virtual.", en_s: "Check 'cat /proc/swaps'.", id_s: "Cek 'cat /proc/swaps'." },
-                { q: "Idle Power Drain", en_d: "AOD on/off drain rate.", id_d: "Konsumsi daya saat idle.", en_s: "Use 'BetterBatteryStats' log.", id_s: "Gunakan log 'BetterBatteryStats'." },
-                { q: "Network Speed", en_d: "TCP congestion control.", id_d: "Kontrol kongesti TCP.", en_s: "Check 'sysctl net.ipv4.tcp_congestion_control'.", id_s: "Cek 'sysctl net.ipv4.tcp_congestion_control'." },
-                { q: "Core Stability", en_d: "Random reboots or hangs.", id_d: "Reboot acak atau hang.", en_s: "Pull '/sys/fs/pstore/console-ramoops'.", id_s: "Ambil '/sys/fs/pstore/console-ramoops'." }
+                { q: "Deep Sleep", en_d: "CPU sleeps to save power.", id_d: "CPU tidur untuk hemat daya.", en_s: "Working: Active. Check: Use 'CPU-Z' to see clock frequencies.", id_s: "Working: Aktif. Cara Cek: Gunakan 'CPU-Z' untuk lihat frekuensi CPU." },
+                { q: "Charging mA", en_d: "Stable current during charging.", id_d: "Arus stabil saat mengecas.", en_s: "Working: >2000mA. Check: Use 'Ampere' app while charging.", id_s: "Working: >2000mA. Cara Cek: Gunakan aplikasi 'Ampere' saat cas." },
+                { q: "Thermal Throttling", en_d: "Phone doesn't overheat instantly.", id_d: "HP tidak langsung panas berlebih.", en_s: "Working: Stable. Check: Run 'CPU Throttling Test' for 5 mins.", id_s: "Working: Stabil. Cara Cek: Jalankan 'CPU Throttling Test' selama 5 menit." },
+                { q: "Multi-Touch", en_d: "Detects all fingers correctly.", id_d: "Deteksi semua jari dengan benar.", en_s: "Working: 10 fingers. Check: Use 'MultiTouch Tester' app.", id_s: "Working: 10 jari. Cara Cek: Gunakan aplikasi 'MultiTouch Tester'." },
+                { q: "WireGuard Support", en_d: "VPN protocol side kernel.", id_d: "Protokol VPN sisi kernel.", en_s: "Working: Yes. Check: Open WireGuard app and try connecting.", id_s: "Working: Ya. Cara Cek: Buka aplikasi WireGuard dan coba konek." },
+                { q: "ZRAM Status", en_d: "Virtual RAM working properly.", id_d: "RAM Virtual jalan dengan benar.", en_s: "Working: Active. Check: Check 'Memory' in Dev Options.", id_s: "Working: Aktif. Cara Cek: Cek 'Memory' di Opsi Developer." },
+                { q: "CPU Governors", en_d: "Clock speed changes with load.", id_d: "Clock speed berubah sesuai beban.", en_s: "Working: Scaling. Check: See CPU-Z frequencies while opening apps.", id_s: "Working: Scaling. Cara Cek: Lihat frekuensi CPU-Z saat buka aplikasi." },
+                { q: "Display Calibration", en_d: "Natural colors, no tint.", id_d: "Warna natural, tidak menguning.", en_s: "Working: Clean. Check: View a white image at max brightness.", id_s: "Working: Bersih. Cara Cek: Lihat gambar putih di kecerahan penuh." },
+                { q: "Audio Gain", en_d: "Balanced volume output.", id_d: "Output volume seimbang.", en_s: "Working: Normal. Check: Play music at max volume, listen for distortion.", id_s: "Working: Normal. Cara Cek: Putar musik volume pol, dengar distorsi." },
+                { q: "Input Latency", en_d: "Low delay when tapping.", id_d: "Delay rendah saat menyentuh.", en_s: "Working: Snappy. Check: Type fast and see if letters follow.", id_s: "Working: Cepat. Cara Cek: Ketik cepat dan lihat apakah huruf mengikuti." },
+                { q: "USB OTG", en_d: "Flash drive detection.", id_d: "Deteksi flashdisk.", en_s: "Working: Mounted. Check: Plug flashdrive via OTG adapter.", id_s: "Working: Muncul. Cara Cek: Colok flashdisk lewat kabel OTG." },
+                { q: "Wi-Fi 5GHz", en_d: "High speed network support.", id_d: "Dukungan jaringan speed tinggi.", en_s: "Working: Connected. Check: Connect to 5GHz Wi-Fi router.", id_s: "Working: Konek. Cara Cek: Hubungkan ke Wi-Fi 5GHz." },
+                { q: "Underclock/Overclock", en_d: "Stability at custom clocks.", id_d: "Stabilitas di clock kustom.", en_s: "Working: No reboot. Check: Apply custom freq in Kernel app.", id_s: "Working: Tidak reboot. Cara Cek: Terapkan freq kustom di app Kernel." },
+                { q: "Double Tap to Wake", en_d: "Screen turns on by tapping twice.", id_d: "Layar nyala dengan ketuk 2x.", en_s: "Working: Responsive. Check: Enable in Settings and test on lockscreen.", id_s: "Working: Responsif. Cara Cek: Aktifkan di Setelan dan tes." },
+                { q: "Core Online Status", en_d: "All CPU cores working.", id_d: "Semua core CPU jalan.", en_s: "Working: 8 Cores. Check: Check CPU-Z 'Device' tab.", id_s: "Working: 8 Core. Cara Cek: Lihat tab 'Device' di CPU-Z." }
             ],
             "Recovery": [
-                { q: "Data Decryption", en_d: "Internal storage access.", id_d: "Akses penyimpanan internal.", en_s: "Check 'recovery.log' for mount errors.", id_s: "Cek 'recovery.log' untuk error mount." },
-                { q: "Mount Partitions", en_d: "System/Vendor accessibility.", id_d: "Aksesibilitas System/Vendor.", en_s: "Try mounting manually in UI.", id_s: "Coba mount manual di UI." },
-                { q: "ADB Sideload", en_d: "Zip flashing via PC.", id_d: "Flashing zip via PC.", en_s: "Check 'adb devices' in recovery.", id_s: "Cek 'adb devices' di recovery." },
-                { q: "Storage Detection", en_d: "MicroSD/OTG recognition.", id_d: "Deteksi MicroSD/OTG.", en_s: "Check 'ls /external_sd'.", id_s: "Cek 'ls /external_sd'." },
-                { q: "Backup Integrity", en_d: "Partition imaging.", id_d: "Pembuatan image partisi.", en_s: "Verify MD5/SHA1 after backup.", id_s: "Verifikasi MD5/SHA1 setelah backup." },
-                { q: "FastbootD Mode", en_d: "Dynamic partition access.", id_d: "Akses partisi dinamis.", en_s: "Run 'fastboot getvar is-userspace'.", id_s: "Jalankan 'fastboot getvar is-userspace'." },
-                { q: "Touch Function", en_d: "Recovery UI control.", id_d: "Kontrol UI recovery.", en_s: "Check dmesg for input device.", id_s: "Cek dmesg untuk perangkat input." },
-                { q: "Flash Logic", en_d: "Installation success rate.", id_d: "Tingkat keberhasilan instalasi.", en_s: "Check error codes in recovery.log.", id_s: "Cek kode error di recovery.log." },
-                { q: "Battery Accuracy", en_d: "Percentage in recovery.", id_d: "Persentase di recovery.", en_s: "Compare with system battery log.", id_s: "Bandingkan dengan log baterai sistem." },
-                { q: "Screen Control", en_d: "Timeout and brightness.", id_d: "Timeout dan kecerahan.", en_s: "Check '/sys/class/backlight'.", id_s: "Cek '/sys/class/backlight'." },
-                { q: "Partition Resize", en_d: "Resizing logical blocks.", id_d: "Mengubah ukuran blok logis.", en_s: "Check 'recovery.log' for resize2fs.", id_s: "Cek 'recovery.log' untuk resize2fs." },
-                { q: "Log Export", en_d: "Saving logs to SDCard.", id_d: "Simpan log ke SDCard.", en_s: "Check 'Copy Log to SD' function.", id_s: "Cek fungsi 'Copy Log to SD'." },
-                { q: "Key Mapping", en_d: "Volume/Power button use.", id_d: "Penggunaan tombol Vol/Power.", en_s: "Check 'recovery.log' for key events.", id_s: "Cek 'recovery.log' untuk event tombol." },
-                { q: "Time Zone", en_d: "Correct log timestamps.", id_d: "Timestamp log yang benar.", en_s: "Check 'date' command in terminal.", id_s: "Cek perintah 'date' di terminal." },
-                { q: "Vibration Hub", en_d: "Tactile UI feedback.", id_d: "Umpan balik taktil UI.", en_s: "Check 'vibrator' logs in recovery.", id_s: "Cek log 'vibrator' di recovery." }
+                { q: "Data Decryption", en_d: "Can see folders in /sdcard.", id_d: "Bisa lihat folder di /sdcard.", en_s: "Working: Names ok. Check: Open 'Install' menu, see file names.", id_s: "Working: Nama ok. Cara Cek: Buka menu 'Install', lihat nama file." },
+                { q: "ADB Sideload", en_d: "PC detects phone in sideload.", id_d: "PC deteksi HP di sideload.", en_s: "Working: Ready. Check: Enter Sideload mode and type 'adb devices'.", id_s: "Working: Siap. Cara Cek: Masuk mode Sideload dan ketik 'adb devices'." },
+                { q: "MTP Support", en_d: "Transfer files from PC.", id_d: "Transfer file dari PC.", en_s: "Working: Visible. Check: Plug USB to PC, check Internal Storage.", id_s: "Working: Terlihat. Cara Cek: Colok USB ke PC, cek Internal Storage." },
+                { q: "Touch Sensitivity", en_d: "Touch works in all areas.", id_d: "Sentuhan jalan di semua sisi.", en_s: "Working: Fluid. Check: Swipe up/down and click menus.", id_s: "Working: Lancar. Cara Cek: Swipe atas/bawah dan klik menu." },
+                { q: "MicroSD/OTG Mount", en_d: "Read external media.", id_d: "Baca media eksternal.", en_s: "Working: Mounted. Check: Change storage to SDCard/OTG.", id_s: "Working: Terbaca. Cara Cek: Ganti storage ke SDCard/OTG." },
+                { q: "Backup/Restore", en_d: "Save system image.", id_d: "Simpan image sistem.", en_s: "Working: Success. Check: Backup Boot partition to internal.", id_s: "Working: Berhasil. Cara Cek: Backup partisi Boot ke internal." },
+                { q: "Format Data", en_d: "Wiping data partitions.", id_d: "Menghapus partisi data.", en_s: "Working: Done. Check: Try 'Format Data (Yes)'.", id_s: "Working: Selesai. Cara Cek: Coba 'Format Data (Yes)'." },
+                { q: "FastbootD", en_d: "Enter sub-fastboot mode.", id_d: "Masuk mode sub-fastboot.", en_s: "Working: Purple UI. Check: Reboot to Fastboot from menu.", id_s: "Working: UI Ungu. Cara Cek: Reboot ke Fastboot dari menu." },
+                { q: "Flash Zip", en_d: "Install zip packages.", id_d: "Instal paket zip.", en_s: "Working: No error. Check: Try flashing a small Magisk or font zip.", id_s: "Working: Tidak error. Cara Cek: Coba flash zip Magisk atau font." },
+                { q: "Partition Mount", en_d: "Mounting System/Vendor.", id_d: "Mount System/Vendor.", en_s: "Working: Checked. Check: Go to Mount menu and tick System.", id_s: "Working: Tercentang. Cara Cek: Buka menu Mount dan centang System." },
+                { q: "Brightness Control", en_d: "Adjust screen light.", id_d: "Atur cahaya layar.", en_s: "Working: Changes. Check: Adjust slider in Settings menu.", id_s: "Working: Berubah. Cara Cek: Atur slider di menu Settings." },
+                { q: "Language Settings", en_d: "Switch UI language.", id_d: "Ganti bahasa UI.", en_s: "Working: Applied. Check: Change to Chinese/English.", id_s: "Working: Terganti. Cara Cek: Ganti ke Chinese/English." },
+                { q: "Hardware Keys", en_d: "Vol/Power buttons work.", id_d: "Tombol Vol/Power jalan.", en_s: "Working: Normal. Check: Use buttons to navigate or select.", id_s: "Working: Normal. Cara Cek: Pakai tombol untuk navigasi." },
+                { q: "Reboot Logic", en_d: "Restart to System/Recovery.", id_d: "Restart ke System/Recovery.", en_s: "Working: Boots. Check: Tap Reboot > System.", id_s: "Working: Booting. Cara Cek: Tekan Reboot > System." },
+                { q: "Log Export", en_d: "Copy logs to SDcard.", id_d: "Copy log ke SDcard.", en_s: "Working: Copied. Check: Use 'Advanced > Copy Log'.", id_s: "Working: Tersalin. Cara Cek: Pakai menu 'Advanced > Copy Log'." }
             ]
         };
 
@@ -237,21 +255,22 @@
         let testData = {};
 
         function toggleLang() {
-            currentLang = currentLang === 'en' ? 'id' : 'en';
-            const dict = i18n[currentLang];
-            document.getElementById('langBtn').innerText = dict.lang;
-            document.getElementById('lbl-tester').innerText = dict.tester;
-            document.getElementById('lbl-project').innerText = dict.project;
-            document.getElementById('lbl-device').innerText = dict.device;
-            document.getElementById('lbl-cat').innerText = dict.cat;
-            document.getElementById('btn-begin').innerText = dict.begin;
-            document.getElementById('lbl-guide-title').innerText = dict.guide;
-            document.getElementById('btn-back').innerText = dict.back;
-            document.getElementById('lbl-export-title').innerText = dict.export;
-            document.getElementById('lbl-attach').innerText = dict.attach;
-            document.getElementById('btn-zip').innerText = dict.download;
-            document.getElementById('lbl-log-title').innerText = dict.logTitle;
-            document.getElementById('photoLabel').innerText = dict.photo;
+            currentLang = (currentLang === 'en') ? 'id' : 'en';
+            const lang = i18n[currentLang];
+            document.getElementById('langBtn').innerText = lang.btn;
+            document.getElementById('lbl-tester').innerText = lang.tester;
+            document.getElementById('lbl-project').innerText = lang.project;
+            document.getElementById('lbl-device').innerText = lang.device;
+            document.getElementById('lbl-cat').innerText = lang.cat;
+            document.getElementById('btn-begin').innerText = lang.begin;
+            document.getElementById('lbl-howcheck').innerText = lang.how;
+            document.getElementById('btn-back').innerText = lang.back;
+            document.getElementById('lbl-export').innerText = lang.export;
+            document.getElementById('lbl-attach-log').innerText = lang.attach;
+            document.getElementById('btn-download').innerText = lang.download;
+            document.getElementById('btn-reset').innerText = lang.reset;
+            document.getElementById('lbl-logguide').innerText = lang.guide;
+            document.getElementById('photoLabel').innerText = lang.photo;
             if(questions.length > 0) updatePage();
         }
 
@@ -259,10 +278,8 @@
             const rom = document.getElementById('romName').value;
             const tg = document.getElementById('tgUser').value;
             if(!rom || !tg) return alert("Required fields missing!");
-            
             const type = document.getElementById('testType').value;
-            questions = [...testSets[type === "ROM" ? "ROM_Generic" : type]];
-
+            questions = [...testSets[type]];
             questions.forEach(q => { if(!testData[q.q]) testData[q.q] = { status: "Not Tested", comment: "", photo: null }; });
             document.getElementById('step-setup').classList.add('hidden');
             document.getElementById('step-testing').classList.remove('hidden');
@@ -277,19 +294,14 @@
             document.getElementById('pageIndicator').innerText = `TASK ${String(currentIndex + 1).padStart(2,'0')}/${questions.length}`;
             document.getElementById('currentComment').value = testData[q.q].comment || "";
             updateStatusButtons(testData[q.q].status);
-            
-            if(testData[q.q].photo) {
-                document.getElementById('photoPreviewContainer').classList.remove('hidden');
-            } else {
-                document.getElementById('photoPreviewContainer').classList.add('hidden');
-            }
+            if(testData[q.q].photo) document.getElementById('photoPreviewContainer').classList.remove('hidden');
+            else document.getElementById('photoPreviewContainer').classList.add('hidden');
             document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? i18n[currentLang].finish : i18n[currentLang].next;
             document.getElementById('progressBar').style.width = ((currentIndex + 1) / questions.length) * 100 + '%';
         }
 
         function setStatus(status) { testData[questions[currentIndex].q].status = status; updateStatusButtons(status); saveCurrentData(); }
         function saveCurrentData() { testData[questions[currentIndex].q].comment = document.getElementById('currentComment').value; }
-        
         function updateStatusButtons(status) {
             document.querySelectorAll('.status-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -304,6 +316,8 @@
             }
         }
 
+        function clearPhoto() { testData[questions[currentIndex].q].photo = null; updatePage(); }
+        function toggleLogModal() { document.getElementById('logModal').classList.toggle('hidden'); }
         function prevQuestion() {
             if(currentIndex > 0) { currentIndex--; updatePage(); } 
             else { document.getElementById('step-testing').classList.add('hidden'); document.getElementById('step-setup').classList.remove('hidden'); }
@@ -316,18 +330,16 @@
                 document.getElementById('step-testing').classList.add('hidden'); 
                 document.getElementById('step-finish').classList.remove('hidden');
                 document.getElementById('sumTester').innerText = document.getElementById('tgUser').value;
+                document.getElementById('sumType').innerText = document.getElementById('testType').value;
                 document.getElementById('sumROM').innerText = document.getElementById('romName').value;
             }
         }
-
-        function toggleLogModal() { document.getElementById('logModal').classList.toggle('hidden'); }
 
         async function generateZip() {
             const zip = new JSZip();
             const now = new Date();
             const rom = document.getElementById('romName').value.replace(/\s+/g, '_');
-            let report = `=== TEST REPORT ===\nPROJECT: ${rom}\nTESTER: ${document.getElementById('tgUser').value}\nDATE: ${now.toLocaleString()}\n\n`;
-
+            let report = `=== ANDROID TESTING HUB V1.0 REPORT ===\nPROJECT: ${rom}\nTESTER: ${document.getElementById('tgUser').value}\nDATE: ${now.toLocaleString()}\n\n`;
             const imgFolder = zip.folder("evidence");
             for (const qObj of questions) {
                 const item = testData[qObj.q];
@@ -339,18 +351,18 @@
                 }
                 report += `------------------------------------\n`;
             }
-
             zip.file("SUMMARY_V1.txt", report);
             const mainLog = document.getElementById('mainLog').files[0];
             if(mainLog) zip.file(mainLog.name, mainLog);
-
             const blob = await zip.generateAsync({type:"blob"});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `${rom}-Report-${now.getTime()}.zip`;
+            link.download = `${rom}-Report.zip`;
             link.click();
             confetti({ particleCount: 200 });
         }
+
+        function resetData() { if(confirm("Discard all progress and reset?")) location.reload(); }
     </script>
 </body>
 </html>
