@@ -28,12 +28,12 @@
 
         <div class="p-8 pb-4 text-center">
             <h1 class="text-2xl font-extrabold uppercase tracking-tighter gradient-text">Android Testing Hub</h1>
-            <p class="text-gray-400 text-[10px] font-bold tracking-widest uppercase">V1.0 • Stable Build</p>
+            <p class="text-gray-400 text-[10px] font-bold tracking-widest uppercase">V1.0 • Stable</p>
         </div>
 
         <div id="step-setup" class="p-8 pt-4 space-y-6">
             <div class="space-y-4">
-                <input type="text" id="tgUser" placeholder="Telegram @username" class="w-full bg-gray-900/50 p-3 rounded-xl border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                <input type="text" id="tgUser" placeholder="Tester @username" class="w-full bg-gray-900/50 p-3 rounded-xl border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition">
                 <input type="text" id="romName" placeholder="Project Name (e.g. LineageOS)" class="w-full bg-gray-900/50 p-3 rounded-xl border border-gray-700 outline-none focus:ring-2 focus:ring-blue-500 transition">
                 <div class="grid grid-cols-2 gap-4 text-sm">
                     <select id="deviceSelect" class="bg-gray-900/50 p-3 rounded-xl border border-gray-700 outline-none">
@@ -41,33 +41,33 @@
                         <option value="Redmi Note 12 Pro 4G">Redmi Note 12 Pro 4G (sweet2)</option>
                     </select>
                     <select id="testType" class="bg-gray-900/50 p-3 rounded-xl border border-gray-700 outline-none">
-                        <option value="ROM">Custom ROM</option>
-                        <option value="Kernel">Kernel Only</option>
-                        <option value="Recovery">Custom Recovery</option>
+                        <option value="ROM">Testing ROM</option>
+                        <option value="Kernel">Testing Kernel</option>
+                        <option value="Recovery">Testing Recovery</option>
                     </select>
                 </div>
             </div>
-            <button onclick="startTesting()" class="w-full bg-blue-600 p-4 rounded-2xl font-bold hover:scale-[1.02] transition uppercase shadow-lg shadow-blue-500/20">Initialize Hub</button>
+            <button onclick="startTesting()" class="w-full bg-blue-600 p-4 rounded-2xl font-bold hover:scale-[1.02] transition uppercase shadow-lg shadow-blue-500/20">Start Testing</button>
         </div>
 
         <div id="step-testing" class="hidden p-8 pt-4">
             <div class="flex justify-between items-center mb-4">
-                <span id="pageIndicator" class="mono text-[10px] bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full border border-blue-500/20 italic">Task 1/10</span>
-                <button onclick="toggleLogModal()" class="text-[10px] bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full border border-amber-500/20 font-bold">
-                    <i class="fa-solid fa-terminal mr-1"></i> LOG GUIDE
+                <span id="pageIndicator" class="mono text-[10px] bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full border border-blue-500/20 italic">TASK 1</span>
+                <button onclick="toggleLogModal()" class="text-[10px] bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full border border-amber-500/20 font-bold uppercase">
+                    <i class="fa-solid fa-terminal mr-1"></i> Log Help
                 </button>
             </div>
 
-            <h2 id="currentQuestion" class="text-3xl font-bold mb-6 tracking-tight text-white leading-tight h-20 flex items-center">Feature</h2>
+            <h2 id="currentQuestion" class="text-2xl font-bold mb-6 tracking-tight text-white leading-tight h-20 flex items-center border-l-4 border-blue-500 pl-4">Feature Name</h2>
             
             <div class="space-y-5">
                 <div class="grid grid-cols-3 gap-2">
                     <button onclick="setStatus('Working')" id="btn-Working" class="status-btn p-3 rounded-xl border border-gray-700 bg-gray-900/30 text-xs transition">Working</button>
-                    <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn p-3 rounded-xl border border-gray-700 bg-gray-900/30 text-xs transition">Bug</button>
+                    <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn p-3 rounded-xl border border-gray-700 bg-gray-900/30 text-xs transition text-red-400">Bug</button>
                     <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn p-3 rounded-xl border border-gray-700 bg-gray-900/30 text-xs transition active">Skip</button>
                 </div>
 
-                <textarea id="currentComment" oninput="saveCurrentData()" placeholder="Add notes/logs here..." class="w-full bg-gray-900/50 p-4 rounded-xl border border-gray-700 h-28 outline-none focus:ring-1 focus:ring-blue-500 text-sm"></textarea>
+                <textarea id="currentComment" oninput="saveCurrentData()" placeholder="Observation notes..." class="w-full bg-gray-900/50 p-4 rounded-xl border border-gray-700 h-24 outline-none focus:ring-1 focus:ring-blue-500 text-sm"></textarea>
 
                 <div class="space-y-2">
                     <input type="file" id="currentPhoto" accept="image/*" onchange="handlePhotoUpload(this)" class="hidden">
@@ -89,8 +89,8 @@
 
         <div id="step-finish" class="hidden p-8 space-y-6">
             <div class="text-center">
-                <h2 class="text-2xl font-bold uppercase tracking-tighter">Report Export Hub</h2>
-                <p class="text-xs text-gray-400">All data compiled into Android Testing Hub V1.0 format</p>
+                <h2 class="text-2xl font-bold uppercase tracking-tighter">Export</h2>
+                <p class="text-xs text-gray-400 italic">V1.0 Summary Generation</p>
             </div>
 
             <div class="bg-gray-900/40 border border-gray-700 rounded-2xl p-5 space-y-3 mono text-[11px]">
@@ -99,7 +99,7 @@
                     <span id="sumTester" class="text-blue-400 font-bold"></span>
                 </div>
                 <div class="flex justify-between border-b border-gray-800 pb-2">
-                    <span class="text-gray-500 uppercase">Test Type</span>
+                    <span class="text-gray-500 uppercase">Category</span>
                     <span id="sumType" class="text-amber-400 font-bold"></span>
                 </div>
                 <div class="flex justify-between border-b border-gray-800 pb-2">
@@ -107,13 +107,13 @@
                     <span id="sumROM" class="text-purple-400 font-bold"></span>
                 </div>
                 <div class="flex justify-between border-b border-gray-800 pb-2">
-                    <span class="text-gray-500 uppercase">Timestamp</span>
-                    <span id="sumTime" class="text-gray-300"></span>
+                    <span class="text-gray-500 uppercase">Device</span>
+                    <span id="sumDevice" class="text-emerald-400 font-bold"></span>
                 </div>
             </div>
 
-            <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left">
-                <label class="text-[10px] text-gray-500 uppercase block mb-2 font-bold tracking-widest italic">Attach Final System Log</label>
+            <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
+                <label class="text-[10px] text-gray-500 uppercase block mb-2 font-bold tracking-widest italic font-mono text-center">Final Logcat / Dmesg</label>
                 <input type="file" id="mainLog" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-gray-800 file:text-blue-400 font-bold">
             </div>
 
@@ -124,28 +124,25 @@
 
     <div id="logModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-6">
         <div class="bg-gray-800 max-w-md w-full rounded-3xl border border-gray-700 p-8 space-y-4">
-            <h3 class="text-xl font-bold text-amber-400 uppercase tracking-tighter">Log Capture Guide</h3>
-            <div class="space-y-3 text-[11px] leading-relaxed text-gray-300 mono bg-black p-4 rounded-xl">
-                <p># ROM/App Logs:</p>
+            <h3 class="text-xl font-bold text-amber-400 uppercase tracking-tighter">Log Guide</h3>
+            <div class="space-y-3 text-[11px] leading-relaxed text-gray-300 mono bg-black p-4 rounded-xl border border-gray-700">
+                <p class="text-blue-400 font-bold underline"># Logcat (ROM/Apps)</p>
                 <code>adb logcat -d > logcat.txt</code>
-                <p class="mt-2"># Kernel/Power Logs:</p>
+                <p class="text-blue-400 font-bold underline mt-4"># Dmesg (Kernel/Sensors)</p>
                 <code>adb shell dmesg > dmesg.txt</code>
-                <p class="mt-2"># Recovery Logs:</p>
+                <p class="text-blue-400 font-bold underline mt-4"># Recovery Logs</p>
                 <code>adb pull /tmp/recovery.log</code>
             </div>
-            <button onclick="toggleLogModal()" class="w-full bg-blue-600 p-3 rounded-xl font-bold uppercase text-xs">Close Guide</button>
+            <button onclick="toggleLogModal()" class="w-full bg-gray-700 p-3 rounded-xl font-bold uppercase text-xs">Got it</button>
         </div>
     </div>
 
     <script>
-        const tests = {
-            "ROM": ["RIL (Call/SMS/Data)", "Wi-Fi & Hotspot", "Bluetooth Audio/Pair", "Camera (Photo/Video)", "Audio (Spk/Mic)", "Biometrics", "GPS Locking", "Charging Turbo", "USB OTG/MTP", "Video Playback"],
-            "Kernel": ["Deep Sleep State", "Thermal Throttling", "CPU Frequency Scaling", "Charging Current (mA)", "Touch Responsiveness", "Stability (Random Reboots)", "Memory Management", "Wake Gestures"],
-            "Recovery": ["Data Decryption (MTP)", "Partition Mounting", "ADB Sideload", "Internal Storage Access", "OTG Support", "Backup/Restore", "FastbootD Mode", "Touchscreen Function"]
-        };
-
-        const hardwareTests = {
-            "Redmi Note 12 Pro 4G": ["108MP Sensor", "120Hz Refresh Rate", "Dolby Atmos", "IR Blaster", "Proximity Sensor", "NFC Function"]
+        const testSets = {
+            "ROM_Generic": ["RIL (Call/SMS/Data)", "Wi-Fi & Hotspot", "Bluetooth Audio/Pair", "Camera (Photo/Video)", "Audio (Spk/Mic)", "Biometrics", "GPS Locking", "Charging Speed", "USB OTG/MTP", "Video Playback"],
+            "ROM_Sweet2": ["108MP Camera Mode", "120Hz Refresh Rate", "67W Turbo Charge", "Dolby Atmos Audio", "IR Blaster Function", "NFC & Google Pay"],
+            "Kernel": ["Deep Sleep State", "Thermal Throttling", "CPU Frequency Scaling", "Charging Current (mA)", "Touch Responsiveness", "Kernel Stability", "Memory Management", "Wake Gestures"],
+            "Recovery": ["Data Decryption", "Partition Mounting", "ADB Sideload", "Internal Storage Access", "OTG Support", "Backup/Restore", "FastbootD Mode", "Touchscreen"]
         };
 
         let questions = [];
@@ -154,12 +151,19 @@
 
         function startTesting() {
             if(!document.getElementById('romName').value || !document.getElementById('tgUser').value) return alert("Fill mandatory fields.");
+            
             const dev = document.getElementById('deviceSelect').value;
             const type = document.getElementById('testType').value;
             
-            // Build Question Set
-            questions = [...tests[type]];
-            if(dev === "Redmi Note 12 Pro 4G") questions = [...questions, ...hardwareTests[dev]];
+            // Logic Focus
+            if(type === "ROM") {
+                questions = [...testSets.ROM_Generic];
+                if(dev === "Redmi Note 12 Pro 4G") {
+                    questions = [...questions, ...testSets.ROM_Sweet2];
+                }
+            } else {
+                questions = [...testSets[type]];
+            }
 
             questions.forEach(q => { if(!testData[q]) testData[q] = { status: "Not Tested", comment: "", photo: null }; });
             document.getElementById('step-setup').classList.add('hidden');
@@ -169,6 +173,7 @@
 
         function toggleLogModal() { document.getElementById('logModal').classList.toggle('show'); }
         function setStatus(status) { testData[questions[currentIndex]].status = status; updateStatusButtons(status); saveCurrentData(); }
+        
         function updateStatusButtons(status) {
             document.querySelectorAll('.status-btn').forEach(btn => {
                 btn.classList.remove('active', 'border-blue-500', 'text-blue-400', 'bg-blue-500/10');
@@ -203,7 +208,7 @@
             updateStatusButtons(testData[q].status);
             const container = document.getElementById('photoPreviewContainer');
             if(testData[q].photo) { container.classList.remove('hidden'); } else { container.classList.add('hidden'); }
-            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? "EXPORT" : "NEXT";
+            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? "FINISH" : "NEXT";
             document.getElementById('progressBar').style.width = ((currentIndex + 1) / questions.length) * 100 + '%';
         }
 
@@ -215,11 +220,10 @@
             else { 
                 document.getElementById('step-testing').classList.add('hidden'); 
                 document.getElementById('step-finish').classList.remove('hidden');
-                const now = new Date();
                 document.getElementById('sumTester').innerText = document.getElementById('tgUser').value;
                 document.getElementById('sumType').innerText = document.getElementById('testType').value;
                 document.getElementById('sumROM').innerText = document.getElementById('romName').value;
-                document.getElementById('sumTime').innerText = now.toLocaleString();
+                document.getElementById('sumDevice').innerText = document.getElementById('deviceSelect').value;
             }
         }
 
@@ -230,22 +234,25 @@
 
         async function generateZip() {
             const btn = document.getElementById('downloadBtn');
-            btn.innerHTML = '<i class="fa-solid fa-sync fa-spin"></i> GENERATING V1.0 PACKAGE...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> COMPILING V1.0...';
             btn.disabled = true;
 
             try {
                 const zip = new JSZip();
                 const now = new Date();
                 const tg = document.getElementById('tgUser').value;
-                const rom = document.getElementById('romName').value;
+                const rom = document.getElementById('romName').value.replace(/\s+/g, '_');
                 const type = document.getElementById('testType').value;
-                const zipName = `ATHubV1_${rom.replace(/\s+/g, '_')}_${tg}_${now.getHours()}${now.getMinutes()}.zip`;
+                
+                // ZIP Naming: project_name-testing_type-date-time.zip
+                const dateStr = now.toISOString().split('T')[0];
+                const timeStr = now.getHours().toString().padStart(2,'0') + now.getMinutes().toString().padStart(2,'0');
+                const zipName = `${rom}-${type}-${dateStr}-${timeStr}.zip`;
 
                 let report = `=== ANDROID TESTING HUB V1.0 ===\n`;
                 report += `DATE    : ${now.toLocaleDateString()}\n`;
                 report += `TIME    : ${now.toLocaleTimeString()}\n`;
                 report += `TESTER  : ${tg}\n`;
-                report += `TYPE    : ${type}\n`;
                 report += `PROJECT : ${rom}\n`;
                 report += `DEVICE  : ${document.getElementById('deviceSelect').value}\n`;
                 report += `================================\n\n`;
@@ -255,17 +262,18 @@
                     const item = testData[q];
                     report += `[${item.status.toUpperCase()}] ${q}\nNote: ${item.comment || "-"}\n`;
                     if(item.photo) {
-                        const photoName = `${q.replace(/\s+/g, '_')}.jpg`;
+                        const ext = item.photo.name.split('.').pop();
+                        const photoName = `${q.replace(/\s+/g, '_')}.${ext}`;
                         imgFolder.file(photoName, item.photo);
                         report += `Visual: evidence/${photoName}\n`;
                     }
                     report += `--------------------------------\n`;
                 }
 
-                report += `\nGenerated by Android Testing Hub V1.0`;
+                report += `\nReport generated by Android Testing Hub V1.0`;
                 zip.file("SUMMARY_V1.txt", report);
                 const mainLog = document.getElementById('mainLog').files[0];
-                if(mainLog) zip.file(mainLog.name, mainLog);
+                if(mainLog) zip.file(`logs/${mainLog.name}`, mainLog);
 
                 const blob = await zip.generateAsync({type:"blob"});
                 const link = document.createElement('a');
