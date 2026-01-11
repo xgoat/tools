@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,8 +40,9 @@
 </head>
 <body>
 
-    <div class="fixed bottom-6 right-6 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer z-50 hover:scale-110 transition-transform" onclick="toggleLang()">
-        <i class="fa-solid fa-language text-white"></i>
+    <div class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 rounded-full flex flex-col items-center justify-center shadow-lg cursor-pointer z-50 hover:scale-110 transition-transform border-4 border-white/10" onclick="toggleLang()">
+        <i class="fa-solid fa-language text-white text-lg"></i>
+        <span id="langIndicator" class="text-[8px] font-black text-white uppercase">ID</span>
     </div>
 
     <div class="max-w-xl w-full glass-card rounded-[var(--radius)] overflow-hidden shadow-2xl">
@@ -51,29 +52,29 @@
 
         <div class="p-8 pb-2 text-center">
             <h1 class="text-3xl font-black tracking-tighter text-white uppercase">Testing <span class="text-blue-500">Hub</span></h1>
-            <p class="text-[10px] text-slate-500 font-bold tracking-[0.3em] uppercase mt-1">Professional Android Lab</p>
+            <p class="text-[10px] text-slate-500 font-bold tracking-[0.3em] uppercase mt-1" id="hdr-sub">LABORATORIUM ANDROID PROFESIONAL</p>
         </div>
 
         <div id="step-setup" class="p-8 space-y-5 step-animate">
             <div class="space-y-4">
                 <div>
-                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-tester">Tester Name</label>
+                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-tester">Nama Tester</label>
                     <input type="text" id="tgUser" placeholder="@username" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
                 </div>
                 <div>
-                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-project">Project Name</label>
-                    <input type="text" id="romName" placeholder="e.g. PixelOS" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
+                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-project">Nama Proyek</label>
+                    <input type="text" id="romName" placeholder="Contoh: PixelOS" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-device">Device</label>
+                        <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-device">Perangkat</label>
                         <select id="deviceSelect" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none text-sm text-white appearance-none cursor-pointer">
                             <option value="Redmi Note 12 Pro 4G">Redmi Note 12 Pro 4G</option>
-                            <option value="Generic">Generic Device</option>
+                            <option value="Generic">Perangkat Lain</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-cat">Category</label>
+                        <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-cat">Kategori</label>
                         <select id="testType" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none text-sm text-white appearance-none cursor-pointer">
                             <option value="ROM">ROM</option>
                             <option value="Kernel">Kernel</option>
@@ -82,37 +83,47 @@
                     </div>
                 </div>
             </div>
-            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl transition-all" id="btn-begin">Start Session</button>
+            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl transition-all" id="btn-begin">Mulai Sesi</button>
         </div>
 
         <div id="step-testing" class="hidden p-8 pt-2 step-animate">
             <div class="flex justify-between items-center mb-6">
-                <span id="pageIndicator" class="mono text-[10px] font-bold text-blue-500 bg-blue-500/10 px-3 py-1 rounded-lg">TASK 01/25</span>
-                <button onclick="toggleLogModal()" class="text-[9px] font-bold text-amber-500 uppercase tracking-tighter border-b border-amber-500/20">LOG HELP</button>
+                <span id="pageIndicator" class="mono text-[10px] font-bold text-blue-500 bg-blue-500/10 px-3 py-1 rounded-lg">TUGAS 01/25</span>
+                <button onclick="toggleLogModal()" class="text-[9px] font-bold text-amber-500 uppercase tracking-tighter border-b border-amber-500/20" id="btn-log-help">BANTUAN LOG</button>
             </div>
 
             <div class="mb-6 space-y-4">
-                <h2 id="currentQuestion" class="text-xl font-extrabold text-white leading-tight">Feature Name</h2>
-                <div class="bg-white/5 border border-white/5 p-6 rounded-[2rem] space-y-3">
-                    <p id="guideDesc" class="text-xs text-slate-300 leading-relaxed font-medium"></p>
-                    <div class="pt-3 border-t border-white/10">
-                        <p id="guideStep" class="text-[11px] text-blue-300 font-semibold"></p>
+                <h2 id="currentQuestion" class="text-xl font-extrabold text-white leading-tight italic">Nama Fitur</h2>
+                <div class="bg-white/5 border border-white/10 p-5 rounded-[2rem] space-y-4">
+                    <div>
+                        <span class="text-[8px] font-black text-blue-400 uppercase tracking-widest block mb-1" id="lbl-desc-title">Deskripsi & Cara Cek:</span>
+                        <p id="guideDesc" class="text-[11px] text-slate-300 leading-relaxed font-medium"></p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 pt-3 border-t border-white/10">
+                        <div>
+                            <span class="text-[8px] font-black text-emerald-400 uppercase tracking-widest block mb-1" id="lbl-work-if">Berfungsi Jika:</span>
+                            <p id="guideWorking" class="text-[10px] text-slate-400 leading-tight"></p>
+                        </div>
+                        <div>
+                            <span class="text-[8px] font-black text-red-400 uppercase tracking-widest block mb-1" id="lbl-bug-if">Bug Jika:</span>
+                            <p id="guideBug" class="text-[10px] text-slate-400 leading-tight"></p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-4">
                 <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setStatus('Working')" id="btn-Working" class="status-btn btn-working p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Working</button>
+                    <button onclick="setStatus('Working')" id="btn-Working" class="status-btn btn-working p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Normal</button>
                     <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Bug</button>
-                    <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Skip</button>
+                    <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Lewati</button>
                 </div>
-                <textarea id="currentComment" oninput="saveCurrentData()" class="w-full p-4 rounded-2xl h-24 bg-black/40 border border-white/10 outline-none text-sm text-white resize-none custom-scrollbar" placeholder="Notes..."></textarea>
+                <textarea id="currentComment" oninput="saveCurrentData()" class="w-full p-4 rounded-2xl h-24 bg-black/40 border border-white/10 outline-none text-sm text-white resize-none custom-scrollbar" placeholder="Catatan..."></textarea>
                 
                 <div class="flex items-center gap-3">
                     <input type="file" id="currentPhoto" accept="image/*" onchange="handlePhotoUpload(this)" class="hidden">
                     <label for="currentPhoto" class="flex-1 flex items-center justify-center p-3 rounded-xl border border-dashed border-white/10 hover:border-blue-500 transition-colors cursor-pointer">
-                        <span class="text-[9px] font-bold uppercase text-slate-500" id="lbl-photo">Add Screenshot</span>
+                        <span class="text-[9px] font-bold uppercase text-slate-500" id="lbl-photo">Tambah Screenshot</span>
                     </label>
                     <div id="photoPreviewContainer" class="hidden relative">
                         <img id="imagePreview" src="#" class="w-12 h-12 object-cover rounded-lg border border-white/10">
@@ -122,161 +133,312 @@
             </div>
 
             <div class="flex gap-3 mt-8">
-                <button onclick="prevQuestion()" class="px-5 py-4 rounded-xl font-bold text-[9px] text-slate-500 uppercase" id="btn-back">Back</button>
-                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-4 rounded-xl font-black text-[10px] uppercase tracking-widest">Next Task</button>
+                <button onclick="prevQuestion()" class="px-5 py-4 rounded-xl font-bold text-[9px] text-slate-500 uppercase" id="btn-back">Kembali</button>
+                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-4 rounded-xl font-black text-[10px] uppercase tracking-widest">Tugas Berikutnya</button>
             </div>
         </div>
 
         <div id="step-finish" class="hidden p-8 step-animate">
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/20">
-                    <i class="fa-solid fa-file-export text-blue-500 text-xl"></i>
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black uppercase tracking-tighter" id="lbl-export-title">Ekspor Laporan</h2>
+                <p class="text-[9px] text-slate-500 font-bold tracking-[0.2em] uppercase" id="lbl-export-sub">Ringkasan Sesi</p>
+            </div>
+
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-5 mb-6 space-y-3">
+                <div class="flex justify-between items-center text-[10px]">
+                    <span class="font-black text-slate-500 uppercase tracking-widest" id="lbl-res-proj">Proyek:</span>
+                    <span id="expProject" class="font-bold text-blue-400"></span>
                 </div>
-                <h2 class="text-xl font-black uppercase">Session Finish</h2>
-                <p id="sumTesterDisplay" class="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-bold"></p>
+                <div class="flex justify-between items-center text-[10px]">
+                    <span class="font-black text-slate-500 uppercase tracking-widest" id="lbl-res-cat">Kategori:</span>
+                    <span id="expCategory" class="font-bold text-amber-400"></span>
+                </div>
+                <div class="flex justify-between items-center text-[10px]">
+                    <span class="font-black text-slate-500 uppercase tracking-widest" id="lbl-res-test">Tester:</span>
+                    <span id="expTester" class="font-bold text-white"></span>
+                </div>
             </div>
 
             <div class="mb-6">
                 <button onclick="togglePreview()" class="w-full p-4 rounded-2xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Review All Tasks</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400" id="lbl-preview">Pratinjau Hasil</span>
                     <i id="previewIcon" class="fa-solid fa-chevron-down text-[10px]"></i>
                 </button>
                 <div id="previewContent" class="hidden mt-2 max-h-56 overflow-y-auto p-4 bg-black/40 rounded-2xl border border-white/5 mono text-[9px] custom-scrollbar space-y-2"></div>
             </div>
 
-            <div class="p-6 bg-blue-600/5 rounded-[2rem] border border-blue-500/10 mb-8">
-                <label class="text-[9px] font-black text-blue-400 uppercase block mb-3 text-center tracking-widest">Attach Main Log (Optional)</label>
+            <div class="p-6 bg-blue-600/5 rounded-[2rem] border border-blue-500/10 mb-8 text-center">
+                <label class="text-[9px] font-black text-blue-400 uppercase block mb-3 tracking-widest" id="lbl-log-attach">Lampirkan Log (Opsional)</label>
                 <input type="file" id="mainLog" onchange="updateFileName(this)" class="hidden">
                 <label for="mainLog" class="cursor-pointer flex items-center justify-between p-3 bg-black/40 rounded-xl border border-white/5">
-                    <span id="fileNameDisplay" class="text-[10px] text-slate-500 truncate mr-2">No file chosen...</span>
-                    <div class="bg-blue-600 px-3 py-1.5 rounded-lg text-[8px] font-black uppercase text-white shadow-lg">Browse</div>
+                    <span id="fileNameDisplay" class="text-[10px] text-slate-500 truncate mr-2 italic">Belum ada file...</span>
+                    <div class="bg-blue-600 px-3 py-1.5 rounded-lg text-[8px] font-black uppercase text-white shadow-lg" id="btn-browse">Pilih</div>
                 </label>
             </div>
 
-            <button onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl transition-all">Download ZIP Report</button>
-            <button onclick="location.reload()" class="w-full mt-4 text-[9px] font-bold text-slate-600 hover:text-red-400 transition-colors uppercase tracking-widest">New Session</button>
+            <button onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl transition-all" id="btn-download">Unduh Paket ZIP</button>
+            <button onclick="location.reload()" class="w-full mt-4 text-[9px] font-bold text-slate-600 hover:text-red-400 transition-colors uppercase tracking-widest" id="btn-reset">Batal & Reset</button>
         </div>
     </div>
 
     <div id="logModal" class="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-6 hidden">
         <div class="bg-slate-900 max-w-lg w-full rounded-[2.5rem] border border-white/10 p-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
-            <h3 class="text-2xl font-black text-amber-500 uppercase mb-4 tracking-tighter">Comprehensive Log Guide</h3>
-            
-            <div class="space-y-6 text-sm">
-                <div class="space-y-2">
-                    <h4 class="text-blue-400 font-bold text-[11px] uppercase tracking-widest">1. Logcat (Untuk Sistem/App Crash)</h4>
-                    <p class="text-[11px] text-slate-400">Gunakan saat aplikasi tertutup sendiri (FC) atau SystemUI terhenti.</p>
-                    <code class="block bg-black p-3 rounded-lg text-emerald-400 text-[10px] mono">adb logcat -d > logcat.txt</code>
+            <h3 class="text-2xl font-black text-amber-500 uppercase mb-4 tracking-tighter" id="log-title">Panduan Log</h3>
+            <div class="space-y-6 text-sm" id="log-body">
                 </div>
-
-                <div class="space-y-2">
-                    <h4 class="text-blue-400 font-bold text-[11px] uppercase tracking-widest">2. Dmesg (Untuk Kernel/Hardware)</h4>
-                    <p class="text-[11px] text-slate-400">Gunakan jika fitur hardware (Senter, Wi-Fi, Audio) tidak berfungsi.</p>
-                    <code class="block bg-black p-3 rounded-lg text-amber-400 text-[10px] mono">adb shell dmesg > dmesg.txt</code>
-                </div>
-
-                <div class="space-y-2">
-                    <h4 class="text-blue-400 font-bold text-[11px] uppercase tracking-widest">3. Pstore (Untuk Random Reboot)</h4>
-                    <p class="text-[11px] text-slate-400">Jika HP tiba-tiba mati/restart ke logo, ambil log ini segera setelah nyala.</p>
-                    <code class="block bg-black p-3 rounded-lg text-red-400 text-[10px] mono">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
-                </div>
-
-                <div class="bg-white/5 p-4 rounded-xl border border-blue-500/20">
-                    <h4 class="text-white font-bold text-[10px] uppercase mb-1">Tips Mengambil Log:</h4>
-                    <ul class="text-[10px] text-slate-400 space-y-1 list-disc ml-4">
-                        <li>Aktifkan USB Debugging di Developer Options.</li>
-                        <li>Hubungkan HP ke PC/Laptop dengan kabel data berkualitas.</li>
-                        <li>Pastikan adb sudah terinstall di PC anda.</li>
-                        <li>Lakukan 'Trigger' (buat bugnya muncul dulu) baru ketik perintah log di atas.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <button onclick="toggleLogModal()" class="w-full mt-8 bg-white/10 p-4 rounded-xl font-black uppercase text-[10px] hover:bg-white/20 transition-all">Close Guide</button>
+            <button onclick="toggleLogModal()" class="w-full mt-8 bg-white/10 p-4 rounded-xl font-black uppercase text-[10px] hover:bg-white/20 transition-all" id="log-close">Tutup</button>
         </div>
     </div>
 
     <script>
-        let currentLang = 'en';
+        let currentLang = 'id';
         let questions = [], currentIndex = 0, testData = {};
 
-        const i18n = {
-            en: { tester: "Tester Name", project: "Project Name", begin: "Start Session", back: "Back", next: "Next Task", photo: "Add Screenshot", error: "Required fields missing!" },
-            id: { tester: "Nama Tester", project: "Nama Proyek", begin: "Mulai Sesi", back: "Kembali", next: "Lanjut", photo: "Tambah Screenshot", error: "Harap isi semua kolom!" }
+        const uiStrings = {
+            id: {
+                hdrSub: "LABORATORIUM ANDROID PROFESIONAL",
+                lblTester: "Nama Tester",
+                lblProject: "Nama Proyek",
+                lblDevice: "Perangkat",
+                lblCat: "Kategori",
+                btnBegin: "Mulai Sesi",
+                task: "TUGAS",
+                btnLogHelp: "BANTUAN LOG",
+                lblDescTitle: "Deskripsi & Cara Cek:",
+                lblWorkIf: "Berfungsi Jika:",
+                lblBugIf: "Bug Jika:",
+                btnNormal: "Normal",
+                btnBug: "Bug",
+                btnSkip: "Lewati",
+                lblPhoto: "Tambah Screenshot",
+                btnBack: "Kembali",
+                btnNext: "Tugas Berikutnya",
+                btnFinish: "Selesai",
+                lblExportTitle: "Ekspor Laporan",
+                lblExportSub: "Ringkasan Sesi",
+                lblResProj: "Proyek:",
+                lblResCat: "Kategori:",
+                lblResTest: "Tester:",
+                lblPreview: "Pratinjau Hasil",
+                lblLogAttach: "Lampirkan Log (Opsional)",
+                btnBrowse: "Pilih",
+                btnDownload: "Unduh Paket ZIP",
+                btnReset: "Batal & Reset",
+                placeholderNote: "Tambahkan catatan temuan anda di sini...",
+                logTitle: "Panduan Log Komprehensif",
+                logClose: "Tutup Panduan",
+                logContent: `
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">1. Logcat (Sistem/App Crash)</h4>
+                            <p class="text-[10px] text-slate-400">Gunakan saat aplikasi Force Close atau SystemUI terhenti.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono">adb logcat -d > logcat.txt</code>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">2. Dmesg (Hardware)</h4>
+                            <p class="text-[10px] text-slate-400">Gunakan jika Wi-Fi, Senter, atau Audio mati total.</p>
+                            <code class="block bg-black p-2 rounded text-amber-400 text-[9px] mono">adb shell dmesg > dmesg.txt</code>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">3. Pstore (Random Reboot)</h4>
+                            <p class="text-[10px] text-slate-400">Ambil segera setelah HP restart sendiri secara tiba-tiba.</p>
+                            <code class="block bg-black p-2 rounded text-red-400 text-[9px] mono">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
+                        </div>
+                    </div>
+                `
+            },
+            en: {
+                hdrSub: "PROFESSIONAL ANDROID LAB",
+                lblTester: "Tester Name",
+                lblProject: "Project Name",
+                lblDevice: "Device",
+                lblCat: "Category",
+                btnBegin: "Start Session",
+                task: "TASK",
+                btnLogHelp: "LOG HELP",
+                lblDescTitle: "Description & How to Check:",
+                lblWorkIf: "Working If:",
+                lblBugIf: "Bug If:",
+                btnNormal: "Working",
+                btnBug: "Bug",
+                btnSkip: "Skip",
+                lblPhoto: "Add Screenshot",
+                btnBack: "Back",
+                btnNext: "Next Task",
+                btnFinish: "Finish",
+                lblExportTitle: "Export Report",
+                lblExportSub: "Session Summary",
+                lblResProj: "Project:",
+                lblResCat: "Category:",
+                lblResTest: "Tester:",
+                lblPreview: "Preview Results",
+                lblLogAttach: "Attach Log (Optional)",
+                btnBrowse: "Browse",
+                btnDownload: "Download ZIP Package",
+                btnReset: "Cancel & Reset",
+                placeholderNote: "Add your findings here...",
+                logTitle: "Comprehensive Log Guide",
+                logClose: "Close Guide",
+                logContent: `
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">1. Logcat (System/App Crash)</h4>
+                            <p class="text-[10px] text-slate-400">Use when apps Force Close or SystemUI stops.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono">adb logcat -d > logcat.txt</code>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">2. Dmesg (Hardware)</h4>
+                            <p class="text-[10px] text-slate-400">Use if Wi-Fi, Torch, or Audio is completely dead.</p>
+                            <code class="block bg-black p-2 rounded text-amber-400 text-[9px] mono">adb shell dmesg > dmesg.txt</code>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">3. Pstore (Random Reboot)</h4>
+                            <p class="text-[10px] text-slate-400">Take immediately after an unexpected reboot.</p>
+                            <code class="block bg-black p-2 rounded text-red-400 text-[9px] mono">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
+                        </div>
+                    </div>
+                `
+            }
         };
 
         const testSets = {
             "ROM": [
-                { q: "RIL: Signal & Network", en_d: "Ensuring your SIM card can connect to the tower, get 4G/5G data, and make calls.", id_d: "Memastikan kartu SIM bisa terhubung ke tower, mendapatkan data 4G/5G, dan bisa menelepon.", en_s: "Working: Signal bar is full & 4G icon appears. Try calling someone.", id_s: "Working: Bar sinyal penuh & ikon 4G muncul. Coba telepon seseorang." },
-                { q: "Fingerprint & Face Unlock", en_d: "Biometrics security performance and speed when unlocking the device.", id_d: "Performa keamanan biometrik dan kecepatan saat membuka kunci layar.", en_s: "Working: Device unlocks in less than 1 second without error.", id_s: "Working: HP terbuka kurang dari 1 detik tanpa ada pesan error." },
-                { q: "Bluetooth Connectivity", en_d: "Connecting to wireless audio devices like TWS or Speakers.", id_d: "Menghubungkan ke perangkat audio nirkabel seperti TWS atau Speaker.", en_s: "Working: Sound is clear on TWS without any lag or stutter.", id_s: "Working: Suara jernih di TWS tanpa ada suara putus-putus." },
-                { q: "Google Play Integrity", en_d: "Security check for banking and official apps to ensure device is safe.", id_d: "Cek keamanan untuk aplikasi bank agar perangkat dianggap aman.", en_s: "Working: Status 'MEETS_DEVICE_INTEGRITY' in YASNAC app.", id_s: "Working: Status 'MEETS_DEVICE_INTEGRITY' di aplikasi YASNAC." },
-                { q: "Wi-Fi & Hotspot", en_d: "Connecting to internet via Wi-Fi and sharing it back via Hotspot.", id_d: "Menghubungkan ke internet lewat Wi-Fi dan berbagi internet via Hotspot.", en_s: "Working: Successfully connected to Wi-Fi and another phone can use your hotspot.", id_s: "Working: Berhasil konek Wi-Fi dan HP lain bisa pakai hotspot anda." },
-                { q: "GPS Accuracy", en_d: "How accurate the device can find your location on the map.", id_d: "Seberapa akurat perangkat menemukan lokasi anda di peta.", en_s: "Working: Blue dot in Google Maps is exactly where you are standing.", id_s: "Working: Titik biru di Google Maps tepat di posisi anda berdiri." },
-                { q: "Camera App Stability", en_d: "Taking photos and videos without the app crashing or lagging.", id_d: "Mengambil foto dan video tanpa aplikasi macet atau keluar sendiri.", en_s: "Working: Photos saved to gallery and 4K/60fps video is smooth.", id_s: "Working: Foto tersimpan dan video 4K/60fps berjalan lancar." },
-                { q: "Audio & Microphones", en_d: "Testing speakers, earpiece, and voice recording quality.", id_d: "Menguji speaker, earpiece, dan kualitas rekaman suara.", en_s: "Working: Stereo sound works and voice recording is loud & clear.", id_s: "Working: Suara speaker stereo nyala dan rekaman suara jernih." },
-                { q: "Fast Charging / Turbo", en_d: "Speed of charging and special charging animations on lockscreen.", id_d: "Kecepatan cas dan munculnya animasi cas khusus di layar kunci.", en_s: "Working: 'Mi Turbo Charge' or 'Fast Charging' text appears.", id_s: "Working: Muncul teks 'Mi Turbo Charge' atau 'Fast Charging'." },
-                { q: "Refresh Rate Switching", en_d: "The ability to switch between 60Hz and 120Hz smoothly.", id_d: "Kemampuan berpindah antar 60Hz dan 120Hz dengan lancar.", en_s: "Working: Screen feels very smooth in 120Hz mode.", id_s: "Working: Layar terasa sangat halus/licin di mode 120Hz." },
-                { q: "System UI Gestures", en_d: "Navigation gestures like swipe to home, back, and recent apps.", id_d: "Gestur navigasi seperti usap ke home, kembali, dan aplikasi terbaru.", en_s: "Working: Swiping from edges works every time without lag.", id_s: "Working: Usap dari pinggir layar selalu berhasil tanpa lag." },
-                { q: "Brightness & Auto-Bright", en_d: "How the screen reacts to light using the light sensor.", id_d: "Bagaimana layar bereaksi terhadap cahaya menggunakan sensor.", en_s: "Working: Brightness drops automatically when you are in a dark room.", id_s: "Working: Kecerahan turun sendiri saat anda di ruangan gelap." },
-                { q: "Flashlight / Torch", en_d: "LED light functionality for camera and emergency lighting.", id_d: "Fungsi lampu LED untuk kamera dan penerangan darurat.", en_s: "Working: Flashlight turns on instantly from Quick Settings.", id_s: "Working: Senter nyala instan dari Pengaturan Cepat." },
-                { q: "Battery Idle Drain", en_d: "How much battery is lost when the phone is not being used (Sleep).", id_d: "Berapa persen baterai yang hilang saat HP didiamkan (Tidur).", en_s: "Working: Less than 1-2% drop overnight (7-8 hours).", id_s: "Working: Turun kurang dari 1-2% saat ditinggal tidur semalaman." },
-                { q: "Dark Mode System", en_d: "Changing system colors to black to save battery and eye strain.", id_d: "Mengubah warna sistem jadi hitam untuk hemat baterai & mata.", en_s: "Working: All menus and system apps turn pitch black.", id_s: "Working: Semua menu dan aplikasi sistem jadi hitam pekat." },
-                { q: "App Opening Speed", en_d: "How fast apps open after clicking the icon.", id_d: "Seberapa cepat aplikasi terbuka setelah ikon diklik.", en_s: "Working: Apps open instantly without 'hanging' on splash screen.", id_s: "Working: Aplikasi terbuka instan tanpa 'nyangkut' di logo." },
-                { q: "RAM Management", en_d: "Testing if apps stay open in the background without restarting.", id_d: "Menguji apakah aplikasi tetap terbuka di latar belakang tanpa restart.", en_s: "Working: Open 5 apps, go back to 1st app, it doesn't reload.", id_s: "Working: Buka 5 aplikasi, balik ke aplikasi ke-1, tidak reload." },
-                { q: "Vibration / Haptics", en_d: "The 'feeling' of the vibration motor when typing or calling.", id_d: "Rasa 'getaran' motor saat mengetik atau menelepon.", en_s: "Working: Vibration feels tight and not noisy.", id_s: "Working: Getaran terasa padat dan tidak berisik." },
-                { q: "AOD (Always on Display)", en_d: "Showing clock and notifications when the screen is off.", id_d: "Menampilkan jam dan notifikasi saat layar mati.", en_s: "Working: Clock is visible & moves slowly to prevent burn-in.", id_s: "Working: Jam terlihat & bergerak pelan (anti burn-in)." },
-                { q: "USB File Transfer", en_d: "Transferring files from Phone to PC using a cable.", id_d: "Memindahkan file dari HP ke PC menggunakan kabel.", en_s: "Working: PC detects phone storage and can copy files fast.", id_s: "Working: PC mendeteksi memori HP dan bisa copy file cepat." },
-                { q: "NFC Payments", en_d: "Using the phone to scan e-money cards or pay at stores.", id_d: "Menggunakan HP untuk scan kartu e-money atau bayar.", en_s: "Working: Device can read balance of e-money card instantly.", id_s: "Working: Perangkat bisa baca saldo kartu e-money instan." },
-                { q: "Proximity Sensor", en_d: "Turning off screen automatically during a call near your ear.", id_d: "Mematikan layar otomatis saat telepon di dekat telinga.", en_s: "Working: Screen goes black when you cover the top part during call.", id_s: "Working: Layar hitam saat bagian atas tertutup waktu telepon." },
-                { q: "Dual SIM Stability", en_d: "Using two SIM cards at the same time without signal drops.", id_d: "Menggunakan dua kartu SIM sekaligus tanpa sinyal hilang.", en_s: "Working: Both SIMs show LTE/VoLTE icons simultaneously.", id_s: "Working: Kedua SIM muncul ikon LTE/VoLTE bersamaan." },
-                { q: "Encryption Status", en_d: "Security status of your files in the internal storage.", id_d: "Status keamanan file anda di dalam memori internal.", en_s: "Working: Status is 'Encrypted' in Security Settings.", id_s: "Working: Status 'Encrypted' di Setelan Keamanan." },
-                { q: "Internal Audio Cast", en_d: "Projecting screen and sound to a Smart TV or PC.", id_d: "Menampilkan layar dan suara ke Smart TV atau PC.", en_s: "Working: Screen is mirrored to TV with low latency.", id_s: "Working: Layar tampil di TV dengan delay yang rendah." }
+                { 
+                    q: "RIL: Signal & Network", 
+                    en_d: "Check SIM card signal and calling ability. Step: Insert SIM and try to call someone.",
+                    en_w: "Signal bar shows up, 4G/5G icon visible, clear voice call.",
+                    en_b: "No service, emergency calls only, or internet not working.",
+                    id_d: "Cek sinyal kartu SIM dan kemampuan menelepon. Cara: Masukkan SIM dan coba telepon seseorang.",
+                    id_w: "Bar sinyal muncul, ikon 4G/5G terlihat, suara telepon jernih.",
+                    id_b: "Tidak ada layanan, hanya panggilan darurat, atau internet mati."
+                },
+                { 
+                    q: "Fingerprint & Face Unlock", 
+                    en_d: "Check biometric speed. Step: Register finger/face and unlock multiple times.",
+                    en_w: "Instant unlock (<1s) without errors.",
+                    en_b: "Sensor not responding or 'Hardware not available' message.",
+                    id_d: "Cek kecepatan biometrik. Cara: Daftarkan jari/wajah dan buka layar berkali-kali.",
+                    id_w: "Terbuka instan (<1 dtk) tanpa ada pesan error.",
+                    id_b: "Sensor tidak merespon atau pesan 'Hardware tidak tersedia'."
+                },
+                { 
+                    q: "Google Play Integrity", 
+                    en_d: "Check if system is safe for banking apps. Step: Run YASNAC app.",
+                    en_w: "Status 'MEETS_DEVICE_INTEGRITY' or SafetyNet PASS.",
+                    en_b: "Status Fail or banking apps detect root.",
+                    id_d: "Cek keamanan sistem untuk aplikasi bank. Cara: Jalankan aplikasi YASNAC.",
+                    id_w: "Status 'MEETS_DEVICE_INTEGRITY' atau SafetyNet PASS.",
+                    id_b: "Status Gagal atau aplikasi bank mendeteksi root."
+                },
+                { 
+                    q: "Wi-Fi & Hotspot", 
+                    en_d: "Check internet sharing. Step: Connect to Wi-Fi then turn on Hotspot.",
+                    en_w: "Other devices can connect and use internet through your phone.",
+                    en_b: "Hotspot cannot be enabled or Wi-Fi disconnects automatically.",
+                    id_d: "Cek berbagi internet. Cara: Konek Wi-Fi lalu nyalakan Hotspot.",
+                    id_w: "Perangkat lain bisa konek dan pakai internet lewat HP anda.",
+                    id_b: "Hotspot tidak bisa aktif atau Wi-Fi mati otomatis."
+                },
+                { 
+                    q: "Bluetooth Audio", 
+                    en_d: "Check wireless audio. Step: Connect TWS and play music.",
+                    en_w: "Sound is clear, no stuttering, controls work.",
+                    en_b: "No sound, audio lag, or frequent disconnections.",
+                    id_d: "Cek audio nirkabel. Cara: Konek TWS dan putar musik.",
+                    id_w: "Suara jernih, tidak putus-putus, kontrol berfungsi.",
+                    id_b: "Tidak ada suara, audio lag, atau sering putus koneksi."
+                }
             ],
             "Kernel": [
-                { q: "Deep Sleep State", en_d: "Ensuring CPU cores go to sleep to save battery power.", id_d: "Memastikan core CPU 'tidur' untuk hemat daya baterai.", en_s: "Working: 'Deep Sleep' active in CPU-Z or Naptime.", id_s: "Working: 'Deep Sleep' aktif di aplikasi CPU-Z." },
-                { q: "Thermal Management", en_d: "How the phone manages heat during gaming or heavy use.", id_d: "Bagaimana HP mengatur panas saat main game atau beban berat.", en_s: "Working: Phone doesn't exceed 45°C during 30min gaming.", id_s: "Working: HP tidak lebih dari 45°C saat main game 30 menit." }
+                { 
+                    q: "Deep Sleep State", 
+                    en_d: "Check if CPU rests when screen is off. Step: Use CPU-Z app.",
+                    en_w: "Deep sleep is active during idle.",
+                    en_b: "CPU stays awake at high frequency during idle.",
+                    id_d: "Cek apakah CPU istirahat saat layar mati. Cara: Gunakan aplikasi CPU-Z.",
+                    id_w: "Deep sleep aktif saat HP tidak digunakan.",
+                    id_b: "CPU tetap terjaga (awake) di frekuensi tinggi saat idle."
+                }
             ],
             "Recovery": [
-                { q: "Data Decryption", en_d: "Ability to see your files inside TWRP/OrangeFox.", id_d: "Kemampuan melihat file anda di dalam TWRP/OrangeFox.", en_s: "Working: Folders in /sdcard are named correctly (not random letters).", id_s: "Working: Nama folder di /sdcard terbaca benar (bukan acak)." }
+                { 
+                    q: "Data Decryption", 
+                    en_d: "Check internal storage access. Step: Open /sdcard folder in Recovery.",
+                    en_w: "Folder names are readable (not random characters).",
+                    en_b: "Folders are locked or show encrypted random names.",
+                    id_d: "Cek akses memori internal. Cara: Buka folder /sdcard di Recovery.",
+                    id_w: "Nama folder terbaca jelas (bukan karakter acak).",
+                    id_b: "Folder terkunci atau muncul nama acak (enkripsi)."
+                }
             ]
         };
 
         function toggleLang() {
-            currentLang = (currentLang === 'en') ? 'id' : 'en';
-            const d = i18n[currentLang];
-            document.getElementById('lbl-tester').innerText = d.tester;
-            document.getElementById('lbl-project').innerText = d.project;
-            document.getElementById('btn-begin').innerText = d.begin;
-            document.getElementById('btn-back').innerText = d.back;
-            document.getElementById('lbl-photo').innerText = (currentLang === 'en' ? "Attach Screenshot" : "Tambah Screenshot");
-            document.getElementById('currentComment').placeholder = (currentLang === 'en' ? "Notes..." : "Catatan...");
+            currentLang = (currentLang === 'id' ? 'en' : 'id');
+            document.getElementById('langIndicator').innerText = currentLang.toUpperCase();
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const s = uiStrings[currentLang];
+            document.getElementById('hdr-sub').innerText = s.hdrSub;
+            document.getElementById('lbl-tester').innerText = s.lblTester;
+            document.getElementById('lbl-project').innerText = s.lblProject;
+            document.getElementById('lbl-device').innerText = s.lblDevice;
+            document.getElementById('lbl-cat').innerText = s.lblCat;
+            document.getElementById('btn-begin').innerText = s.btnBegin;
+            document.getElementById('btn-log-help').innerText = s.btnLogHelp;
+            document.getElementById('lbl-desc-title').innerText = s.lblDescTitle;
+            document.getElementById('lbl-work-if').innerText = s.lblWorkIf;
+            document.getElementById('lbl-bug-if').innerText = s.lblBugIf;
+            document.getElementById('btn-Working').innerText = s.btnNormal;
+            document.getElementById('btn-Bug').innerText = s.btnBug;
+            document.getElementById('btn-Not-Tested').innerText = s.btnSkip;
+            document.getElementById('lbl-photo').innerText = s.lblPhoto;
+            document.getElementById('btn-back').innerText = s.btnBack;
+            document.getElementById('lbl-export-title').innerText = s.lblExportTitle;
+            document.getElementById('lbl-export-sub').innerText = s.lblExportSub;
+            document.getElementById('lbl-res-proj').innerText = s.lblResProj;
+            document.getElementById('lbl-res-cat').innerText = s.lblResCat;
+            document.getElementById('lbl-res-test').innerText = s.lblResTest;
+            document.getElementById('lbl-preview').innerText = s.lblPreview;
+            document.getElementById('lbl-log-attach').innerText = s.lblLogAttach;
+            document.getElementById('btn-browse').innerText = s.btnBrowse;
+            document.getElementById('btn-download').innerText = s.btnDownload;
+            document.getElementById('btn-reset').innerText = s.btnReset;
+            document.getElementById('currentComment').placeholder = s.placeholderNote;
+            document.getElementById('log-title').innerText = s.logTitle;
+            document.getElementById('log-close').innerText = s.logClose;
+            document.getElementById('log-body').innerHTML = s.logContent;
+
             if(questions.length > 0) updatePage();
         }
 
         function startTesting() {
             const rom = document.getElementById('romName').value;
             const tg = document.getElementById('tgUser').value;
-            if(!rom || !tg) return alert(i18n[currentLang].error);
+            if(!rom || !tg) return alert(currentLang === 'id' ? "Identitas belum lengkap!" : "Identity incomplete!");
             questions = [...testSets[document.getElementById('testType').value]];
             questions.forEach(q => { if(!testData[q.q]) testData[q.q] = { status: "Not Tested", comment: "", photo: null }; });
             document.getElementById('step-setup').classList.add('hidden');
             document.getElementById('step-testing').classList.remove('hidden');
-            updatePage();
+            applyLanguage();
         }
 
         function updatePage() {
             const q = questions[currentIndex];
+            const s = uiStrings[currentLang];
             document.getElementById('currentQuestion').innerText = q.q;
             document.getElementById('guideDesc').innerText = q[currentLang + '_d'];
-            document.getElementById('guideStep').innerText = "Check: " + q[currentLang + '_s'];
-            document.getElementById('pageIndicator').innerText = `TASK ${String(currentIndex + 1).padStart(2,'0')}/${questions.length}`;
+            document.getElementById('guideWorking').innerText = q[currentLang + '_w'];
+            document.getElementById('guideBug').innerText = q[currentLang + '_b'];
+            document.getElementById('pageIndicator').innerText = `${s.task} ${String(currentIndex + 1).padStart(2,'0')} / ${questions.length}`;
             document.getElementById('currentComment').value = testData[q.q].comment || "";
             document.querySelectorAll('.status-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.id === `btn-${testData[q.q].status.replace(/\s+/g, '-')}`);
             });
             document.getElementById('photoPreviewContainer').classList.toggle('hidden', !testData[q.q].photo);
-            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? "Finish" : i18n[currentLang].next;
+            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? s.btnFinish : s.btnNext;
             document.getElementById('progressBar').style.width = ((currentIndex + 1) / questions.length) * 100 + '%';
         }
 
@@ -285,13 +447,7 @@
         function handlePhotoUpload(i) { if (i.files[0]) { testData[questions[currentIndex].q].photo = i.files[0]; updatePage(); } }
         function clearPhoto() { testData[questions[currentIndex].q].photo = null; updatePage(); }
         function toggleLogModal() { document.getElementById('logModal').classList.toggle('hidden'); }
-        
-        function togglePreview() { 
-            const content = document.getElementById('previewContent');
-            content.classList.toggle('hidden'); 
-            document.getElementById('previewIcon').classList.toggle('rotate-180'); 
-        }
-
+        function togglePreview() { document.getElementById('previewContent').classList.toggle('hidden'); document.getElementById('previewIcon').classList.toggle('rotate-180'); }
         function prevQuestion() { if(currentIndex > 0) { currentIndex--; updatePage(); } else { document.getElementById('step-testing').classList.add('hidden'); document.getElementById('step-setup').classList.remove('hidden'); } }
         
         function nextQuestion() {
@@ -300,7 +456,9 @@
             else { 
                 document.getElementById('step-testing').classList.add('hidden'); 
                 document.getElementById('step-finish').classList.remove('hidden');
-                document.getElementById('sumTesterDisplay').innerText = `${document.getElementById('tgUser').value} @ ${document.getElementById('deviceSelect').value}`;
+                document.getElementById('expProject').innerText = document.getElementById('romName').value;
+                document.getElementById('expCategory').innerText = document.getElementById('testType').value;
+                document.getElementById('expTester').innerText = document.getElementById('tgUser').value;
                 buildPreview();
             }
         }
@@ -308,15 +466,12 @@
         function buildPreview() {
             const container = document.getElementById('previewContent');
             container.innerHTML = "";
-            questions.forEach((q, idx) => {
+            questions.forEach((q) => {
                 const d = testData[q.q];
                 const color = d.status === 'Working' ? 'text-emerald-400' : (d.status === 'Bug' ? 'text-red-400' : 'text-slate-500');
                 container.innerHTML += `
                     <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex justify-between items-center">
-                        <div>
-                            <p class="text-[8px] text-slate-500 uppercase font-bold">Task ${idx+1}</p>
-                            <p class="text-white font-bold">${q.q}</p>
-                        </div>
+                        <span class="text-white font-bold">${q.q}</span>
                         <span class="${color} font-black uppercase text-[8px] px-2 py-1 bg-black/40 rounded-lg">${d.status}</span>
                     </div>`;
             });
@@ -337,17 +492,17 @@
             report += `CATEGORY : ${cat}\n`;
             report += `DEVICE   : ${document.getElementById('deviceSelect').value}\n`;
             report += `TESTER   : ${document.getElementById('tgUser').value}\n`;
-            report += `TIME     : ${now.toLocaleString()}\n`;
+            report += `DATE     : ${now.toLocaleString()}\n`;
             report += `==========================\n\n`;
 
             const imgFolder = zip.folder("evidence");
             questions.forEach(q => {
                 const item = testData[q.q];
                 report += `[${item.status.toUpperCase()}] ${q.q}\n`;
-                report += `FINDINGS: ${item.comment || "No notes."}\n`;
+                report += `FINDINGS: ${item.comment || "N/A"}\n`;
                 if(item.photo) {
                     const ext = item.photo.name.split('.').pop();
-                    const photoName = `${q.q.replace(/\s+/g, '_')}.${ext}`;
+                    const photoName = `${q.q.replace(/[:\\/\\s\\?%*|\"<>]/g, '_')}.${ext}`;
                     imgFolder.file(photoName, item.photo);
                     report += `ATTACHED: evidence/${photoName}\n`;
                 }
@@ -365,6 +520,9 @@
             link.click();
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
+
+        // Init
+        applyLanguage();
     </script>
 </body>
 </html>
