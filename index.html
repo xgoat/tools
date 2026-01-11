@@ -52,7 +52,7 @@
 
         <div class="p-8 pb-2 text-center">
             <h1 class="text-3xl font-black tracking-tighter text-white uppercase">Testing <span class="text-blue-500">Hub</span></h1>
-            <p class="text-[10px] text-slate-500 font-bold tracking-[0.3em] uppercase mt-1" id="hdr-sub">LABORATORIUM ANDROID PROFESIONAL</p>
+            <p class="text-[10px] text-slate-500 font-bold tracking-[0.3em] uppercase mt-1" id="hdr-sub">PROFESSIONAL ANDROID LAB</p>
         </div>
 
         <div id="step-setup" class="p-8 space-y-5 step-animate">
@@ -88,20 +88,24 @@
 
         <div id="step-testing" class="hidden p-8 pt-2 step-animate">
             <div class="flex justify-between items-center mb-6">
-                <span id="pageIndicator" class="mono text-[10px] font-bold text-blue-500 bg-blue-500/10 px-3 py-1 rounded-lg">TUGAS 01/25</span>
-                <button onclick="toggleLogModal()" class="text-[9px] font-bold text-amber-500 uppercase tracking-tighter border-b border-amber-500/20" id="btn-log-help">BANTUAN LOG</button>
+                <span id="pageIndicator" class="mono text-[10px] font-bold text-blue-500 bg-blue-500/10 px-3 py-1 rounded-lg">TASK 01/25</span>
+                <button onclick="toggleLogModal()" class="text-[9px] font-bold text-amber-500 uppercase tracking-tighter border-b border-amber-500/20" id="btn-log-help">LOG GUIDE</button>
             </div>
 
             <div class="mb-6 space-y-4">
                 <h2 id="currentQuestion" class="text-xl font-extrabold text-white leading-tight italic">Nama Fitur</h2>
                 <div class="bg-white/5 border border-white/10 p-5 rounded-[2rem] space-y-4">
                     <div>
-                        <span class="text-[8px] font-black text-blue-400 uppercase tracking-widest block mb-1" id="lbl-desc-title">Deskripsi & Cara Cek:</span>
+                        <span class="text-[8px] font-black text-blue-400 uppercase tracking-widest block mb-1" id="lbl-desc-title">Deskripsi Fitur:</span>
                         <p id="guideDesc" class="text-[11px] text-slate-300 leading-relaxed font-medium"></p>
+                    </div>
+                    <div class="pt-3 border-t border-white/10">
+                        <span class="text-[8px] font-black text-amber-400 uppercase tracking-widest block mb-1" id="lbl-check-step">Cara Cek:</span>
+                        <p id="guideStep" class="text-[11px] text-slate-300 leading-relaxed italic"></p>
                     </div>
                     <div class="grid grid-cols-2 gap-4 pt-3 border-t border-white/10">
                         <div>
-                            <span class="text-[8px] font-black text-emerald-400 uppercase tracking-widest block mb-1" id="lbl-work-if">Berfungsi Jika:</span>
+                            <span class="text-[8px] font-black text-emerald-400 uppercase tracking-widest block mb-1" id="lbl-work-if">Working Jika:</span>
                             <p id="guideWorking" class="text-[10px] text-slate-400 leading-tight"></p>
                         </div>
                         <div>
@@ -118,7 +122,7 @@
                     <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Bug</button>
                     <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Lewati</button>
                 </div>
-                <textarea id="currentComment" oninput="saveCurrentData()" class="w-full p-4 rounded-2xl h-24 bg-black/40 border border-white/10 outline-none text-sm text-white resize-none custom-scrollbar" placeholder="Catatan..."></textarea>
+                <textarea id="currentComment" oninput="saveCurrentData()" class="w-full p-4 rounded-2xl h-24 bg-black/40 border border-white/10 outline-none text-sm text-white resize-none custom-scrollbar" placeholder="Notes..."></textarea>
                 
                 <div class="flex items-center gap-3">
                     <input type="file" id="currentPhoto" accept="image/*" onchange="handlePhotoUpload(this)" class="hidden">
@@ -134,14 +138,14 @@
 
             <div class="flex gap-3 mt-8">
                 <button onclick="prevQuestion()" class="px-5 py-4 rounded-xl font-bold text-[9px] text-slate-500 uppercase" id="btn-back">Kembali</button>
-                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-4 rounded-xl font-black text-[10px] uppercase tracking-widest">Tugas Berikutnya</button>
+                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-4 rounded-xl font-black text-[10px] uppercase tracking-widest">Next Task</button>
             </div>
         </div>
 
         <div id="step-finish" class="hidden p-8 step-animate">
             <div class="text-center mb-6">
-                <h2 class="text-2xl font-black uppercase tracking-tighter" id="lbl-export-title">Ekspor Laporan</h2>
-                <p class="text-[9px] text-slate-500 font-bold tracking-[0.2em] uppercase" id="lbl-export-sub">Ringkasan Sesi</p>
+                <h2 class="text-2xl font-black uppercase tracking-tighter" id="lbl-export-title">TESTING HUB REPORT</h2>
+                <p class="text-[9px] text-slate-500 font-bold tracking-[0.2em] uppercase" id="lbl-export-sub">Session Summary</p>
             </div>
 
             <div class="bg-white/5 border border-white/10 rounded-3xl p-5 mb-6 space-y-3">
@@ -161,14 +165,14 @@
 
             <div class="mb-6">
                 <button onclick="togglePreview()" class="w-full p-4 rounded-2xl bg-white/5 border border-white/10 flex justify-between items-center hover:bg-white/10 transition-all">
-                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400" id="lbl-preview">Pratinjau Hasil</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-400" id="lbl-preview">Hasil Tes</span>
                     <i id="previewIcon" class="fa-solid fa-chevron-down text-[10px]"></i>
                 </button>
                 <div id="previewContent" class="hidden mt-2 max-h-56 overflow-y-auto p-4 bg-black/40 rounded-2xl border border-white/5 mono text-[9px] custom-scrollbar space-y-2"></div>
             </div>
 
             <div class="p-6 bg-blue-600/5 rounded-[2rem] border border-blue-500/10 mb-8 text-center">
-                <label class="text-[9px] font-black text-blue-400 uppercase block mb-3 tracking-widest" id="lbl-log-attach">Lampirkan Log (Opsional)</label>
+                <label class="text-[9px] font-black text-blue-400 uppercase block mb-3 tracking-widest" id="lbl-log-attach">Lampirkan File Utama</label>
                 <input type="file" id="mainLog" onchange="updateFileName(this)" class="hidden">
                 <label for="mainLog" class="cursor-pointer flex items-center justify-between p-3 bg-black/40 rounded-xl border border-white/5">
                     <span id="fileNameDisplay" class="text-[10px] text-slate-500 truncate mr-2 italic">Belum ada file...</span>
@@ -176,17 +180,17 @@
                 </label>
             </div>
 
-            <button onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl transition-all" id="btn-download">Unduh Paket ZIP</button>
-            <button onclick="location.reload()" class="w-full mt-4 text-[9px] font-bold text-slate-600 hover:text-red-400 transition-colors uppercase tracking-widest" id="btn-reset">Batal & Reset</button>
+            <button onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl transition-all" id="btn-download">Download ZIP</button>
+            <button onclick="location.reload()" class="w-full mt-4 text-[9px] font-bold text-slate-600 hover:text-red-400 transition-colors uppercase tracking-widest" id="btn-reset">Reset Sesi</button>
         </div>
     </div>
 
-    <div id="logModal" class="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-6 hidden">
-        <div class="bg-slate-900 max-w-lg w-full rounded-[2.5rem] border border-white/10 p-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
-            <h3 class="text-2xl font-black text-amber-500 uppercase mb-4 tracking-tighter" id="log-title">Panduan Log</h3>
+    <div id="logModal" class="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 max-w-2xl w-full rounded-[2.5rem] border border-white/10 p-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <h3 class="text-2xl font-black text-amber-500 uppercase mb-4 tracking-tighter" id="log-title">LOG GUIDE KOMPREHENSIF</h3>
             <div class="space-y-6 text-sm" id="log-body">
                 </div>
-            <button onclick="toggleLogModal()" class="w-full mt-8 bg-white/10 p-4 rounded-xl font-black uppercase text-[10px] hover:bg-white/20 transition-all" id="log-close">Tutup</button>
+            <button onclick="toggleLogModal()" class="w-full mt-8 bg-white/10 p-4 rounded-xl font-black uppercase text-[10px] hover:bg-white/20 transition-all" id="log-close">Tutup Panduan</button>
         </div>
     </div>
 
@@ -203,46 +207,57 @@
                 lblCat: "Kategori",
                 btnBegin: "Mulai Sesi",
                 task: "TUGAS",
-                btnLogHelp: "BANTUAN LOG",
-                lblDescTitle: "Deskripsi & Cara Cek:",
-                lblWorkIf: "Berfungsi Jika:",
+                btnLogHelp: "LOG GUIDE",
+                lblDescTitle: "Deskripsi Fitur:",
+                lblCheckStep: "Cara Cek:",
+                lblWorkIf: "Working Jika:",
                 lblBugIf: "Bug Jika:",
                 btnNormal: "Normal",
                 btnBug: "Bug",
                 btnSkip: "Lewati",
                 lblPhoto: "Tambah Screenshot",
                 btnBack: "Kembali",
-                btnNext: "Tugas Berikutnya",
+                btnNext: "Lanjut",
                 btnFinish: "Selesai",
-                lblExportTitle: "Ekspor Laporan",
+                lblExportTitle: "TESTING HUB REPORT",
                 lblExportSub: "Ringkasan Sesi",
                 lblResProj: "Proyek:",
                 lblResCat: "Kategori:",
                 lblResTest: "Tester:",
-                lblPreview: "Pratinjau Hasil",
+                lblPreview: "Hasil Tes",
                 lblLogAttach: "Lampirkan Log (Opsional)",
                 btnBrowse: "Pilih",
-                btnDownload: "Unduh Paket ZIP",
-                btnReset: "Batal & Reset",
-                placeholderNote: "Tambahkan catatan temuan anda di sini...",
-                logTitle: "Panduan Log Komprehensif",
+                btnDownload: "Download ZIP",
+                btnReset: "Reset Sesi",
+                placeholderNote: "Catatan temuan...",
+                logTitle: "LOG GUIDE KOMPREHENSIF",
                 logClose: "Tutup Panduan",
                 logContent: `
-                    <div class="space-y-4">
-                        <div class="space-y-1">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">1. Logcat (Sistem/App Crash)</h4>
-                            <p class="text-[10px] text-slate-400">Gunakan saat aplikasi Force Close atau SystemUI terhenti.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono">adb logcat -d > logcat.txt</code>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase mb-2">1. Main Logcat (App/System Crash)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Wajib saat aplikasi FC, SystemUI crash, atau fitur tidak jalan.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -d > logcat.txt</code>
                         </div>
-                        <div class="space-y-1">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">2. Dmesg (Hardware)</h4>
-                            <p class="text-[10px] text-slate-400">Gunakan jika Wi-Fi, Senter, atau Audio mati total.</p>
-                            <code class="block bg-black p-2 rounded text-amber-400 text-[9px] mono">adb shell dmesg > dmesg.txt</code>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-amber-400 font-bold text-[11px] uppercase mb-2">2. Radio Log (Sinyal/IMEI)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Wajib saat Sinyal hilang, SIM tidak terbaca, atau SMS/Telepon error.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -b radio -d > radio.txt</code>
                         </div>
-                        <div class="space-y-1">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">3. Pstore (Random Reboot)</h4>
-                            <p class="text-[10px] text-slate-400">Ambil segera setelah HP restart sendiri secara tiba-tiba.</p>
-                            <code class="block bg-black p-2 rounded text-red-400 text-[9px] mono">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-purple-400 font-bold text-[11px] uppercase mb-2">3. Dmesg (Kernel/Hardware)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Wajib saat Wi-Fi, BT, Kamera, atau Audio mati (Hardware level).</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell dmesg > dmesg.txt</code>
+                        </div>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-red-400 font-bold text-[11px] uppercase mb-2">4. Pstore (Random Reboot)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Jika HP tiba-tiba restart sendiri ke logo. Ambil log segera setelah nyala.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
+                        </div>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5 col-span-1 md:col-span-2">
+                            <h4 class="text-white font-bold text-[11px] uppercase mb-2">5. Last Kernel Log (Bootloop/Stuck)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Jika device gagal masuk sistem. Gunakan dari recovery (TWRP Terminal).</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">cat /proc/last_kmsg > /sdcard/last_kmsg.txt</code>
                         </div>
                     </div>
                 `
@@ -255,8 +270,9 @@
                 lblCat: "Category",
                 btnBegin: "Start Session",
                 task: "TASK",
-                btnLogHelp: "LOG HELP",
-                lblDescTitle: "Description & How to Check:",
+                btnLogHelp: "LOG GUIDE",
+                lblDescTitle: "Feature Description:",
+                lblCheckStep: "How to Check:",
                 lblWorkIf: "Working If:",
                 lblBugIf: "Bug If:",
                 btnNormal: "Working",
@@ -264,37 +280,47 @@
                 btnSkip: "Skip",
                 lblPhoto: "Add Screenshot",
                 btnBack: "Back",
-                btnNext: "Next Task",
+                btnNext: "Next",
                 btnFinish: "Finish",
-                lblExportTitle: "Export Report",
+                lblExportTitle: "TESTING HUB REPORT",
                 lblExportSub: "Session Summary",
                 lblResProj: "Project:",
                 lblResCat: "Category:",
                 lblResTest: "Tester:",
-                lblPreview: "Preview Results",
+                lblPreview: "Results",
                 lblLogAttach: "Attach Log (Optional)",
                 btnBrowse: "Browse",
-                btnDownload: "Download ZIP Package",
-                btnReset: "Cancel & Reset",
-                placeholderNote: "Add your findings here...",
-                logTitle: "Comprehensive Log Guide",
+                btnDownload: "Download ZIP",
+                btnReset: "Reset",
+                placeholderNote: "Findings note...",
+                logTitle: "COMPREHENSIVE LOG GUIDE",
                 logClose: "Close Guide",
                 logContent: `
-                    <div class="space-y-4">
-                        <div class="space-y-1">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">1. Logcat (System/App Crash)</h4>
-                            <p class="text-[10px] text-slate-400">Use when apps Force Close or SystemUI stops.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono">adb logcat -d > logcat.txt</code>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase mb-2">1. Main Logcat (App/System Crash)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Required for FCs, SystemUI crashes, or broken features.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -d > logcat.txt</code>
                         </div>
-                        <div class="space-y-1">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">2. Dmesg (Hardware)</h4>
-                            <p class="text-[10px] text-slate-400">Use if Wi-Fi, Torch, or Audio is completely dead.</p>
-                            <code class="block bg-black p-2 rounded text-amber-400 text-[9px] mono">adb shell dmesg > dmesg.txt</code>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-amber-400 font-bold text-[11px] uppercase mb-2">2. Radio Log (Signal/IMEI)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Required for Signal loss, SIM not read, or SMS/Call issues.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -b radio -d > radio.txt</code>
                         </div>
-                        <div class="space-y-1">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase">3. Pstore (Random Reboot)</h4>
-                            <p class="text-[10px] text-slate-400">Take immediately after an unexpected reboot.</p>
-                            <code class="block bg-black p-2 rounded text-red-400 text-[9px] mono">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-purple-400 font-bold text-[11px] uppercase mb-2">3. Dmesg (Kernel/Hardware)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">Required if Wi-Fi, BT, Camera, or Audio is dead (HW Level).</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell dmesg > dmesg.txt</code>
+                        </div>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
+                            <h4 class="text-red-400 font-bold text-[11px] uppercase mb-2">4. Pstore (Random Reboot)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">If device reboots unexpectedly. Take log immediately after boot.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
+                        </div>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5 col-span-1 md:col-span-2">
+                            <h4 class="text-white font-bold text-[11px] uppercase mb-2">5. Last Kernel Log (Bootloop/Stuck)</h4>
+                            <p class="text-[10px] text-slate-400 mb-2">If device fails to boot. Use from recovery terminal.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">cat /proc/last_kmsg > /sdcard/last_kmsg.txt</code>
                         </div>
                     </div>
                 `
@@ -304,71 +330,107 @@
         const testSets = {
             "ROM": [
                 { 
-                    q: "RIL: Signal & Network", 
-                    en_d: "Check SIM card signal and calling ability. Step: Insert SIM and try to call someone.",
-                    en_w: "Signal bar shows up, 4G/5G icon visible, clear voice call.",
-                    en_b: "No service, emergency calls only, or internet not working.",
-                    id_d: "Cek sinyal kartu SIM dan kemampuan menelepon. Cara: Masukkan SIM dan coba telepon seseorang.",
-                    id_w: "Bar sinyal muncul, ikon 4G/5G terlihat, suara telepon jernih.",
-                    id_b: "Tidak ada layanan, hanya panggilan darurat, atau internet mati."
+                    q: "RIL: Cellular Network & Calls", 
+                    id_d: "Menguji kemampuan modem dalam menangkap sinyal seluler dan melakukan panggilan suara.",
+                    id_s: "1. Masukkan SIM Card. 2. Matikan Wi-Fi. 3. Telepon nomor operator atau teman.",
+                    id_w: "Sinyal 4G/5G muncul, suara telepon jernih, VoLTE aktif.",
+                    id_b: "No service, panggilan putus (call drop), atau sinyal melompat-lompat.",
+                    en_d: "Testing modem ability to catch signal and voice calls.",
+                    en_s: "1. Insert SIM. 2. Disable Wi-Fi. 3. Make a phone call.",
+                    en_w: "4G/5G signal bar full, clear audio, VoLTE icon active.",
+                    en_b: "No service, call drop, or signal jumping."
                 },
                 { 
-                    q: "Fingerprint & Face Unlock", 
-                    en_d: "Check biometric speed. Step: Register finger/face and unlock multiple times.",
-                    en_w: "Instant unlock (<1s) without errors.",
-                    en_b: "Sensor not responding or 'Hardware not available' message.",
-                    id_d: "Cek kecepatan biometrik. Cara: Daftarkan jari/wajah dan buka layar berkali-kali.",
-                    id_w: "Terbuka instan (<1 dtk) tanpa ada pesan error.",
-                    id_b: "Sensor tidak merespon atau pesan 'Hardware tidak tersedia'."
+                    q: "Bluetooth: Audio & File Transfer", 
+                    id_d: "Menguji stabilitas koneksi Bluetooth untuk audio nirkabel dan pengiriman file.",
+                    id_s: "1. Konek ke TWS/Speaker. 2. Putar lagu. 3. Coba kirim gambar via BT ke HP lain.",
+                    id_w: "Audio lancar tanpa stutter, file terkirim 100%.",
+                    id_b: "Suara putus-putus, tidak bisa konek (pairing fail), atau BT mati sendiri.",
+                    en_d: "Testing BT stability for audio and file sharing.",
+                    en_s: "1. Connect TWS. 2. Play music. 3. Send a file via BT.",
+                    en_w: "Smooth audio, file transfer successful.",
+                    en_b: "Audio stutter, pairing fail, or BT turns off automatically."
                 },
                 { 
-                    q: "Google Play Integrity", 
-                    en_d: "Check if system is safe for banking apps. Step: Run YASNAC app.",
-                    en_w: "Status 'MEETS_DEVICE_INTEGRITY' or SafetyNet PASS.",
-                    en_b: "Status Fail or banking apps detect root.",
-                    id_d: "Cek keamanan sistem untuk aplikasi bank. Cara: Jalankan aplikasi YASNAC.",
-                    id_w: "Status 'MEETS_DEVICE_INTEGRITY' atau SafetyNet PASS.",
-                    id_b: "Status Gagal atau aplikasi bank mendeteksi root."
+                    q: "Google Play Integrity & SafetyNet", 
+                    id_d: "Memastikan sistem lolos verifikasi keamanan Google untuk aplikasi perbankan.",
+                    id_s: "1. Buka aplikasi YASNAC atau Play Store > Settings > About.",
+                    id_w: "Status 'Meets Device Integrity' dan 'Pass'.",
+                    id_b: "Status 'Fail', aplikasi Bank mendeteksi Root/Modifikasi.",
+                    en_d: "Ensuring Google security verification for banking apps.",
+                    en_s: "1. Open YASNAC app or Play Store Settings.",
+                    en_w: "Meets Device Integrity and Pass status.",
+                    en_b: "Fail status, banking apps block the device."
                 },
                 { 
-                    q: "Wi-Fi & Hotspot", 
-                    en_d: "Check internet sharing. Step: Connect to Wi-Fi then turn on Hotspot.",
-                    en_w: "Other devices can connect and use internet through your phone.",
-                    en_b: "Hotspot cannot be enabled or Wi-Fi disconnects automatically.",
-                    id_d: "Cek berbagi internet. Cara: Konek Wi-Fi lalu nyalakan Hotspot.",
-                    id_w: "Perangkat lain bisa konek dan pakai internet lewat HP anda.",
-                    id_b: "Hotspot tidak bisa aktif atau Wi-Fi mati otomatis."
+                    q: "Fast Charging / Turbo Charge", 
+                    id_d: "Menguji input daya masuk sesuai dengan spesifikasi hardware.",
+                    id_s: "1. Gunakan charger & kabel original. 2. Colok saat baterai di bawah 50%.",
+                    id_w: "Muncul teks 'Mi Turbo Charge' atau 'Charging Rapidly'.",
+                    id_b: "Hanya 'Charging' biasa atau butuh waktu sangat lama untuk naik 1%.",
+                    en_d: "Testing power input according to hardware specs.",
+                    en_s: "1. Use original charger. 2. Plug in when battery is <50%.",
+                    en_w: "Turbo Charge or Fast Charging animation appears.",
+                    en_b: "Slow charging or no 'Fast' label."
                 },
                 { 
-                    q: "Bluetooth Audio", 
-                    en_d: "Check wireless audio. Step: Connect TWS and play music.",
-                    en_w: "Sound is clear, no stuttering, controls work.",
-                    en_b: "No sound, audio lag, or frequent disconnections.",
-                    id_d: "Cek audio nirkabel. Cara: Konek TWS dan putar musik.",
-                    id_w: "Suara jernih, tidak putus-putus, kontrol berfungsi.",
-                    id_b: "Tidak ada suara, audio lag, atau sering putus koneksi."
+                    q: "Refresh Rate Switching (60/120Hz)", 
+                    id_d: "Menguji kelancaran UI pada mode refresh rate tinggi.",
+                    id_s: "1. Set ke 120Hz di Settings. 2. Aktifkan 'Show Refresh Rate' di Dev Options.",
+                    id_w: "Angka berubah sesuai interaksi dan layar terasa sangat licin.",
+                    id_b: "Layar terasa berat (laggy) atau angka terkunci di 60Hz.",
+                    en_d: "Testing UI smoothness on high refresh rate.",
+                    en_s: "1. Set 120Hz. 2. Enable 'Show Refresh Rate' in Dev Options.",
+                    en_w: "Value changes based on touch, UI feels smooth.",
+                    en_b: "Laggy UI or stuck at 60Hz."
+                },
+                { 
+                    q: "Camera: Stability & Modes", 
+                    id_d: "Menguji kestabilan aplikasi kamera bawaan di berbagai mode.",
+                    id_s: "1. Buka Kamera. 2. Ambil Foto, Video, Portrait, dan Night Mode.",
+                    id_w: "Semua mode berjalan lancar, hasil tersimpan di Galeri.",
+                    id_b: "Aplikasi tertutup (FC) saat ganti mode atau video tidak tersimpan.",
+                    en_d: "Testing camera app stability across all modes.",
+                    en_s: "1. Open Camera. 2. Test Photo, Video, and Night mode.",
+                    en_w: "All modes work, images saved to Gallery.",
+                    en_b: "App crashes (FC) or video fails to save."
                 }
             ],
             "Kernel": [
                 { 
-                    q: "Deep Sleep State", 
-                    en_d: "Check if CPU rests when screen is off. Step: Use CPU-Z app.",
-                    en_w: "Deep sleep is active during idle.",
-                    en_b: "CPU stays awake at high frequency during idle.",
-                    id_d: "Cek apakah CPU istirahat saat layar mati. Cara: Gunakan aplikasi CPU-Z.",
-                    id_w: "Deep sleep aktif saat HP tidak digunakan.",
-                    id_b: "CPU tetap terjaga (awake) di frekuensi tinggi saat idle."
+                    q: "CPU Deep Sleep State", 
+                    id_d: "Memastikan CPU benar-benar 'istirahat' saat layar mati untuk hemat baterai.",
+                    id_s: "1. Diamkan HP 10 menit layar mati. 2. Cek di CPU-Z atau Naptime.",
+                    id_w: "Deep Sleep tercatat aktif (>80% saat idle).",
+                    id_b: "CPU tetap 'Awake' terus menerus walau layar mati.",
+                    en_d: "Ensuring CPU rests when screen is off.",
+                    en_s: "1. Leave phone for 10min. 2. Check CPU-Z or Naptime.",
+                    en_w: "Deep Sleep active (>80% during idle).",
+                    en_b: "CPU stays 'Awake' constantly."
+                },
+                { 
+                    q: "Thermal Management (Throttling)", 
+                    id_d: "Menguji batas panas kernel sebelum menurunkan performa.",
+                    id_s: "1. Jalankan CPU Throttling Test selama 15 menit.",
+                    id_w: "Grafik stabil di atas 80%, tidak ada penurunan mendadap drastis.",
+                    id_b: "Grafik langsung merah (drop parah) atau HP mati karena overheat.",
+                    en_d: "Testing heat management and performance scaling.",
+                    en_s: "1. Run CPU Throttling Test for 15 mins.",
+                    en_w: "Stable graph >80%, no sudden drops.",
+                    en_b: "Graph goes red or phone shutdowns due to heat."
                 }
             ],
             "Recovery": [
                 { 
-                    q: "Data Decryption", 
-                    en_d: "Check internal storage access. Step: Open /sdcard folder in Recovery.",
-                    en_w: "Folder names are readable (not random characters).",
-                    en_b: "Folders are locked or show encrypted random names.",
-                    id_d: "Cek akses memori internal. Cara: Buka folder /sdcard di Recovery.",
-                    id_w: "Nama folder terbaca jelas (bukan karakter acak).",
-                    id_b: "Folder terkunci atau muncul nama acak (enkripsi)."
+                    q: "Data Decryption (Internal Storage)", 
+                    id_d: "Menguji kemampuan recovery dalam membaca data terenkripsi.",
+                    id_s: "1. Pasang password layar di ROM. 2. Masuk Recovery. 3. Buka folder /sdcard.",
+                    id_w: "Diminta password dan nama folder terbaca normal.",
+                    id_b: "Nama folder menjadi karakter acak (enkripsi) atau gagal mount.",
+                    en_d: "Testing recovery's ability to read encrypted data.",
+                    en_s: "1. Set lockscreen pass in ROM. 2. Boot Recovery. 3. Browse /sdcard.",
+                    en_w: "Asks for password, folder names are correct.",
+                    en_b: "Folders show random characters (encrypted)."
                 }
             ]
         };
@@ -389,6 +451,7 @@
             document.getElementById('btn-begin').innerText = s.btnBegin;
             document.getElementById('btn-log-help').innerText = s.btnLogHelp;
             document.getElementById('lbl-desc-title').innerText = s.lblDescTitle;
+            document.getElementById('lbl-check-step').innerText = s.lblCheckStep;
             document.getElementById('lbl-work-if').innerText = s.lblWorkIf;
             document.getElementById('lbl-bug-if').innerText = s.lblBugIf;
             document.getElementById('btn-Working').innerText = s.btnNormal;
@@ -430,6 +493,7 @@
             const s = uiStrings[currentLang];
             document.getElementById('currentQuestion').innerText = q.q;
             document.getElementById('guideDesc').innerText = q[currentLang + '_d'];
+            document.getElementById('guideStep').innerText = q[currentLang + '_s'];
             document.getElementById('guideWorking').innerText = q[currentLang + '_w'];
             document.getElementById('guideBug').innerText = q[currentLang + '_b'];
             document.getElementById('pageIndicator').innerText = `${s.task} ${String(currentIndex + 1).padStart(2,'0')} / ${questions.length}`;
@@ -521,7 +585,6 @@
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
-        // Init
         applyLanguage();
     </script>
 </body>
