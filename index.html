@@ -59,18 +59,18 @@
             <div class="space-y-4">
                 <div>
                     <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-tester">Nama Tester</label>
-                    <input type="text" id="tgUser" placeholder="@username" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
+                    <input type="text" id="tgUser" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
                 </div>
                 <div>
                     <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-project">Nama Proyek</label>
-                    <input type="text" id="romName" placeholder="PixelOS / Hydra Kernel" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
+                    <input type="text" id="romName" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-device">Perangkat</label>
                         <select id="deviceSelect" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none text-sm text-white appearance-none cursor-pointer">
                             <option value="Redmi Note 12 Pro 4G">Redmi Note 12 Pro 4G</option>
-                            <option value="Generic Device">Perangkat Lain</option>
+                            <option value="Generic Device" id="opt-other">Perangkat Lain</option>
                         </select>
                     </div>
                     <div>
@@ -122,7 +122,7 @@
                     <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Bug</button>
                     <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-3 rounded-xl text-[9px] font-black uppercase bg-white/5 opacity-50 transition-all">Lewati</button>
                 </div>
-                <textarea id="currentComment" oninput="saveCurrentData()" class="w-full p-4 rounded-2xl h-24 bg-black/40 border border-white/10 outline-none text-sm text-white resize-none custom-scrollbar" placeholder="Notes..."></textarea>
+                <textarea id="currentComment" oninput="saveCurrentData()" class="w-full p-4 rounded-2xl h-24 bg-black/40 border border-white/10 outline-none text-sm text-white resize-none custom-scrollbar"></textarea>
                 
                 <div class="flex items-center gap-3">
                     <input type="file" id="currentPhoto" accept="image/*" onchange="handlePhotoUpload(this)" class="hidden">
@@ -175,7 +175,7 @@
                 <label class="text-[9px] font-black text-blue-400 uppercase block mb-3 tracking-widest" id="lbl-log-attach">Lampirkan File Log Utama</label>
                 <input type="file" id="mainLog" onchange="updateFileName(this)" class="hidden">
                 <label for="mainLog" class="cursor-pointer flex items-center justify-between p-3 bg-black/40 rounded-xl border border-white/5">
-                    <span id="fileNameDisplay" class="text-[10px] text-slate-500 truncate mr-2 italic">Belum ada file...</span>
+                    <span id="fileNameDisplay" class="text-[10px] text-slate-500 truncate mr-2 italic">...</span>
                     <div class="bg-blue-600 px-3 py-1.5 rounded-lg text-[8px] font-black uppercase text-white shadow-lg" id="btn-browse">Pilih</div>
                 </label>
             </div>
@@ -202,7 +202,10 @@
                 hdrSub: "LABORATORIUM ANDROID PROFESIONAL",
                 lblTester: "Nama Tester",
                 lblProject: "Nama Proyek",
+                plTester: "@username_anda",
+                plProject: "PixelOS / Hydra Kernel",
                 lblDevice: "Perangkat",
+                optOther: "Perangkat Lain",
                 lblCat: "Kategori",
                 btnBegin: "Mulai Sesi",
                 task: "TUGAS",
@@ -225,12 +228,14 @@
                 lblResTest: "Tester:",
                 lblPreview: "Hasil Tes",
                 lblLogAttach: "Lampirkan Log (Opsional)",
+                plFile: "Belum ada file...",
                 btnBrowse: "Pilih",
                 btnDownload: "Download ZIP",
                 btnReset: "Reset Sesi",
                 placeholderNote: "Catatan temuan...",
                 logTitle: "LOG GUIDE KOMPREHENSIF",
-                logClose: "Tutup",
+                logClose: "Tutup Panduan",
+                alertId: "Lengkapi Identitas!",
                 logContent: `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
@@ -260,7 +265,10 @@
                 hdrSub: "PROFESSIONAL ANDROID LAB",
                 lblTester: "Tester Name",
                 lblProject: "Project Name",
+                plTester: "@your_username",
+                plProject: "PixelOS / Hydra Kernel",
                 lblDevice: "Device",
+                optOther: "Other Device",
                 lblCat: "Category",
                 btnBegin: "Start Session",
                 task: "TASK",
@@ -283,12 +291,14 @@
                 lblResTest: "Tester:",
                 lblPreview: "Results",
                 lblLogAttach: "Attach Log (Optional)",
+                plFile: "No file selected...",
                 btnBrowse: "Browse",
                 btnDownload: "Download ZIP",
-                btnReset: "Reset",
+                btnReset: "Reset Session",
                 placeholderNote: "Findings note...",
                 logTitle: "COMPREHENSIVE LOG GUIDE",
-                logClose: "Close",
+                logClose: "Close Guide",
+                alertId: "Fill identity!",
                 logContent: `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
@@ -412,7 +422,10 @@
             document.getElementById('hdr-sub').innerText = s.hdrSub;
             document.getElementById('lbl-tester').innerText = s.lblTester;
             document.getElementById('lbl-project').innerText = s.lblProject;
+            document.getElementById('tgUser').placeholder = s.plTester;
+            document.getElementById('romName').placeholder = s.plProject;
             document.getElementById('lbl-device').innerText = s.lblDevice;
+            document.getElementById('opt-other').innerText = s.optOther;
             document.getElementById('lbl-cat').innerText = s.lblCat;
             document.getElementById('btn-begin').innerText = s.btnBegin;
             document.getElementById('btn-log-help').innerText = s.btnLogHelp;
@@ -432,9 +445,11 @@
             document.getElementById('lbl-res-test').innerText = s.lblResTest;
             document.getElementById('lbl-preview').innerText = s.lblPreview;
             document.getElementById('lbl-log-attach').innerText = s.lblLogAttach;
+            document.getElementById('fileNameDisplay').innerText = s.plFile;
             document.getElementById('btn-browse').innerText = s.btnBrowse;
             document.getElementById('btn-download').innerText = s.btnDownload;
             document.getElementById('btn-reset').innerText = s.btnReset;
+            document.getElementById('currentComment').placeholder = s.placeholderNote;
             document.getElementById('log-title').innerText = s.logTitle;
             document.getElementById('log-close').innerText = s.logClose;
             document.getElementById('log-body').innerHTML = s.logContent;
@@ -444,7 +459,7 @@
         function startTesting() {
             const rom = document.getElementById('romName').value;
             const tg = document.getElementById('tgUser').value;
-            if(!rom || !tg) return alert(currentLang === 'id' ? "Lengkapi Identitas!" : "Fill identity!");
+            if(!rom || !tg) return alert(uiStrings[currentLang].alertId);
             questions = [...testSets[document.getElementById('testType').value]];
             questions.forEach(q => { if(!testData[q.q]) testData[q.q] = { status: "Not Tested", comment: "", photo: null }; });
             document.getElementById('step-setup').classList.add('hidden');
@@ -505,13 +520,26 @@
 
         async function generateZip() {
             const zip = new JSZip();
-            const romName = document.getElementById('romName').value.replace(/\s+/g, '_');
+            const romInput = document.getElementById('romName').value;
+            const romName = romInput.replace(/\s+/g, '_');
             const cat = document.getElementById('testType').value;
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('id-ID').replace(/\//g, '-');
-            const timeStr = now.getHours() + '-' + now.getMinutes();
             
-            let report = `=== REPORT ===\nPROJECT  : ${document.getElementById('romName').value}\nCATEGORY : ${cat}\nDEVICE   : ${document.getElementById('deviceSelect').value}\nTESTER   : ${document.getElementById('tgUser').value}\nDATE     : ${now.toLocaleString()}\n==============\n\n`;
+            // Format Waktu & Tanggal
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            const dateStr = `${day}-${month}-${year}`;
+            const timeStr = `${hours}-${minutes}`;
+            
+            // Nama File: ATH-ProjectName-JenisTesting-Tanggal-Jam.zip
+            const finalZipName = `ATH-${romName}-${cat}-${dateStr}-${timeStr}.zip`;
+            
+            let report = `=== REPORT ===\nPROJECT  : ${romInput}\nCATEGORY : ${cat}\nDEVICE   : ${document.getElementById('deviceSelect').value}\nTESTER   : ${document.getElementById('tgUser').value}\nDATE     : ${now.toLocaleString()}\n==============\n\n`;
+            
             const imgFolder = zip.folder("evidence");
             questions.forEach(q => {
                 const item = testData[q.q];
@@ -524,16 +552,21 @@
                 }
                 report += `--------------------------\n`;
             });
+            
             zip.file("report_result.txt", report);
             const mainLog = document.getElementById('mainLog').files[0];
             if(mainLog) zip.file(mainLog.name, mainLog);
+            
             const blob = await zip.generateAsync({type:"blob"});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `${romName}-${cat}-${dateStr}-${timeStr}.zip`;
+            link.download = finalZipName;
             link.click();
+            
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
+        
+        // Inisialisasi awal
         applyLanguage();
     </script>
 </body>
