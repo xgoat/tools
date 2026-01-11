@@ -37,17 +37,21 @@
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             transition: all 0.3s ease;
         }
-        input:focus, select:focus, textarea:focus {
-            border-color: #3b82f6 !important;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-        }
         .step-animate { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .guide-box { background: rgba(59, 130, 246, 0.05); border-left: 3px solid #3b82f6; }
     </style>
 </head>
 <body class="min-h-screen p-4 flex flex-col items-center justify-center">
 
-    <div class="max-w-xl w-full glass-card rounded-[2.5rem] overflow-hidden">
+    <div class="fixed top-6 right-6 z-50">
+        <button onclick="toggleLang()" class="glass-card px-4 py-2 rounded-full text-[10px] font-bold border border-white/10 hover:bg-white/5 transition uppercase tracking-widest">
+            <i class="fa-solid fa-globe mr-2 text-blue-400"></i> <span id="langDisplay">Language: EN</span>
+        </button>
+    </div>
+
+    <div class="max-w-xl w-full glass-card rounded-[2.5rem] overflow-hidden relative">
         <div class="h-1.5 bg-white/5 w-full">
             <div id="progressBar" class="h-full bg-blue-500 transition-all duration-700 shadow-[0_0_10px_#3b82f6]" style="width: 0%"></div>
         </div>
@@ -62,23 +66,23 @@
         <div id="step-setup" class="p-8 pt-4 space-y-6 step-animate">
             <div class="space-y-4">
                 <div class="group">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Tester Identity</label>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block" data-en="Tester Identity" data-id="Identitas Tester">Tester Identity</label>
                     <input type="text" id="tgUser" placeholder="@username" class="w-full p-4 rounded-2xl outline-none text-sm">
                 </div>
                 <div class="group">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Project Name</label>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block" data-en="Project Name" data-id="Nama Proyek">Project Name</label>
                     <input type="text" id="romName" placeholder="e.g. PixelOS v4.0" class="w-full p-4 rounded-2xl outline-none text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Device</label>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block" data-en="Device" data-id="Perangkat">Device</label>
                         <select id="deviceSelect" class="w-full p-4 rounded-2xl outline-none text-sm appearance-none">
                             <option value="Generic">Generic Device</option>
                             <option value="Redmi Note 12 Pro 4G">Redmi Note 12 Pro 4G</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block">Category</label>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase ml-2 mb-1 block" data-en="Category" data-id="Kategori">Category</label>
                         <select id="testType" class="w-full p-4 rounded-2xl outline-none text-sm appearance-none">
                             <option value="ROM">ROM</option>
                             <option value="Kernel">Kernel</option>
@@ -87,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-bold text-sm transition-all shadow-xl shadow-blue-900/20 uppercase tracking-widest">Begin Session</button>
+            <button onclick="startTesting()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-bold text-sm transition-all shadow-xl shadow-blue-900/20 uppercase tracking-widest" data-en="Begin Session" data-id="Mulai Sesi">Begin Session</button>
         </div>
 
         <div id="step-testing" class="hidden p-8 pt-2 step-animate">
@@ -100,26 +104,31 @@
                 </button>
             </div>
 
-            <div class="mb-8">
-                <h2 id="currentQuestion" class="text-2xl font-bold text-white leading-tight min-h-[4rem]">Feature</h2>
+            <div class="mb-6">
+                <h2 id="currentQuestion" class="text-2xl font-bold text-white leading-tight mb-3">Feature</h2>
+                <div id="guideContainer" class="guide-box p-4 rounded-xl space-y-2">
+                    <p id="guideDesc" class="text-[11px] text-slate-300 leading-relaxed italic"></p>
+                    <div class="pt-2 border-t border-blue-500/10">
+                        <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest block mb-1" data-en="How to check:" data-id="Cara pengecekan:">How to check:</span>
+                        <p id="guideStep" class="text-[11px] text-blue-100/80 font-medium"></p>
+                    </div>
+                </div>
             </div>
             
             <div class="space-y-6">
                 <div class="grid grid-cols-3 gap-3">
-                    <button onclick="setStatus('Working')" id="btn-Working" class="status-btn btn-working p-4 rounded-2xl text-[10px] font-black uppercase">Working</button>
-                    <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-4 rounded-2xl text-[10px] font-black uppercase">Bug</button>
-                    <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-4 rounded-2xl text-[10px] font-black uppercase">Skip</button>
+                    <button onclick="setStatus('Working')" id="btn-Working" class="status-btn btn-working p-4 rounded-2xl text-[10px] font-black uppercase" data-en="Working" data-id="Berhasil">Working</button>
+                    <button onclick="setStatus('Bug')" id="btn-Bug" class="status-btn btn-bug p-4 rounded-2xl text-[10px] font-black uppercase" data-en="Bug" data-id="Bug">Bug</button>
+                    <button onclick="setStatus('Not Tested')" id="btn-Not-Tested" class="status-btn btn-skip p-4 rounded-2xl text-[10px] font-black uppercase" data-en="Skip" data-id="Lewati">Skip</button>
                 </div>
 
-                <div class="relative">
-                    <textarea id="currentComment" oninput="saveCurrentData()" placeholder="Describe findings, reproduction steps, or logs..." class="w-full p-5 rounded-3xl h-32 outline-none text-sm resize-none"></textarea>
-                </div>
+                <textarea id="currentComment" oninput="saveCurrentData()" placeholder="Notes..." class="w-full p-5 rounded-3xl h-24 outline-none text-sm resize-none"></textarea>
 
                 <div class="flex items-center gap-4">
                     <input type="file" id="currentPhoto" accept="image/*" onchange="handlePhotoUpload(this)" class="hidden">
                     <label for="currentPhoto" class="cursor-pointer flex-1 flex items-center justify-center p-4 rounded-2xl border border-dashed border-slate-700 hover:border-blue-500 bg-white/5 transition-all group">
                         <i class="fa-solid fa-image mr-2 text-slate-500 group-hover:text-blue-500"></i>
-                        <span id="photoLabel" class="text-[10px] font-bold uppercase text-slate-500">Attach Screenshot</span>
+                        <span id="photoLabel" class="text-[10px] font-bold uppercase text-slate-500" data-en="Attach Screenshot" data-id="Lampirkan Screenshot">Attach Screenshot</span>
                     </label>
                     <div id="photoPreviewContainer" class="hidden relative">
                         <img id="imagePreview" src="#" class="w-14 h-14 object-cover rounded-xl border border-white/20">
@@ -129,60 +138,37 @@
             </div>
 
             <div class="flex gap-4 mt-10">
-                <button onclick="prevQuestion()" class="p-5 rounded-2xl font-bold text-xs text-slate-500 hover:text-white transition">BACK</button>
+                <button onclick="prevQuestion()" class="p-5 rounded-2xl font-bold text-xs text-slate-500 hover:text-white transition uppercase" data-en="Back" data-id="Kembali">Back</button>
                 <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-5 rounded-2xl font-bold text-xs transition-all uppercase tracking-widest shadow-lg shadow-white/5">Next Task</button>
             </div>
         </div>
 
         <div id="step-finish" class="hidden p-8 step-animate">
             <div class="text-center mb-8">
-                <div class="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
-                    <i class="fa-solid fa-cloud-arrow-down text-2xl text-blue-400"></i>
-                </div>
-                <h2 class="text-2xl font-bold uppercase tracking-tighter">Export</h2>
+                <h2 class="text-2xl font-bold uppercase tracking-tighter" data-en="Export" data-id="Ekspor">Export</h2>
                 <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Validation V1.0 Complete</p>
             </div>
-
-            <div class="bg-black/40 rounded-3xl p-6 border border-white/5 space-y-4 mb-6">
-                <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase">Project</span>
-                    <span id="sumROM" class="text-xs font-bold text-blue-400"></span>
+            <div class="bg-black/40 rounded-3xl p-6 border border-white/5 space-y-4 mb-6" id="summaryBox">
                 </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase">Category</span>
-                    <span id="sumType" class="text-xs font-bold text-amber-400"></span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase">Tester</span>
-                    <span id="sumTester" class="text-xs font-bold text-white"></span>
-                </div>
+            <div class="p-6 bg-blue-500/5 rounded-3xl border border-blue-500/10 mb-8 text-center">
+                <label class="text-[10px] font-black text-blue-400 uppercase block mb-3 tracking-widest italic" data-en="Attach System Log" data-id="Lampirkan Log Sistem">Attach System Log</label>
+                <input type="file" id="mainLog" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-slate-800 file:text-blue-400">
             </div>
-
-            <div class="p-6 bg-blue-500/5 rounded-3xl border border-blue-500/10 mb-8">
-                <label class="text-[10px] font-black text-blue-400 uppercase block mb-3 text-center tracking-widest italic">Attach System Log (Logcat/Dmesg)</label>
-                <input type="file" id="mainLog" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-slate-800 file:text-blue-400 hover:file:bg-slate-700 cursor-pointer">
-            </div>
-
-            <button id="downloadBtn" onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs tracking-[0.2em] transition-all uppercase shadow-xl shadow-blue-900/40">Download ZIP Package</button>
-            <button onclick="resetData()" class="w-full mt-4 text-slate-600 hover:text-red-400 text-[10px] font-bold uppercase transition">Reset Session</button>
+            <button id="downloadBtn" onclick="generateZip()" class="w-full bg-blue-600 hover:bg-blue-500 p-5 rounded-2xl font-black text-xs tracking-[0.2em] transition-all uppercase shadow-xl" data-en="Download ZIP Package" data-id="Unduh Paket ZIP">Download ZIP Package</button>
         </div>
     </div>
 
     <div id="logModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 flex items-center justify-center p-6 hidden">
-        <div class="bg-slate-900 max-w-sm w-full rounded-[2rem] border border-white/10 p-8 shadow-2xl">
-            <h3 class="text-xl font-bold text-amber-500 uppercase mb-4 tracking-tighter">Log Instructions</h3>
+        <div class="bg-slate-900 max-w-sm w-full rounded-[2rem] border border-white/10 p-8">
+            <h3 class="text-xl font-bold text-amber-500 uppercase mb-4" data-en="Log Instructions" data-id="Instruksi Log">Log Instructions</h3>
             <div class="space-y-4 font-mono text-[10px] text-slate-400">
                 <div class="p-4 bg-black rounded-2xl border border-white/5">
                     <p class="text-blue-400 mb-2"># System/App Bug</p>
                     <code>adb logcat -d > logcat.txt</code>
                 </div>
                 <div class="p-4 bg-black rounded-2xl border border-white/5">
-                    <p class="text-emerald-400 mb-2"># Kernel/Battery/Hardware</p>
+                    <p class="text-emerald-400 mb-2"># Kernel/Dmesg</p>
                     <code>adb shell dmesg > dmesg.txt</code>
-                </div>
-                <div class="p-4 bg-black rounded-2xl border border-white/5">
-                    <p class="text-purple-400 mb-2"># Bootloop/Recovery</p>
-                    <code>adb pull /tmp/recovery.log</code>
                 </div>
             </div>
             <button onclick="toggleLogModal()" class="w-full mt-6 bg-slate-800 p-4 rounded-xl font-bold uppercase text-[10px]">Close</button>
@@ -190,28 +176,86 @@
     </div>
 
     <script>
-        const testSets = {
-            "ROM_Generic": [
-                "System UI Stability (No Crashes)", "App Opening Speed & Smoothness", "RIL: 4G/5G Signal & Data Switch", "RIL: VoLTE / Video Call Stability",
-                "Wi-Fi: 2.4GHz/5GHz & Hotspot", "Bluetooth: Audio Latency & LHDC/LDAC", "GPS: Accuracy & Locking Speed (Maps)", "Camera: Focus & Shutter Speed",
-                "Audio: Speaker, Earpiece & Hi-Res", "Mic: Call & Voice Note Clarity", "Biometrics: Fingerprint & Face Unlock", "Display: Auto Brightness & Color Prof.",
-                "Charging: Protocol (PD/QC) & Heat", "USB: MTP, OTG & MIDI Transfer", "Netflix/YouTube: L1 Security & HDR", "Google Play: SafetyNet / Integrity",
-                "Recent Apps: Memory Management (RAM)", "Dark Mode & Monet Engine Stability"
+        let currentLang = 'en';
+        
+        const testBank = {
+            "ROM": [
+                { 
+                    q: "RIL: Signal & Mobile Data", 
+                    en_d: "Ensures SIM card is detected and data connection is stable.", 
+                    id_d: "Memastikan kartu SIM terdeteksi dan koneksi data stabil.",
+                    en_s: "Toggle airplane mode. Check 4G/5G signal bar and run a speedtest.", 
+                    id_s: "Ganti mode pesawat. Cek sinyal 4G/5G dan jalankan speedtest."
+                },
+                { 
+                    q: "Google Play Integrity", 
+                    en_d: "Checks if the ROM passes Google's security certification.", 
+                    id_d: "Memastikan ROM lolos sertifikasi keamanan Google.",
+                    en_s: "Use 'YASNAC' or 'Play Integrity API Checker' app from Play Store.", 
+                    id_s: "Gunakan aplikasi 'YASNAC' atau 'Play Integrity API Checker' di Play Store."
+                },
+                { 
+                    q: "Biometrics: Fingerprint & Face", 
+                    en_d: "Test accuracy and speed of unlocking mechanisms.", 
+                    id_d: "Uji akurasi dan kecepatan mekanisme pembukaan kunci.",
+                    en_s: "Register 2 fingers and face. Try unlocking 10 times rapidly.", 
+                    id_s: "Daftarkan 2 jari dan wajah. Coba buka kunci 10 kali dengan cepat."
+                },
+                { 
+                    q: "Widevine Security Level", 
+                    en_d: "Determines streaming quality on apps like Netflix (L1 vs L3).", 
+                    id_d: "Menentukan kualitas streaming di aplikasi seperti Netflix (L1 vs L3).",
+                    en_s: "Check 'DRM Info' app. Ensure Security Level is L1.", 
+                    id_s: "Cek aplikasi 'DRM Info'. Pastikan Security Level adalah L1."
+                }
             ],
-            "ROM_Sweet2": [
-                "108MP Ultra-HD Mode Stability", "120Hz Refresh Rate (Adaptive Check)", "67W Turbo Charge Animation & Speed", "Dual Speakers: Dolby Atmos Balance",
-                "IR Blaster: Remote Control Function", "NFC: Reading & Google Pay", "Proximity Sensor (Call/Pocket)"
+            "Sweet2": [
+                { 
+                    q: "108MP Camera Mode", 
+                    en_d: "Specific hardware test for the 108MP sensor stability.", 
+                    id_d: "Uji perangkat keras khusus untuk stabilitas sensor 108MP.",
+                    en_s: "Open Camera app > More > 108MP Mode. Take 3 photos.", 
+                    id_s: "Buka Kamera > Lainnya > Mode 108MP. Ambil 3 foto."
+                },
+                { 
+                    q: "67W Turbo Charging", 
+                    en_d: "Checks if Xiaomi's proprietary fast charging is detected.", 
+                    id_d: "Memastikan pengisian cepat khusus Xiaomi terdeteksi.",
+                    en_s: "Connect original charger. Look for 'Turbo Charge' animation.", 
+                    id_s: "Sambungkan charger original. Cari animasi 'Turbo Charge'."
+                }
             ],
             "Kernel": [
-                "Deep Sleep Verification (Battery)", "CPU Frequency: Scaling & Governor", "GPU Rendering & Smoothness", "Thermal Throttling (Stress Test)",
-                "I/O Scheduler Performance", "WireGuard / VPN Protocol Support", "Charging Current (mA) Stability", "Kernel Samepage Merging (KSM)",
-                "Touch Responsiveness & Latency", "Vibration: Haptic Feedback Motor", "F2FS / Ext4 Partition Performance", "ZRAM: Compression & Efficiency",
-                "Idle Power Drain (AOD On/Off)", "WireGuard / Network Acceleration"
+                { 
+                    q: "Deep Sleep State", 
+                    en_d: "CPU must enter lowest power state when screen is off.", 
+                    id_d: "CPU harus masuk ke status daya terendah saat layar mati.",
+                    en_s: "Use 'BetterBatteryStats' or 'Franco Kernel Manager' to verify.", 
+                    id_s: "Gunakan 'BetterBatteryStats' atau 'Franco Kernel Manager' untuk verifikasi."
+                },
+                { 
+                    q: "Thermal Throttling", 
+                    en_d: "Measures performance drop when device gets hot.", 
+                    id_d: "Mengukur penurunan performa saat perangkat panas.",
+                    en_s: "Run 'CPU Throttling Test' for 15 mins. Check the graph.", 
+                    id_s: "Jalankan 'CPU Throttling Test' selama 15 menit. Cek grafiknya."
+                }
             ],
             "Recovery": [
-                "Data Decryption (Pattern/PIN)", "Mounting: System, Vendor, Product", "ADB Sideload & Error Handling", "Internal Storage Recognition",
-                "MicroSD & OTG Compatibility", "Backup & Restore Integrity", "FastbootD Mode (Dynamic Partitions)", "Touchscreen Functionality",
-                "Flash Logic (Update Engine/Nano)", "Battery Percentage Accuracy", "Screen Timeout / Brightness Control", "Partition Resizing (If Applicable)"
+                { 
+                    q: "Data Decryption", 
+                    en_d: "Recovery must be able to read encrypted storage files.", 
+                    id_d: "Recovery harus bisa membaca file storage yang terenkripsi.",
+                    en_s: "In recovery, check if /sdcard folders show real names (not random strings).", 
+                    id_s: "Di recovery, cek apakah folder /sdcard muncul nama asli (bukan karakter acak)."
+                },
+                { 
+                    q: "ADB Sideload", 
+                    en_d: "Installing zip files directly from a PC.", 
+                    id_d: "Menginstal file zip langsung dari PC.",
+                    en_s: "Run 'adb sideload file.zip' from PC and check logs.", 
+                    id_s: "Jalankan 'adb sideload file.zip' dari PC dan cek lognya."
+                }
             ]
         };
 
@@ -219,35 +263,65 @@
         let currentIndex = 0;
         let testData = {};
 
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'id' : 'en';
+            document.getElementById('langDisplay').innerText = `Language: ${currentLang.toUpperCase()}`;
+            
+            // Update static elements
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
+            });
+
+            if (questions.length > 0) updatePage();
+        }
+
         function startTesting() {
             const rom = document.getElementById('romName').value;
             const tg = document.getElementById('tgUser').value;
-            if(!rom || !tg) return alert("Tester & Project name are required.");
+            if(!rom || !tg) return alert("Required fields missing!");
             
-            const dev = document.getElementById('deviceSelect').value;
             const type = document.getElementById('testType').value;
-            
-            if(type === "ROM") {
-                questions = [...testSets.ROM_Generic];
-                if(dev === "Redmi Note 12 Pro 4G") questions = [...questions, ...testSets.ROM_Sweet2];
-            } else {
-                questions = [...testSets[type]];
+            const dev = document.getElementById('deviceSelect').value;
+
+            questions = [...testBank[type]];
+            if(type === "ROM" && dev === "Redmi Note 12 Pro 4G") {
+                questions = [...questions, ...testBank.Sweet2];
             }
 
-            questions.forEach(q => { if(!testData[q]) testData[q] = { status: "Not Tested", comment: "", photo: null }; });
+            questions.forEach(q => { if(!testData[q.q]) testData[q.q] = { status: "Not Tested", comment: "", photo: null }; });
             document.getElementById('step-setup').classList.add('hidden');
             document.getElementById('step-testing').classList.remove('hidden');
             updatePage();
         }
 
-        function toggleLogModal() { document.getElementById('logModal').classList.toggle('hidden'); }
-        
-        function setStatus(status) { 
-            testData[questions[currentIndex]].status = status; 
-            updateStatusButtons(status); 
-            saveCurrentData(); 
+        function updatePage() {
+            const q = questions[currentIndex];
+            document.getElementById('currentQuestion').innerText = q.q;
+            document.getElementById('guideDesc').innerText = q[`${currentLang}_d`];
+            document.getElementById('guideStep').innerText = q[`${currentLang}_s`];
+            document.getElementById('pageIndicator').innerText = `TASK ${String(currentIndex + 1).padStart(2,'0')}/${questions.length}`;
+            
+            document.getElementById('currentComment').value = testData[q.q].comment || "";
+            updateStatusButtons(testData[q.q].status);
+            
+            if(testData[q.q].photo) {
+                document.getElementById('photoPreviewContainer').classList.remove('hidden');
+                const reader = new FileReader();
+                reader.onload = (e) => { document.getElementById('imagePreview').src = e.target.result; };
+                reader.readAsDataURL(testData[q.q].photo);
+            } else {
+                document.getElementById('photoPreviewContainer').classList.add('hidden');
+            }
+            
+            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? "EXPORT" : "NEXT";
+            document.getElementById('progressBar').style.width = ((currentIndex + 1) / questions.length) * 100 + '%';
         }
-        
+
+        function setStatus(status) { 
+            testData[questions[currentIndex].q].status = status; 
+            updateStatusButtons(status); 
+        }
+
         function updateStatusButtons(status) {
             document.querySelectorAll('.status-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -255,48 +329,20 @@
             });
         }
 
+        function saveCurrentData() { 
+            testData[questions[currentIndex].q].comment = document.getElementById('currentComment').value; 
+        }
+
         function handlePhotoUpload(input) {
             if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('imagePreview').src = e.target.result;
-                    document.getElementById('photoPreviewContainer').classList.remove('hidden');
-                    document.getElementById('photoLabel').innerText = "Evidence Saved";
-                    testData[questions[currentIndex]].photo = input.files[0];
-                };
-                reader.readAsDataURL(input.files[0]);
+                testData[questions[currentIndex].q].photo = input.files[0];
+                updatePage();
             }
         }
 
         function clearPhoto() {
-            testData[questions[currentIndex]].photo = null;
-            document.getElementById('photoPreviewContainer').classList.add('hidden');
-            document.getElementById('photoLabel').innerText = "Attach Screenshot";
-        }
-
-        function updatePage() {
-            const q = questions[currentIndex];
-            document.getElementById('currentQuestion').innerText = q;
-            document.getElementById('pageIndicator').innerText = `TASK ${String(currentIndex + 1).padStart(2,'0')}/${questions.length}`;
-            document.getElementById('currentComment').value = testData[q].comment || "";
-            updateStatusButtons(testData[q].status);
-            
-            if(testData[q].photo) {
-                const reader = new FileReader();
-                reader.onload = (e) => { document.getElementById('imagePreview').src = e.target.result; };
-                reader.readAsDataURL(testData[q].photo);
-                document.getElementById('photoPreviewContainer').classList.remove('hidden');
-            } else {
-                document.getElementById('photoPreviewContainer').classList.add('hidden');
-                document.getElementById('photoLabel').innerText = "Attach Screenshot";
-            }
-            
-            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? "Export Data" : "Next Task";
-            document.getElementById('progressBar').style.width = ((currentIndex + 1) / questions.length) * 100 + '%';
-        }
-
-        function saveCurrentData() { 
-            testData[questions[currentIndex]].comment = document.getElementById('currentComment').value; 
+            testData[questions[currentIndex].q].photo = null;
+            updatePage();
         }
 
         function nextQuestion() {
@@ -305,9 +351,6 @@
             else { 
                 document.getElementById('step-testing').classList.add('hidden'); 
                 document.getElementById('step-finish').classList.remove('hidden');
-                document.getElementById('sumTester').innerText = document.getElementById('tgUser').value;
-                document.getElementById('sumType').innerText = document.getElementById('testType').value;
-                document.getElementById('sumROM').innerText = document.getElementById('romName').value;
             }
         }
 
@@ -316,67 +359,41 @@
             else { document.getElementById('step-testing').classList.add('hidden'); document.getElementById('step-setup').classList.remove('hidden'); }
         }
 
+        function toggleLogModal() { document.getElementById('logModal').classList.toggle('hidden'); }
+
         async function generateZip() {
-            const btn = document.getElementById('downloadBtn');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Compiling...';
-            btn.disabled = true;
+            const zip = new JSZip();
+            const now = new Date();
+            const rom = document.getElementById('romName').value.replace(/\s+/g, '_');
+            const type = document.getElementById('testType').value;
+            const dateStr = now.toISOString().split('T')[0];
+            const timeStr = String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
 
-            try {
-                const zip = new JSZip();
-                const now = new Date();
-                const tg = document.getElementById('tgUser').value;
-                const rom = document.getElementById('romName').value.replace(/\s+/g, '_');
-                const type = document.getElementById('testType').value;
-                
-                const dateStr = now.toISOString().split('T')[0];
-                const timeStr = String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
-                const zipName = `${rom}-${type}-${dateStr}-${timeStr}.zip`;
+            let report = `=== ANDROID TESTING HUB V1.0 ===\nPROJECT: ${rom}\nTESTER: ${document.getElementById('tgUser').value}\nDATE: ${now.toLocaleString()}\n\n`;
 
-                let report = `========================================\n`;
-                report += `   ANDROID TESTING HUB V1.0 REPORT\n`;
-                report += `========================================\n`;
-                report += `DATE    : ${now.toLocaleDateString()}\n`;
-                report += `TIME    : ${now.toLocaleTimeString()}\n`;
-                report += `TESTER  : ${tg}\n`;
-                report += `PROJECT : ${rom}\n`;
-                report += `CATEGORY: ${type}\n`;
-                report += `DEVICE  : ${document.getElementById('deviceSelect').value}\n`;
-                report += `========================================\n\n`;
-                
-                const imgFolder = zip.folder("evidence");
-                for (const q of questions) {
-                    const item = testData[q];
-                    report += `[${item.status.toUpperCase()}] ${q}\n`;
-                    report += `NOTES: ${item.comment || "No detailed notes provided."}\n`;
-                    if(item.photo) {
-                        const ext = item.photo.name.split('.').pop();
-                        const photoName = `${q.substring(0,20).replace(/\s+/g, '_')}.${ext}`;
-                        imgFolder.file(photoName, item.photo);
-                        report += `FILE : evidence/${photoName}\n`;
-                    }
-                    report += `----------------------------------------\n`;
+            const imgFolder = zip.folder("evidence");
+            for (const qObj of questions) {
+                const item = testData[qObj.q];
+                report += `[${item.status.toUpperCase()}] ${qObj.q}\nNotes: ${item.comment || "-"}\n`;
+                if(item.photo) {
+                    const fileName = `${qObj.q.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.jpg`;
+                    imgFolder.file(fileName, item.photo);
+                    report += `Media: evidence/${fileName}\n`;
                 }
-
-                report += `\nEnd of Summary. Generated via ATH V1.0.`;
-                zip.file("SUMMARY_V1.txt", report);
-                
-                const mainLog = document.getElementById('mainLog').files[0];
-                if(mainLog) zip.file(mainLog.name, mainLog);
-
-                const blob = await zip.generateAsync({type:"blob"});
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = zipName;
-                link.click();
-                
-                confetti({ particleCount: 200, spread: 100, origin: { y: 0.7 }, colors: ['#3b82f6', '#10b981', '#ffffff'] });
-            } finally {
-                btn.innerHTML = 'Download ZIP Package';
-                btn.disabled = false;
+                report += `------------------------------------\n`;
             }
-        }
 
-        function resetData() { if(confirm("Discard all progress and reset?")) location.reload(); }
+            zip.file("SUMMARY_V1.txt", report);
+            const mainLog = document.getElementById('mainLog').files[0];
+            if(mainLog) zip.file(mainLog.name, mainLog);
+
+            const blob = await zip.generateAsync({type:"blob"});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${rom}-${type}-${dateStr}-${timeStr}.zip`;
+            link.click();
+            confetti({ particleCount: 200 });
+        }
     </script>
 </body>
 </html>
