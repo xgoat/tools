@@ -63,14 +63,14 @@
                 </div>
                 <div>
                     <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-project">Nama Proyek</label>
-                    <input type="text" id="romName" placeholder="Contoh: PixelOS" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
+                    <input type="text" id="romName" placeholder="PixelOS / Hydra Kernel" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none focus:border-blue-500 transition-all text-sm text-white font-medium">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 block mb-2" id="lbl-device">Perangkat</label>
                         <select id="deviceSelect" class="w-full p-4 rounded-2xl bg-black/40 border border-white/5 outline-none text-sm text-white appearance-none cursor-pointer">
                             <option value="Redmi Note 12 Pro 4G">Redmi Note 12 Pro 4G</option>
-                            <option value="Generic">Perangkat Lain</option>
+                            <option value="Generic Device">Perangkat Lain</option>
                         </select>
                     </div>
                     <div>
@@ -88,7 +88,7 @@
 
         <div id="step-testing" class="hidden p-8 pt-2 step-animate">
             <div class="flex justify-between items-center mb-6">
-                <span id="pageIndicator" class="mono text-[10px] font-bold text-blue-500 bg-blue-500/10 px-3 py-1 rounded-lg">TASK 01/25</span>
+                <span id="pageIndicator" class="mono text-[10px] font-bold text-blue-500 bg-blue-500/10 px-3 py-1 rounded-lg">TASK 01/30</span>
                 <button onclick="toggleLogModal()" class="text-[9px] font-bold text-amber-500 uppercase tracking-tighter border-b border-amber-500/20" id="btn-log-help">LOG GUIDE</button>
             </div>
 
@@ -138,13 +138,13 @@
 
             <div class="flex gap-3 mt-8">
                 <button onclick="prevQuestion()" class="px-5 py-4 rounded-xl font-bold text-[9px] text-slate-500 uppercase" id="btn-back">Kembali</button>
-                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-4 rounded-xl font-black text-[10px] uppercase tracking-widest">Next Task</button>
+                <button id="nextBtn" onclick="nextQuestion()" class="flex-1 bg-white text-black p-4 rounded-xl font-black text-[10px] uppercase tracking-widest">Lanjut</button>
             </div>
         </div>
 
         <div id="step-finish" class="hidden p-8 step-animate">
             <div class="text-center mb-6">
-                <h2 class="text-2xl font-black uppercase tracking-tighter" id="lbl-export-title">TESTING HUB REPORT</h2>
+                <h2 class="text-3xl font-black uppercase tracking-tighter text-blue-500" id="lbl-export-title">REPORT</h2>
                 <p class="text-[9px] text-slate-500 font-bold tracking-[0.2em] uppercase" id="lbl-export-sub">Session Summary</p>
             </div>
 
@@ -172,7 +172,7 @@
             </div>
 
             <div class="p-6 bg-blue-600/5 rounded-[2rem] border border-blue-500/10 mb-8 text-center">
-                <label class="text-[9px] font-black text-blue-400 uppercase block mb-3 tracking-widest" id="lbl-log-attach">Lampirkan File Utama</label>
+                <label class="text-[9px] font-black text-blue-400 uppercase block mb-3 tracking-widest" id="lbl-log-attach">Lampirkan File Log Utama</label>
                 <input type="file" id="mainLog" onchange="updateFileName(this)" class="hidden">
                 <label for="mainLog" class="cursor-pointer flex items-center justify-between p-3 bg-black/40 rounded-xl border border-white/5">
                     <span id="fileNameDisplay" class="text-[10px] text-slate-500 truncate mr-2 italic">Belum ada file...</span>
@@ -188,8 +188,7 @@
     <div id="logModal" class="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 max-w-2xl w-full rounded-[2.5rem] border border-white/10 p-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
             <h3 class="text-2xl font-black text-amber-500 uppercase mb-4 tracking-tighter" id="log-title">LOG GUIDE KOMPREHENSIF</h3>
-            <div class="space-y-6 text-sm" id="log-body">
-                </div>
+            <div class="space-y-6 text-sm" id="log-body"></div>
             <button onclick="toggleLogModal()" class="w-full mt-8 bg-white/10 p-4 rounded-xl font-black uppercase text-[10px] hover:bg-white/20 transition-all" id="log-close">Tutup Panduan</button>
         </div>
     </div>
@@ -219,7 +218,7 @@
                 btnBack: "Kembali",
                 btnNext: "Lanjut",
                 btnFinish: "Selesai",
-                lblExportTitle: "TESTING HUB REPORT",
+                lblExportTitle: "REPORT",
                 lblExportSub: "Ringkasan Sesi",
                 lblResProj: "Proyek:",
                 lblResCat: "Kategori:",
@@ -231,33 +230,28 @@
                 btnReset: "Reset Sesi",
                 placeholderNote: "Catatan temuan...",
                 logTitle: "LOG GUIDE KOMPREHENSIF",
-                logClose: "Tutup Panduan",
+                logClose: "Tutup",
                 logContent: `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase mb-2">1. Main Logcat (App/System Crash)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Wajib saat aplikasi FC, SystemUI crash, atau fitur tidak jalan.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -d > logcat.txt</code>
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase mb-1">1. Main Logcat</h4>
+                            <p class="text-[9px] text-slate-400 mb-2">Untuk crash aplikasi/SystemUI.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[8px] mono">adb logcat -d > logcat.txt</code>
                         </div>
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-amber-400 font-bold text-[11px] uppercase mb-2">2. Radio Log (Sinyal/IMEI)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Wajib saat Sinyal hilang, SIM tidak terbaca, atau SMS/Telepon error.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -b radio -d > radio.txt</code>
+                            <h4 class="text-amber-400 font-bold text-[11px] uppercase mb-1">2. Radio Log</h4>
+                            <p class="text-[9px] text-slate-400 mb-2">Masalah Sinyal/IMEI/SMS.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[8px] mono">adb logcat -b radio -d > radio.txt</code>
                         </div>
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-purple-400 font-bold text-[11px] uppercase mb-2">3. Dmesg (Kernel/Hardware)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Wajib saat Wi-Fi, BT, Kamera, atau Audio mati (Hardware level).</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell dmesg > dmesg.txt</code>
+                            <h4 class="text-purple-400 font-bold text-[11px] uppercase mb-1">3. Dmesg</h4>
+                            <p class="text-[9px] text-slate-400 mb-2">Kernel/Hardware (Wi-Fi mati).</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[8px] mono">adb shell dmesg > dmesg.txt</code>
                         </div>
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-red-400 font-bold text-[11px] uppercase mb-2">4. Pstore (Random Reboot)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Jika HP tiba-tiba restart sendiri ke logo. Ambil log segera setelah nyala.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
-                        </div>
-                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5 col-span-1 md:col-span-2">
-                            <h4 class="text-white font-bold text-[11px] uppercase mb-2">5. Last Kernel Log (Bootloop/Stuck)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Jika device gagal masuk sistem. Gunakan dari recovery (TWRP Terminal).</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">cat /proc/last_kmsg > /sdcard/last_kmsg.txt</code>
+                            <h4 class="text-red-400 font-bold text-[11px] uppercase mb-1">4. Pstore</h4>
+                            <p class="text-[9px] text-slate-400 mb-2">Log setelah Random Reboot.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[8px] mono">cat /sys/fs/pstore/console-ramoops</code>
                         </div>
                     </div>
                 `
@@ -282,7 +276,7 @@
                 btnBack: "Back",
                 btnNext: "Next",
                 btnFinish: "Finish",
-                lblExportTitle: "TESTING HUB REPORT",
+                lblExportTitle: "REPORT",
                 lblExportSub: "Session Summary",
                 lblResProj: "Project:",
                 lblResCat: "Category:",
@@ -294,33 +288,23 @@
                 btnReset: "Reset",
                 placeholderNote: "Findings note...",
                 logTitle: "COMPREHENSIVE LOG GUIDE",
-                logClose: "Close Guide",
+                logClose: "Close",
                 logContent: `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-blue-400 font-bold text-[11px] uppercase mb-2">1. Main Logcat (App/System Crash)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Required for FCs, SystemUI crashes, or broken features.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -d > logcat.txt</code>
+                            <h4 class="text-blue-400 font-bold text-[11px] uppercase mb-1">1. Main Logcat</h4>
+                            <p class="text-[9px] text-slate-400 mb-2">For App/SystemUI crashes.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[8px] mono">adb logcat -d > logcat.txt</code>
                         </div>
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-amber-400 font-bold text-[11px] uppercase mb-2">2. Radio Log (Signal/IMEI)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Required for Signal loss, SIM not read, or SMS/Call issues.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb logcat -b radio -d > radio.txt</code>
+                            <h4 class="text-amber-400 font-bold text-[11px] uppercase mb-1">2. Radio Log</h4>
+                            <p class="text-[9px] text-slate-400 mb-2">Signal/IMEI/SMS issues.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[8px] mono">adb logcat -b radio -d > radio.txt</code>
                         </div>
                         <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-purple-400 font-bold text-[11px] uppercase mb-2">3. Dmesg (Kernel/Hardware)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">Required if Wi-Fi, BT, Camera, or Audio is dead (HW Level).</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell dmesg > dmesg.txt</code>
-                        </div>
-                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5">
-                            <h4 class="text-red-400 font-bold text-[11px] uppercase mb-2">4. Pstore (Random Reboot)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">If device reboots unexpectedly. Take log immediately after boot.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">adb shell "cat /sys/fs/pstore/console-ramoops" > panic.txt</code>
-                        </div>
-                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5 col-span-1 md:col-span-2">
-                            <h4 class="text-white font-bold text-[11px] uppercase mb-2">5. Last Kernel Log (Bootloop/Stuck)</h4>
-                            <p class="text-[10px] text-slate-400 mb-2">If device fails to boot. Use from recovery terminal.</p>
-                            <code class="block bg-black p-2 rounded text-emerald-400 text-[9px] mono border border-white/10">cat /proc/last_kmsg > /sdcard/last_kmsg.txt</code>
+                            <h4 class="text-purple-400 font-bold text-[11px] uppercase mb-1">3. Dmesg</h4>
+                            <p class="text-[9px] text-slate-400 mb-2">Kernel/Hardware issues.</p>
+                            <code class="block bg-black p-2 rounded text-emerald-400 text-[8px] mono">adb shell dmesg > dmesg.txt</code>
                         </div>
                     </div>
                 `
@@ -329,109 +313,91 @@
 
         const testSets = {
             "ROM": [
-                { 
-                    q: "RIL: Cellular Network & Calls", 
-                    id_d: "Menguji kemampuan modem dalam menangkap sinyal seluler dan melakukan panggilan suara.",
-                    id_s: "1. Masukkan SIM Card. 2. Matikan Wi-Fi. 3. Telepon nomor operator atau teman.",
-                    id_w: "Sinyal 4G/5G muncul, suara telepon jernih, VoLTE aktif.",
-                    id_b: "No service, panggilan putus (call drop), atau sinyal melompat-lompat.",
-                    en_d: "Testing modem ability to catch signal and voice calls.",
-                    en_s: "1. Insert SIM. 2. Disable Wi-Fi. 3. Make a phone call.",
-                    en_w: "4G/5G signal bar full, clear audio, VoLTE icon active.",
-                    en_b: "No service, call drop, or signal jumping."
-                },
-                { 
-                    q: "Bluetooth: Audio & File Transfer", 
-                    id_d: "Menguji stabilitas koneksi Bluetooth untuk audio nirkabel dan pengiriman file.",
-                    id_s: "1. Konek ke TWS/Speaker. 2. Putar lagu. 3. Coba kirim gambar via BT ke HP lain.",
-                    id_w: "Audio lancar tanpa stutter, file terkirim 100%.",
-                    id_b: "Suara putus-putus, tidak bisa konek (pairing fail), atau BT mati sendiri.",
-                    en_d: "Testing BT stability for audio and file sharing.",
-                    en_s: "1. Connect TWS. 2. Play music. 3. Send a file via BT.",
-                    en_w: "Smooth audio, file transfer successful.",
-                    en_b: "Audio stutter, pairing fail, or BT turns off automatically."
-                },
-                { 
-                    q: "Google Play Integrity & SafetyNet", 
-                    id_d: "Memastikan sistem lolos verifikasi keamanan Google untuk aplikasi perbankan.",
-                    id_s: "1. Buka aplikasi YASNAC atau Play Store > Settings > About.",
-                    id_w: "Status 'Meets Device Integrity' dan 'Pass'.",
-                    id_b: "Status 'Fail', aplikasi Bank mendeteksi Root/Modifikasi.",
-                    en_d: "Ensuring Google security verification for banking apps.",
-                    en_s: "1. Open YASNAC app or Play Store Settings.",
-                    en_w: "Meets Device Integrity and Pass status.",
-                    en_b: "Fail status, banking apps block the device."
-                },
-                { 
-                    q: "Fast Charging / Turbo Charge", 
-                    id_d: "Menguji input daya masuk sesuai dengan spesifikasi hardware.",
-                    id_s: "1. Gunakan charger & kabel original. 2. Colok saat baterai di bawah 50%.",
-                    id_w: "Muncul teks 'Mi Turbo Charge' atau 'Charging Rapidly'.",
-                    id_b: "Hanya 'Charging' biasa atau butuh waktu sangat lama untuk naik 1%.",
-                    en_d: "Testing power input according to hardware specs.",
-                    en_s: "1. Use original charger. 2. Plug in when battery is <50%.",
-                    en_w: "Turbo Charge or Fast Charging animation appears.",
-                    en_b: "Slow charging or no 'Fast' label."
-                },
-                { 
-                    q: "Refresh Rate Switching (60/120Hz)", 
-                    id_d: "Menguji kelancaran UI pada mode refresh rate tinggi.",
-                    id_s: "1. Set ke 120Hz di Settings. 2. Aktifkan 'Show Refresh Rate' di Dev Options.",
-                    id_w: "Angka berubah sesuai interaksi dan layar terasa sangat licin.",
-                    id_b: "Layar terasa berat (laggy) atau angka terkunci di 60Hz.",
-                    en_d: "Testing UI smoothness on high refresh rate.",
-                    en_s: "1. Set 120Hz. 2. Enable 'Show Refresh Rate' in Dev Options.",
-                    en_w: "Value changes based on touch, UI feels smooth.",
-                    en_b: "Laggy UI or stuck at 60Hz."
-                },
-                { 
-                    q: "Camera: Stability & Modes", 
-                    id_d: "Menguji kestabilan aplikasi kamera bawaan di berbagai mode.",
-                    id_s: "1. Buka Kamera. 2. Ambil Foto, Video, Portrait, dan Night Mode.",
-                    id_w: "Semua mode berjalan lancar, hasil tersimpan di Galeri.",
-                    id_b: "Aplikasi tertutup (FC) saat ganti mode atau video tidak tersimpan.",
-                    en_d: "Testing camera app stability across all modes.",
-                    en_s: "1. Open Camera. 2. Test Photo, Video, and Night mode.",
-                    en_w: "All modes work, images saved to Gallery.",
-                    en_b: "App crashes (FC) or video fails to save."
-                }
+                { q: "RIL: Cellular Signal", id_d: "Koneksi jaringan operator.", id_s: "Cek bar sinyal & data seluler.", id_w: "Sinyal muncul & LTE/5G aktif.", id_b: "No Service/Cross sign.", en_d: "Cellular connectivity.", en_s: "Check signal bars.", en_w: "Signal OK.", en_b: "No Service." },
+                { q: "RIL: Voice Calls", id_d: "Panggilan suara masuk & keluar.", id_s: "Coba telepon nomor lain.", id_w: "Suara jernih dua arah.", id_b: "Telepon putus sendiri.", en_d: "Voice call functionality.", en_s: "Make a call.", en_w: "Clear audio.", en_b: "Call drop." },
+                { q: "VoLTE / VoWiFi", id_d: "Layanan suara via LTE/Wi-Fi.", id_s: "Cek ikon HD/VoLTE di statusbar.", id_w: "Ikon muncul & aktif.", id_b: "Ikon tidak muncul walau didukung.", en_d: "Voice over LTE/Wi-Fi.", en_s: "Check HD icon.", en_w: "Icon visible.", en_b: "Not working." },
+                { q: "Fingerprint Scanner", id_d: "Biometrik sidik jari.", id_s: "Daftarkan jari & buka kunci.", id_w: "Terbuka cepat & akurat.", id_b: "HW Not Available.", en_d: "Fingerprint sensor.", en_s: "Register & unlock.", en_w: "Fast unlock.", en_b: "Sensor dead." },
+                { q: "Face Unlock", id_d: "Biometrik wajah.", id_s: "Daftarkan wajah & buka kunci.", id_w: "Deteksi normal.", id_b: "Gagal mendeteksi/FC.", en_d: "Face recognition.", en_s: "Register face.", en_w: "Works fine.", en_b: "Detection fail." },
+                { q: "Wi-Fi Connectivity", id_d: "Koneksi internet via Wi-Fi.", id_s: "Hubungkan ke router.", id_w: "Koneksi stabil.", id_b: "Sering Disconnected.", en_d: "Wi-Fi connection.", en_s: "Connect to Wi-Fi.", en_w: "Stable.", en_b: "Disconnecting." },
+                { q: "Wi-Fi Hotspot", id_d: "Berbagi internet.", id_s: "Nyalakan Hotspot & konek HP lain.", id_w: "HP lain bisa internetan.", id_b: "Hotspot Error saat aktif.", en_d: "Hotspot sharing.", en_s: "Enable hotspot.", en_w: "Internet shared.", en_b: "Hotspot Error." },
+                { q: "Bluetooth: Audio", id_d: "Suara via BT TWS/Speaker.", id_s: "Putar lagu di Spotify via TWS.", id_w: "Suara jernih, no delay.", id_b: "Audio stutter/putus.", en_d: "BT Audio.", en_s: "Play music via TWS.", en_w: "Clear audio.", en_b: "Stuttering." },
+                { q: "Bluetooth: File Transfer", id_d: "Kirim file via BT.", id_s: "Kirim gambar ke HP lain.", id_w: "File sukses terkirim.", id_b: "Transfer gagal terus.", en_d: "BT Transfer.", en_s: "Send a file.", en_w: "Success.", en_b: "Fail." },
+                { q: "GPS & Accuracy", id_d: "Akurasi lokasi.", id_s: "Buka Google Maps, kunci lokasi.", id_w: "Akurasi di bawah 10m.", id_b: "Searching GPS selamanya.", en_d: "GPS location.", en_s: "Check Maps.", en_w: "Fast lock.", en_b: "No lock." },
+                { q: "NFC (Jika didukung)", id_d: "Fitur NFC.", id_s: "Cek saldo e-money.", id_w: "Saldo terbaca.", id_b: "NFC tidak merespon.", en_d: "NFC function.", en_s: "Read card.", en_w: "Success.", en_b: "No response." },
+                { q: "Google Play Integrity", id_d: "Keamanan Google.", id_s: "Buka YASNAC app.", id_w: "Meets integrity.", id_b: "Integrity fail.", en_d: "Play Integrity.", en_s: "Check YASNAC.", en_w: "Pass.", en_b: "Fail." },
+                { q: "SafetyNet", id_d: "Verifikasi sistem.", id_s: "Cek di Play Store settings.", id_w: "Device certified.", id_b: "Not certified.", en_d: "SafetyNet.", en_s: "Check Play Store.", en_w: "Pass.", en_b: "Fail." },
+                { q: "Fast Charging", id_d: "Pengisian daya cepat.", id_s: "Gunakan charger bawaan.", id_w: "Muncul label 'Fast'.", id_b: "Hanya charging biasa.", en_d: "Fast Charge.", en_s: "Plug charger.", en_w: "Fast label OK.", en_b: "Slow charging." },
+                { q: "Refresh Rate Switch", id_d: "Perpindahan 60/120Hz.", id_s: "Ubah di Display settings.", id_w: "Layar terasa mulus.", id_b: "Stuck di 60Hz.", en_d: "Refresh rate.", en_s: "Switch Hz.", en_w: "Smooth.", en_b: "Stuck 60Hz." },
+                { q: "Dark Mode", id_d: "Tema gelap sistem.", id_s: "Aktifkan Dark Mode.", id_w: "Semua UI berubah gelap.", id_b: "Ada teks tidak terbaca.", en_d: "Dark Mode.", en_s: "Enable dark.", en_w: "Global dark.", en_b: "UI issues." },
+                { q: "Brightness: Manual", id_d: "Kecerahan manual.", id_s: "Geser slider brightness.", id_w: "Cahaya berubah akurat.", id_b: "Flicker/Berkedip.", en_d: "Brightness.", en_s: "Slide slider.", en_w: "Accurate.", en_b: "Flickering." },
+                { q: "Brightness: Auto", id_d: "Kecerahan otomatis.", id_s: "Tutup sensor cahaya.", id_w: "Cahaya turun otomatis.", id_b: "Tidak merespon.", en_d: "Auto Brightness.", en_s: "Cover sensor.", en_w: "Responds.", en_b: "No response." },
+                { q: "Camera: Photos", id_d: "Ambil foto.", id_s: "Jepret 5 foto cepat.", id_w: "Tersimpan normal.", id_b: "FC / Shutter lag.", en_d: "Photos.", en_s: "Take 5 shots.", en_w: "Success.", en_b: "Crash." },
+                { q: "Camera: Video", id_d: "Rekam video.", id_s: "Rekam video 1 menit.", id_w: "Tersimpan tanpa korup.", id_b: "Video hijau/rusak.", en_d: "Video.", en_s: "Record 1 min.", en_w: "Success.", en_b: "Corrupt file." },
+                { q: "Camera: Flashlight", id_d: "Senter HP.", id_s: "Nyalakan dari QS Tiles.", id_w: "Senter menyala.", id_b: "Ikon abu-abu/mati.", en_d: "Flashlight.", en_s: "Enable flash.", en_w: "Bright.", en_b: "Not working." },
+                { q: "Audio: Media", id_d: "Suara speaker.", id_s: "Putar lagu di YouTube.", id_w: "Suara keluar normal.", id_b: "Suara pecah/kresek.", en_d: "Speaker.", en_s: "Play YouTube.", en_w: "Clear sound.", en_b: "Distorted." },
+                { q: "Audio: Mic", id_d: "Mikrofon telepon.", id_s: "Rekam suara di Recorder.", id_w: "Suara terdengar jelas.", id_b: "Suara sangat kecil.", en_d: "Mic.", en_s: "Record voice.", en_w: "Clear.", en_b: "Low volume." },
+                { q: "Audio: Wired Headset", id_d: "Jack Audio 3.5mm.", id_s: "Colok earphone kabel.", id_w: "Terdeteksi normal.", id_b: "Suara tetap di speaker.", en_d: "Headphone jack.", en_s: "Plug earphone.", en_w: "Detected.", en_b: "No detection." },
+                { q: "Accelerometer", id_d: "Sensor rotasi.", id_s: "Putar layar ke landscape.", id_w: "Berputar otomatis.", id_b: "Layar tidak berputar.", en_d: "Accelerometer.", en_s: "Rotate screen.", en_w: "Auto rotate OK.", en_b: "Stuck." },
+                { q: "Proximity Sensor", id_d: "Sensor telepon.", id_s: "Telepon & tutup atas HP.", id_w: "Layar mati otomatis.", id_b: "Layar tetap menyala.", en_d: "Proximity.", en_s: "Cover top during call.", en_w: "Screen off.", en_b: "Screen on." },
+                { q: "Double Tap to Wake", id_d: "Ketuk 2x bangun.", id_s: "Ketuk 2x layar mati.", id_w: "Layar menyala.", id_b: "Tidak ada respon.", en_d: "DT2W.", en_s: "Double tap screen.", en_w: "Wakes up.", en_b: "No response." },
+                { q: "USB: Data Transfer", id_d: "Kabel data ke PC.", id_s: "Sambungkan HP ke PC.", id_w: "File muncul di PC.", id_b: "Hanya charging.", en_d: "USB Transfer.", en_s: "Connect to PC.", en_w: "Files visible.", en_b: "Charge only." },
+                { q: "USB: OTG", id_d: "Baca Flashdisk.", id_s: "Colok Flashdisk via OTG.", id_w: "Terdeteksi di file manager.", id_b: "Tidak terdeteksi.", en_d: "OTG.", en_s: "Plug Flashdisk.", en_w: "Detected.", en_b: "No detection." },
+                { q: "SystemUI Fluidity", id_d: "Kelancaran sistem.", id_s: "Buka-tutup aplikasi.", id_w: "Animasi lancar.", id_b: "Jittery/Patah-patah.", en_d: "Fluidity.", en_s: "Open apps.", en_w: "Smooth.", en_b: "Laggy." },
+                { q: "Battery Idle Drain", id_d: "Boros baterai.", id_s: "Tinggalkan HP semalam.", id_w: "Turun 1-3%.", id_b: "Turun di atas 10%.", en_d: "Idle drain.", en_s: "Standby overnight.", en_w: "Normal.", en_b: "High drain." }
             ],
             "Kernel": [
-                { 
-                    q: "CPU Deep Sleep State", 
-                    id_d: "Memastikan CPU benar-benar 'istirahat' saat layar mati untuk hemat baterai.",
-                    id_s: "1. Diamkan HP 10 menit layar mati. 2. Cek di CPU-Z atau Naptime.",
-                    id_w: "Deep Sleep tercatat aktif (>80% saat idle).",
-                    id_b: "CPU tetap 'Awake' terus menerus walau layar mati.",
-                    en_d: "Ensuring CPU rests when screen is off.",
-                    en_s: "1. Leave phone for 10min. 2. Check CPU-Z or Naptime.",
-                    en_w: "Deep Sleep active (>80% during idle).",
-                    en_b: "CPU stays 'Awake' constantly."
-                },
-                { 
-                    q: "Thermal Management (Throttling)", 
-                    id_d: "Menguji batas panas kernel sebelum menurunkan performa.",
-                    id_s: "1. Jalankan CPU Throttling Test selama 15 menit.",
-                    id_w: "Grafik stabil di atas 80%, tidak ada penurunan mendadap drastis.",
-                    id_b: "Grafik langsung merah (drop parah) atau HP mati karena overheat.",
-                    en_d: "Testing heat management and performance scaling.",
-                    en_s: "1. Run CPU Throttling Test for 15 mins.",
-                    en_w: "Stable graph >80%, no sudden drops.",
-                    en_b: "Graph goes red or phone shutdowns due to heat."
-                }
+                { q: "Deep Sleep State", id_d: "CPU istirahat.", id_s: "Cek CPU-Z setelah idle.", id_w: "Deep sleep aktif.", id_b: "CPU Awake terus.", en_d: "Deep sleep.", en_s: "Check CPU-Z.", en_w: "Active.", en_b: "Awake." },
+                { q: "CPU Overclocking", id_d: "Frekuensi tinggi.", id_s: "Cek di Kernel Manager.", id_w: "Max freq tercapai.", id_b: "Reboot saat full load.", en_d: "OC.", en_s: "Check Manager.", en_w: "Freq OK.", en_b: "Reboot." },
+                { q: "CPU Undervolting", id_d: "Tegangan rendah.", id_s: "Set UV di manager.", id_w: "Baterai lebih awet.", id_b: "Freeze/Hang.", en_d: "UV.", en_s: "Apply UV.", en_w: "Stable.", en_b: "Freeze." },
+                { q: "Thermal Throttling", id_d: "Kontrol suhu.", id_s: "Stress test 15 menit.", id_w: "Performa turun perlahan.", id_b: "HP langsung mati panas.", en_d: "Thermal.", en_s: "Stress test.", en_w: "Safe drop.", en_b: "Shutdown." },
+                { q: "WireGuard Support", id_d: "VPN tingkat kernel.", id_s: "Aktifkan WireGuard VPN.", id_w: "Konek & internet jalan.", id_b: "VPN gagal aktif.", en_d: "WireGuard.", en_s: "Enable WG.", en_w: "Connected.", en_b: "Fail." },
+                { q: "I/O Scheduler Switch", id_d: "Penjadwal data.", id_s: "Ganti ke Maple/FIOPS.", id_w: "Perubahan tersimpan.", id_b: "Default terus.", en_d: "I/O Sched.", en_s: "Change sched.", en_w: "Applied.", en_b: "Reset." },
+                { q: "KCAL Color Control", id_d: "Kalibrasi warna.", id_s: "Ubah RGB di manager.", id_w: "Warna layar berubah.", id_b: "Tidak ada efek.", en_d: "KCAL.", en_s: "Tweak RGB.", en_w: "Color change.", en_b: "No effect." },
+                { q: "Vibration Strength", id_d: "Kekuatan getar.", id_s: "Atur slider getaran.", id_w: "Getaran berubah.", id_b: "Getar mati total.", en_d: "Vibe.", en_s: "Adjust vibe.", en_w: "Works.", en_b: "Dead." },
+                { q: "Sound Control", id_d: "Gain audio.", id_s: "Naikkan Speaker Gain.", id_w: "Suara lebih keras.", id_b: "Audio distorsi parah.", en_d: "Sound ctrl.", en_s: "Increase gain.", en_w: "Louder.", en_b: "Distortion." },
+                { q: "TCP Congestion", id_d: "Optimasi internet.", id_s: "Ganti ke BBR/Westwood.", id_w: "Ping lebih stabil.", id_b: "Internet mati.", en_d: "TCP.", en_s: "Set BBR.", en_w: "Stable.", en_b: "No net." },
+                { q: "Fast Charge USB", id_d: "Daya USB PC.", id_s: "Aktifkan di manager.", id_w: "Arus naik >500mA.", id_b: "Tetap lambat.", en_d: "USB Fast.", en_s: "Enable toggle.", en_w: "High current.", en_b: "Slow." },
+                { q: "GPU Clock control", id_d: "Frekuensi GPU.", id_s: "Cek saat main game.", id_w: "GPU lari di max freq.", id_b: "Frame drop parah.", en_d: "GPU clock.", en_s: "Check in-game.", en_w: "Max freq.", en_b: "Drop." },
+                { q: "Battery Cycle Info", id_d: "Informasi siklus.", id_s: "Cek di manager.", id_w: "Data muncul.", id_b: "Data 0/Unknown.", en_d: "Batt cycle.", en_s: "Check info.", en_w: "Data OK.", en_b: "Unknown." },
+                { q: "Wake gestures", id_d: "Gestur layar mati.", id_s: "Swipe S untuk senter.", id_w: "Berhasil.", id_b: "Gagal.", en_d: "Gestures.", en_s: "Swipe off-screen.", en_w: "Works.", en_b: "Fail." },
+                { q: "ZRAM Stability", id_d: "RAM virtual.", id_s: "Cek penggunaan ZRAM.", id_w: "ZRAM terisi saat penuh.", id_b: "HP Freeze saat RAM habis.", en_d: "ZRAM.", en_s: "Check usage.", en_w: "Works.", en_b: "Freeze." },
+                { q: "Memory Management", id_d: "LMK / OOM.", id_s: "Buka 10 apps.", id_w: "Apps multitasking oke.", id_b: "Apps refresh terus.", en_d: "RAM mgmt.", en_s: "Open 10 apps.", en_w: "Smooth.", en_b: "Refresh." },
+                { q: "Flash Drive Mount", id_d: "Mounting drive.", id_s: "Colok SSD via OTG.", id_w: "Terbaca cepat.", id_b: "Gagal mount.", en_d: "Mounting.", en_s: "Plug SSD.", en_w: "Fast read.", en_b: "Fail." },
+                { q: "Kernel Samepage Merging", id_d: "KSM memory.", id_s: "Aktifkan KSM.", id_w: "RAM lebih lega.", id_b: "Panas berlebih.", en_d: "KSM.", en_s: "Enable KSM.", en_w: "Free RAM.", en_b: "Hot." },
+                { q: "SELinux State", id_d: "Keamanan kernel.", id_s: "Cek 'getenforce' di terminal.", id_w: "Enforcing/Permissive.", id_b: "Reboot saat cek.", en_d: "SELinux.", en_s: "Check status.", en_w: "Stable.", en_b: "Reboot." },
+                { q: "Fsync Toggle", id_d: "Keamanan data.", id_s: "Matikan Fsync.", id_w: "Write speed naik.", id_b: "Data korup.", en_d: "Fsync.", en_s: "Disable fsync.", en_w: "Fast write.", en_b: "Corrupt." },
+                { q: "CPU Quiet / Core Control", id_d: "Manajemen core.", id_s: "Cek core yang aktif.", id_w: "Core mati saat idle.", id_b: "Semua core nyala terus.", en_d: "Core ctrl.", en_s: "Check active cores.", en_w: "Idle OK.", en_b: "Always on." },
+                { q: "Touch Boost", id_d: "Respon sentuh.", id_s: "Sentuh layar, cek freq.", id_w: "Freq naik saat disentuh.", id_b: "Layar terasa berat.", en_d: "Touch boost.", en_s: "Touch screen.", en_w: "Freq jump.", en_b: "Heavy." },
+                { q: "Boeffla Sound", id_d: "Tweak audio.", id_s: "Atur equalizer kernel.", id_w: "Output suara berubah.", id_b: "Audio mati.", en_d: "Boeffla.", en_s: "Tweak EQ.", en_w: "Sound change.", en_b: "Silent." },
+                { q: "State Notifier", id_d: "Notifikasi layar.", id_s: "Cek log saat on/off.", id_w: "Kernel tau status layar.", id_b: "Layar tidak bisa nyala.", en_d: "State Notify.", en_s: "Check logs.", en_w: "Works.", en_b: "Black screen." },
+                { q: "Compile Toolchain", id_d: "Kualitas build.", id_s: "Cek versi kernel.", id_w: "Clang/GCC terbaru.", id_b: "Versi jadul.", en_d: "Toolchain.", en_s: "Check version.", en_w: "Modern.", en_b: "Old." }
             ],
             "Recovery": [
-                { 
-                    q: "Data Decryption (Internal Storage)", 
-                    id_d: "Menguji kemampuan recovery dalam membaca data terenkripsi.",
-                    id_s: "1. Pasang password layar di ROM. 2. Masuk Recovery. 3. Buka folder /sdcard.",
-                    id_w: "Diminta password dan nama folder terbaca normal.",
-                    id_b: "Nama folder menjadi karakter acak (enkripsi) atau gagal mount.",
-                    en_d: "Testing recovery's ability to read encrypted data.",
-                    en_s: "1. Set lockscreen pass in ROM. 2. Boot Recovery. 3. Browse /sdcard.",
-                    en_w: "Asks for password, folder names are correct.",
-                    en_b: "Folders show random characters (encrypted)."
-                }
+                { q: "Data Decryption", id_d: "Buka data enkripsi.", id_s: "Masuk recovery, buka /sdcard.", id_w: "File terbaca.", id_b: "Karakter acak.", en_d: "Decryption.", en_s: "Open /sdcard.", en_w: "Files visible.", en_b: "Encrypted." },
+                { q: "MTP File Transfer", id_d: "Transfer file recovery.", id_s: "Konek PC saat di recovery.", id_w: "Memori HP muncul di PC.", id_b: "PC tidak deteksi.", en_d: "MTP.", en_s: "Connect PC.", en_w: "Storage visible.", en_b: "No detect." },
+                { q: "ADB Sideload", id_d: "Flash via ADB.", id_s: "Coba 'adb sideload zip'.", id_w: "Flash berjalan.", id_b: "ADB tidak konek.", en_d: "Sideload.", en_s: "Try sideload.", en_w: "Success.", en_b: "Fail." },
+                { q: "Backup / Restore", id_d: "Cadangkan partisi.", id_s: "Backup partisi Boot.", id_w: "Backup sukses.", id_b: "Error write partition.", en_d: "Backup.", en_s: "Backup Boot.", en_w: "Success.", en_b: "Error." },
+                { q: "Wipe Data / Cache", id_d: "Hapus data.", id_s: "Wipe Cache.", id_w: "Selesai tanpa error.", id_b: "Gagal mount cache.", en_d: "Wipe.", en_s: "Wipe Cache.", en_w: "Success.", en_b: "Error." },
+                { q: "FastbootD Mode", id_d: "Mode Fastboot baru.", id_s: "Reboot to FastbootD.", id_w: "Masuk menu FastbootD.", id_b: "HP mati/reboot ke system.", en_d: "FastbootD.", en_s: "Enter FastbootD.", en_w: "Success.", en_b: "Fail." },
+                { q: "Mount System / Vendor", id_d: "Akses partisi.", id_s: "Coba mount System.", id_w: "Status: Mounted.", id_b: "Gagal mount.", en_d: "Mount.", en_s: "Mount System.", en_w: "Success.", en_b: "Fail." },
+                { q: "Internal File Manager", id_d: "Manajer file.", id_s: "Copy file antar folder.", id_w: "File pindah sukses.", id_b: "FM Crash.", en_d: "File Manager.", en_s: "Copy file.", en_w: "Success.", en_b: "Crash." },
+                { q: "Terminal Emulator", id_d: "Perintah terminal.", id_s: "Ketik 'ls' di terminal.", id_w: "List file muncul.", id_b: "Keyboard tidak muncul.", en_d: "Terminal.", en_s: "Type 'ls'.", en_w: "Works.", en_b: "No keys." },
+                { q: "Flash Image (.img)", id_d: "Flash boot/recovery.", id_s: "Flash .img ke Recovery.", id_w: "Flash sukses.", id_b: "Format tidak didukung.", en_d: "Flash img.", en_s: "Flash .img.", en_w: "Success.", en_b: "Fail." },
+                { q: "Slot Switching (A/B)", id_d: "Pindah slot.", id_s: "Pindah dari A ke B.", id_w: "Slot berubah.", id_b: "Stuck di satu slot.", en_d: "Slot swap.", en_s: "Switch A to B.", en_w: "Success.", en_b: "Fail." },
+                { q: "Touchscreen Response", id_d: "Sentuhan recovery.", id_s: "Geser menu recovery.", id_w: "Responsif.", id_b: "Touch mati.", en_d: "Touch.", en_s: "Swipe menu.", en_w: "Responsive.", en_b: "Dead." },
+                { q: "Brightness control", id_d: "Kecerahan layar.", id_s: "Ubah kecerahan di menu.", id_w: "Layar meredup/terang.", id_b: "Tetap terang terus.", en_d: "Brightness.", en_s: "Change brightness.", en_w: "Works.", en_b: "No change." },
+                { q: "Battery Percentage", id_d: "Info baterai.", id_s: "Lihat angka % di atas.", id_w: "Angka sesuai sistem.", id_b: "Stuck 0% / 50%.", en_d: "Battery %.", en_s: "Check top bar.", en_w: "Accurate.", en_b: "Stuck." },
+                { q: "Time/Date Accuracy", id_d: "Waktu recovery.", id_s: "Cek jam di statusbar.", id_w: "Waktu akurat.", id_b: "Tahun 1970.", en_d: "Time.", en_s: "Check clock.", en_w: "Correct.", en_b: "1970." },
+                { q: "Install ZIP via SDCard", id_d: "Flash dari SDCard.", id_s: "Buka file dari MicroSD.", id_w: "SDCard terbaca.", id_b: "SDCard tidak terbaca.", en_d: "SDCard.", en_s: "Browse SD.", en_w: "Readable.", en_b: "No detect." },
+                { q: "Vibration feedback", id_d: "Getar tombol.", id_s: "Tekan tombol menu.", id_w: "HP bergetar pelan.", id_b: "Tidak ada getar.", en_d: "Vibrate.", en_s: "Press menu.", en_w: "Works.", en_b: "Dead." },
+                { q: "Screenshots", id_d: "Tangkapan layar.", id_s: "Tekan Power + Vol Down.", id_w: "Gambar tersimpan.", id_b: "Gagal ambil gambar.", en_d: "Screenshots.", en_s: "Power+Vol Down.", en_w: "Saved.", en_b: "Fail." },
+                { q: "Flash Magisk / Root", id_d: "Instalasi root.", id_s: "Flash Magisk.apk/zip.", id_w: "Instalasi sukses.", id_b: "Bootloop setelah flash.", en_d: "Root.", en_s: "Flash Magisk.", en_w: "Success.", en_b: "Bootloop." },
+                { q: "Reboot Options", id_d: "Pilihan boot.", id_s: "Reboot to System/BL.", id_w: "Pindah mode sukses.", id_b: "HP mati total.", en_d: "Reboot.", en_s: "Reboot menu.", en_w: "Success.", en_b: "Black." },
+                { q: "Partition Resize", id_d: "Ubah ukuran.", id_s: "Cek info partisi.", id_w: "Ukuran muncul.", id_b: "Size 0MB.", en_d: "Resize.", en_s: "Check partition.", en_w: "Data OK.", en_b: "0MB." },
+                { q: "Theme Support", id_d: "Kustomisasi tema.", id_s: "Ganti warna UI.", id_w: "Tema berubah.", id_b: "UI berantakan.", en_d: "Theme.", en_s: "Change color.", en_w: "Applied.", en_b: "Buggy." },
+                { q: "Format Data (f2fs/ext4)", id_d: "Format sistem file.", id_s: "Ganti format data.", id_w: "Berhasil ganti format.", id_b: "Gagal format.", en_d: "Format FS.", en_s: "Change to f2fs.", en_w: "Success.", en_b: "Fail." },
+                { q: "Flash GApps", id_d: "Pasang Google Apps.", id_s: "Flash NikGApps/MindGApps.", id_w: "Selesai tanpa error.", id_b: "Error 1 / Error 70.", en_d: "GApps.", en_s: "Flash ZIP.", en_w: "Success.", en_b: "Error." },
+                { q: "Logs Export", id_d: "Salin log recovery.", id_s: "Copy log ke /sdcard.", id_w: "File .log tercipta.", id_b: "Gagal salin.", en_d: "Logs.", en_s: "Export logs.", en_w: "Success.", en_b: "Fail." }
             ]
         };
 
@@ -469,18 +435,16 @@
             document.getElementById('btn-browse').innerText = s.btnBrowse;
             document.getElementById('btn-download').innerText = s.btnDownload;
             document.getElementById('btn-reset').innerText = s.btnReset;
-            document.getElementById('currentComment').placeholder = s.placeholderNote;
             document.getElementById('log-title').innerText = s.logTitle;
             document.getElementById('log-close').innerText = s.logClose;
             document.getElementById('log-body').innerHTML = s.logContent;
-
             if(questions.length > 0) updatePage();
         }
 
         function startTesting() {
             const rom = document.getElementById('romName').value;
             const tg = document.getElementById('tgUser').value;
-            if(!rom || !tg) return alert(currentLang === 'id' ? "Identitas belum lengkap!" : "Identity incomplete!");
+            if(!rom || !tg) return alert(currentLang === 'id' ? "Lengkapi Identitas!" : "Fill identity!");
             questions = [...testSets[document.getElementById('testType').value]];
             questions.forEach(q => { if(!testData[q.q]) testData[q.q] = { status: "Not Tested", comment: "", photo: null }; });
             document.getElementById('step-setup').classList.add('hidden');
@@ -533,11 +497,7 @@
             questions.forEach((q) => {
                 const d = testData[q.q];
                 const color = d.status === 'Working' ? 'text-emerald-400' : (d.status === 'Bug' ? 'text-red-400' : 'text-slate-500');
-                container.innerHTML += `
-                    <div class="p-3 bg-white/5 rounded-xl border border-white/5 flex justify-between items-center">
-                        <span class="text-white font-bold">${q.q}</span>
-                        <span class="${color} font-black uppercase text-[8px] px-2 py-1 bg-black/40 rounded-lg">${d.status}</span>
-                    </div>`;
+                container.innerHTML += `<div class="p-3 bg-white/5 rounded-xl border border-white/5 flex justify-between items-center"><span class="text-white font-bold">${q.q}</span><span class="${color} font-black uppercase text-[8px] px-2 py-1 bg-black/40 rounded-lg">${d.status}</span></div>`;
             });
         }
 
@@ -551,19 +511,11 @@
             const dateStr = now.toLocaleDateString('id-ID').replace(/\//g, '-');
             const timeStr = now.getHours() + '-' + now.getMinutes();
             
-            let report = `=== TESTING HUB REPORT ===\n`;
-            report += `PROJECT  : ${document.getElementById('romName').value}\n`;
-            report += `CATEGORY : ${cat}\n`;
-            report += `DEVICE   : ${document.getElementById('deviceSelect').value}\n`;
-            report += `TESTER   : ${document.getElementById('tgUser').value}\n`;
-            report += `DATE     : ${now.toLocaleString()}\n`;
-            report += `==========================\n\n`;
-
+            let report = `=== REPORT ===\nPROJECT  : ${document.getElementById('romName').value}\nCATEGORY : ${cat}\nDEVICE   : ${document.getElementById('deviceSelect').value}\nTESTER   : ${document.getElementById('tgUser').value}\nDATE     : ${now.toLocaleString()}\n==============\n\n`;
             const imgFolder = zip.folder("evidence");
             questions.forEach(q => {
                 const item = testData[q.q];
-                report += `[${item.status.toUpperCase()}] ${q.q}\n`;
-                report += `FINDINGS: ${item.comment || "N/A"}\n`;
+                report += `[${item.status.toUpperCase()}] ${q.q}\nFINDINGS: ${item.comment || "N/A"}\n`;
                 if(item.photo) {
                     const ext = item.photo.name.split('.').pop();
                     const photoName = `${q.q.replace(/[:\\/\\s\\?%*|\"<>]/g, '_')}.${ext}`;
@@ -572,11 +524,9 @@
                 }
                 report += `--------------------------\n`;
             });
-
-            zip.file("testing_result.txt", report);
+            zip.file("report_result.txt", report);
             const mainLog = document.getElementById('mainLog').files[0];
             if(mainLog) zip.file(mainLog.name, mainLog);
-
             const blob = await zip.generateAsync({type:"blob"});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -584,7 +534,6 @@
             link.click();
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
-
         applyLanguage();
     </script>
 </body>
