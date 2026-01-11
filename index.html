@@ -82,38 +82,65 @@
             </div>
 
             <div class="flex gap-4 mt-8">
-                <button onclick="prevQuestion()" class="flex-1 bg-gray-800 p-4 rounded-2xl font-bold text-gray-500 hover:text-white transition uppercase">Back</button>
+                <button onclick="prevQuestion()" class="flex-1 bg-gray-800 p-4 rounded-2xl font-bold text-gray-500 hover:text-white transition uppercase text-xs">Back</button>
                 <button id="nextBtn" onclick="nextQuestion()" class="flex-[2] bg-blue-600 p-4 rounded-2xl font-bold shadow-lg shadow-blue-500/20 uppercase transition">Next</button>
             </div>
         </div>
 
-        <div id="step-finish" class="hidden p-10 text-center space-y-6">
-            <h2 class="text-3xl font-black italic tracking-tighter uppercase">Ready to Export</h2>
+        <div id="step-finish" class="hidden p-8 space-y-6">
+            <div class="text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-500/20 rounded-full mb-4">
+                    <i class="fa-solid fa-file-zipper text-2xl text-blue-400"></i>
+                </div>
+                <h2 class="text-2xl font-bold">Session Finalized</h2>
+                <p class="text-xs text-gray-400">Review your information before exporting</p>
+            </div>
+
+            <div class="bg-gray-900/40 border border-gray-700 rounded-2xl p-5 space-y-3 mono text-[11px]">
+                <div class="flex justify-between border-b border-gray-800 pb-2">
+                    <span class="text-gray-500 uppercase">Tester</span>
+                    <span id="sumTester" class="text-blue-400 font-bold"></span>
+                </div>
+                <div class="flex justify-between border-b border-gray-800 pb-2">
+                    <span class="text-gray-500 uppercase">Project</span>
+                    <span id="sumROM" class="text-purple-400 font-bold"></span>
+                </div>
+                <div class="flex justify-between border-b border-gray-800 pb-2">
+                    <span class="text-gray-500 uppercase">Device</span>
+                    <span id="sumDevice" class="text-emerald-400 font-bold"></span>
+                </div>
+                <div class="flex justify-between border-b border-gray-800 pb-2">
+                    <span class="text-gray-500 uppercase">Timestamp</span>
+                    <span id="sumTime" class="text-gray-300"></span>
+                </div>
+            </div>
+
             <div class="bg-gray-900/50 p-6 rounded-2xl border border-gray-800 text-left">
-                <label class="text-[10px] text-gray-500 uppercase block mb-2 font-bold tracking-widest">Primary Logcat / Dmesg</label>
+                <label class="text-[10px] text-gray-500 uppercase block mb-2 font-bold tracking-widest">Optional Logcat/Dmesg (.txt/.log)</label>
                 <input type="file" id="mainLog" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-gray-800 file:text-blue-400 font-bold cursor-pointer">
             </div>
-            <button id="downloadBtn" onclick="generateZip()" class="w-full bg-gradient-to-r from-green-600 to-emerald-600 p-5 rounded-2xl font-black tracking-widest shadow-xl shadow-green-500/10 hover:scale-[1.02] transition">DOWNLOAD ZIP PACKAGE</button>
-            <button onclick="resetData()" class="text-red-500 text-[10px] uppercase font-bold tracking-widest opacity-50 hover:opacity-100 transition">Retest Again</button>
+
+            <button id="downloadBtn" onclick="generateZip()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 p-5 rounded-2xl font-black tracking-widest shadow-xl shadow-blue-500/20 hover:scale-[1.02] transition">DOWNLOAD PACKAGE</button>
+            <button onclick="resetData()" class="w-full text-red-500 text-[10px] uppercase font-bold tracking-widest opacity-50 hover:opacity-100 transition">Discard & Retest</button>
         </div>
     </div>
 
     <div id="logModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-6">
         <div class="bg-gray-800 max-w-md w-full rounded-3xl border border-gray-700 p-8 space-y-4 shadow-2xl">
-            <h3 class="text-xl font-bold text-amber-400 flex items-center gap-2">
-                <i class="fa-solid fa-terminal"></i> How to Take Logs?
+            <h3 class="text-xl font-bold text-amber-400 flex items-center gap-2 uppercase tracking-tighter">
+                <i class="fa-solid fa-terminal"></i> Log Capture Guide
             </h3>
             <div class="space-y-3 text-xs leading-relaxed text-gray-300">
-                <p>If you encounter a <strong>Bug</strong>, developers need these logs via ADB or Terminal:</p>
-                <div class="bg-black p-3 rounded-lg mono text-blue-300 border border-gray-700">
-                    # For Logcat (UI/Apps)<br>
-                    adb logcat -d > logcat.txt<br><br>
-                    # For Kernel (Sensors/Power)<br>
-                    adb shell dmesg > dmesg.txt
+                <p>If you encounter a <strong>Bug</strong>, run these commands via ADB immediately after it happens:</p>
+                <div class="bg-black p-4 rounded-xl mono text-blue-300 border border-gray-700 space-y-2">
+                    <p class="text-[10px] text-gray-500 uppercase"># UI / Crash Logs</p>
+                    <code class="block">adb logcat -d > logcat.txt</code>
+                    <p class="text-[10px] text-gray-500 uppercase mt-2"># Hardware / Kernel Logs</p>
+                    <code class="block">adb shell dmesg > dmesg.txt</code>
                 </div>
-                <p>1. Reproduce the bug first.<br>2. Run the command immediately.<br>3. Upload the resulting file at the final step.</p>
+                <p class="italic text-gray-400">Upload these files in the final stage of this suite.</p>
             </div>
-            <button onclick="toggleLogModal()" class="w-full bg-gray-700 p-3 rounded-xl font-bold hover:bg-gray-600 transition">GOT IT</button>
+            <button onclick="toggleLogModal()" class="w-full bg-blue-600 p-3 rounded-xl font-bold hover:bg-blue-700 transition">UNDERSTOOD</button>
         </div>
     </div>
 
@@ -126,16 +153,12 @@
         let testData = {};
 
         function startTesting() {
-            if(!document.getElementById('romName').value) return alert("Project name is required.");
+            if(!document.getElementById('romName').value || !document.getElementById('tgUser').value) return alert("Fill in Tester & ROM Name.");
             const dev = document.getElementById('deviceSelect').value;
-            
-            // LOGIC: If sweet2, MERGE generic + specific tests
             questions = (dev === "Generic") ? [...genericTests] : [...genericTests, ...sweet2Tests];
-            
             questions.forEach(q => { if(!testData[q]) testData[q] = { status: "Not Tested", comment: "", photo: null }; });
             document.getElementById('step-setup').classList.add('hidden');
             document.getElementById('step-testing').classList.remove('hidden');
-            updateProgress();
             updatePage();
         }
 
@@ -160,7 +183,7 @@
                 reader.onload = (e) => {
                     document.getElementById('imagePreview').src = e.target.result;
                     document.getElementById('photoPreviewContainer').classList.remove('hidden');
-                    document.getElementById('photoLabel').innerText = "Image Selected";
+                    document.getElementById('photoLabel').innerText = "Evidence Attached";
                     testData[questions[currentIndex]].photo = input.files[0];
                     saveCurrentData();
                 };
@@ -188,20 +211,27 @@
                 reader.onload = (e) => { document.getElementById('imagePreview').src = e.target.result; container.classList.remove('hidden'); };
                 reader.readAsDataURL(testData[q].photo);
             } else { container.classList.add('hidden'); document.getElementById('photoLabel').innerText = "Attach Screenshot"; }
-            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? "FINALIZE" : "NEXT";
+            document.getElementById('nextBtn').innerText = (currentIndex === questions.length - 1) ? "FINISH" : "NEXT";
             updateProgress();
         }
 
         function saveCurrentData() {
             testData[questions[currentIndex]].comment = document.getElementById('currentComment').value;
-            localStorage.setItem('at_suite_final', JSON.stringify({
-                tg: document.getElementById('tgUser').value, rom: document.getElementById('romName').value, dev: document.getElementById('deviceSelect').value, results: testData
-            }));
         }
 
         function nextQuestion() {
             if(currentIndex < questions.length - 1) { currentIndex++; updatePage(); } 
-            else { document.getElementById('step-testing').classList.add('hidden'); document.getElementById('step-finish').classList.remove('hidden'); }
+            else { 
+                document.getElementById('step-testing').classList.add('hidden'); 
+                document.getElementById('step-finish').classList.remove('hidden');
+                
+                // Show Summary Page Info
+                const now = new Date();
+                document.getElementById('sumTester').innerText = document.getElementById('tgUser').value;
+                document.getElementById('sumROM').innerText = document.getElementById('romName').value;
+                document.getElementById('sumDevice').innerText = document.getElementById('deviceSelect').value;
+                document.getElementById('sumTime').innerText = now.toLocaleString();
+            }
         }
 
         function prevQuestion() {
@@ -216,44 +246,61 @@
 
         async function generateZip() {
             const btn = document.getElementById('downloadBtn');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> COMPILING...';
+            btn.innerHTML = '<i class="fa-solid fa-cog fa-spin"></i> GENERATING PACKAGE...';
             btn.disabled = true;
 
             try {
                 const zip = new JSZip();
-                const rom = document.getElementById('romName').value.replace(/\s+/g, '_');
-                const date = new Date().toISOString().split('T')[0];
-                let report = `=== ANDROID REPORT ===\nROM: ${rom}\nDevice: ${document.getElementById('deviceSelect').value}\n\n`;
+                const now = new Date();
+                const tg = document.getElementById('tgUser').value;
+                const rom = document.getElementById('romName').value;
+                const device = document.getElementById('deviceSelect').value;
+                const type = document.getElementById('testType').value;
+                
+                // Formatted Filename
+                const dateStr = now.toISOString().split('T')[0];
+                const timeStr = now.getHours().toString().padStart(2,'0') + now.getMinutes().toString().padStart(2,'0');
+                const zipName = `${rom.replace(/\s+/g, '_')}-${tg}-${dateStr}-${timeStr}.zip`;
+
+                let report = `=== ANDROID QUALITY ASSURANCE REPORT ===\n`;
+                report += `DATE    : ${now.toLocaleDateString()}\n`;
+                report += `TIME    : ${now.toLocaleTimeString()}\n`;
+                report += `TESTER  : ${tg}\n`;
+                report += `PROJECT : ${rom}\n`;
+                report += `DEVICE  : ${device}\n`;
+                report += `TYPE    : ${type}\n`;
+                report += `========================================\n\n`;
                 
                 const imgFolder = zip.folder("screenshots");
                 for (const q of questions) {
                     const item = testData[q];
                     report += `[${item.status.toUpperCase()}] ${q}\nNote: ${item.comment || "-"}\n`;
                     if(item.photo) {
-                        const photoName = `${q.replace(/\s+/g, '_')}.jpg`;
+                        const ext = item.photo.name.split('.').pop();
+                        const photoName = `${q.replace(/\s+/g, '_')}.${ext}`;
                         imgFolder.file(photoName, item.photo);
                         report += `Media: screenshots/${photoName}\n`;
                     }
-                    report += `------------------\n`;
+                    report += `----------------------------------------\n`;
                 }
 
-                zip.file("SUMMARY.txt", report);
+                zip.file("SUMMARY_REPORT.txt", report);
                 const mainLog = document.getElementById('mainLog').files[0];
-                if(mainLog) zip.file(mainLog.name, mainLog);
+                if(mainLog) zip.file(`logs/${mainLog.name}`, mainLog);
 
                 const blob = await zip.generateAsync({type:"blob"});
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = `${rom}-${date}.zip`;
+                link.download = zipName;
                 link.click();
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#60a5fa', '#a78bfa', '#10b981'] });
             } finally {
-                btn.innerHTML = 'DOWNLOAD ZIP PACKAGE';
+                btn.innerHTML = 'DOWNLOAD PACKAGE';
                 btn.disabled = false;
             }
         }
 
-        function resetData() { if(confirm("Restart testing?")) { localStorage.clear(); location.reload(); } }
+        function resetData() { if(confirm("Discard results and restart?")) { location.reload(); } }
     </script>
 </body>
 </html>
